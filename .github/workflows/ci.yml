@@ -32,3 +32,8 @@ jobs:
           jq -e '.applinks.details[0].components[0]."/" == "/pair*"' \
             .well-known/apple-app-site-association \
             || (echo "AASA /pair* component is missing or wrong" && exit 1)
+
+      - name: _headers sets correct content-type for AASA
+        run: |
+          grep -q "^  Content-Type: application/json" _headers \
+            || (echo "_headers is missing the AASA Content-Type rule" && exit 1)

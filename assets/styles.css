@@ -90,6 +90,11 @@ a.cta:hover {
   opacity: 0.9;
 }
 
+a.cta:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
 footer {
   margin-top: 64px;
   padding-top: 24px;
