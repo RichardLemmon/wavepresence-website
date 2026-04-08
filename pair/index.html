@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pair your phone — WavePresence</title>
+  <meta name="description" content="Pair your phone with WavePresence so your family knows you're home safe.">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <main>
+    <header class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><circle cx="32" cy="32" r="30"/><path d="M16 36 Q24 24 32 36 T48 36" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M12 42 Q22 26 32 42 T52 42" stroke="white" stroke-width="2" stroke-linecap="round" stroke-opacity="0.6" fill="none"/><path d="M20 30 Q26 22 32 30 T44 30" stroke="white" stroke-width="2" stroke-linecap="round" stroke-opacity="0.6" fill="none"/></svg>
+      <span class="wordmark">WavePresence</span>
+    </header>
+
+    <div id="ios-message" style="display:none">
+      <h1>Opening the WavePresence App Clip…</h1>
+      <p class="muted">If nothing happens in a few seconds, you can also open this link by scanning the original QR code with your iPhone Camera.</p>
+    </div>
+
+    <div id="android-message" style="display:none">
+      <h1>Coming soon to Google Play</h1>
+      <p>WavePresence for Android is in development. We'll let you know the moment it lands.</p>
+      <a class="cta" href="mailto:support@wavepresence.com?subject=Notify%20me%20when%20WavePresence%20Android%20launches">Notify me when it's ready</a>
+    </div>
+
+    <div id="desktop-message" style="display:none">
+      <h1>Open this link on your iPhone</h1>
+      <p>To finish pairing, open this same link on the iPhone you want to pair. The easiest way is to scan the QR code shown in the WavePresence app on a family member's phone.</p>
+      <p class="muted" id="desktop-name-hint"></p>
+    </div>
+
+    <footer>
+      <p>© 2026 WavePresence · <a href="mailto:support@wavepresence.com">support@wavepresence.com</a></p>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var personId = params.get('person_id') || '';
+      var profileId = params.get('profile_id') || '';
+      var name = params.get('name') || '';
+
+      var ua = navigator.userAgent || '';
+      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      var isAndroid = /android/i.test(ua);
+
+      function show(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = 'block';
+      }
+
+      if (isIOS) {
+        show('ios-message');
+        // Belt-and-suspenders fallback: AASA association should normally
+        // surface the App Clip card directly when Camera scans the QR. If
+        // the user got here some other way (Messages share, Safari paste),
+        // forward to Apple's hosted App Clip launcher.
+        var appClipUrl = 'https://appclip.apple.com/id'
+          + '?p=com.wavepresence.app.Clip'
+          + '&person_id=' + encodeURIComponent(personId)
+          + '&profile_id=' + encodeURIComponent(profileId)
+          + '&name=' + encodeURIComponent(name);
+        // Use a small delay so the "Opening…" message has a chance to render
+        // before the navigation. 250ms is imperceptible but enough for paint.
+        setTimeout(function () {
+          window.location.replace(appClipUrl);
+        }, 250);
+      } else if (isAndroid) {
+        show('android-message');
+      } else {
+        show('desktop-message');
+        if (name) {
+          var hint = document.getElementById('desktop-name-hint');
+          if (hint) hint.textContent = "You're pairing " + name + "'s phone.";
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
