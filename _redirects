@@ -1,0 +1,6 @@
+# Cloudflare Pages redirect rules go here.
+# Format: <source> <destination> <status>
+# Example: /old-path /new-path 301
+#
+# (intentionally empty for now — www→apex redirect is handled by a
+# Cloudflare Page Rule, not a _redirects entry)
