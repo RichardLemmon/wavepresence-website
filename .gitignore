@@ -1,0 +1,13 @@
+# Cloudflare API token — never commit
+.env.cloudflare
+
+# macOS metadata
+.DS_Store
+
+# Editor swap files
+*.swp
+*.swo
+*~
+
+# Wrangler local state
+.wrangler/
