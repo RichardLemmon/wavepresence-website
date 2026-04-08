@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-aasa:
+    name: Validate AASA file
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: AASA file exists
+        run: |
+          test -f .well-known/apple-app-site-association \
+            || (echo "MISSING: .well-known/apple-app-site-association" && exit 1)
+
+      - name: AASA is valid JSON
+        run: jq . .well-known/apple-app-site-association
+
+      - name: AASA has correct Team ID prefix
+        run: |
+          jq -e '.appclips.apps[0] | startswith("MZ9RT5S9R5.")' \
+            .well-known/apple-app-site-association \
+            || (echo "AASA Team ID prefix is wrong; expected MZ9RT5S9R5." && exit 1)
+
+      - name: AASA has the /pair* component
+        run: |
+          jq -e '.applinks.details[0].components[0]."/" == "/pair*"' \
+            .well-known/apple-app-site-association \
+            || (echo "AASA /pair* component is missing or wrong" && exit 1)

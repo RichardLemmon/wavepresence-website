@@ -1,0 +1,15 @@
+{
+  "appclips": {
+    "apps": ["MZ9RT5S9R5.com.wavepresence.app.Clip"]
+  },
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["MZ9RT5S9R5.com.wavepresence.app.Clip"],
+        "components": [
+          { "/": "/pair*", "comment": "Sensor pairing via App Clip" }
+        ]
+      }
+    ]
+  }
+}
