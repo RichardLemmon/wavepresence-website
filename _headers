@@ -1,8 +1,15 @@
+# max-age=300 is intentionally low during the App Clip / AASA verification
+# phase. Once the App Clip target is built and a real iPhone confirms the
+# App Clip card surfaces via Camera, bump this back to 86400 (Apple's
+# recommended TTL for stable AASA files). See README.md and issue #1.
 /.well-known/apple-app-site-association
   Content-Type: application/json
   Cache-Control: public, max-age=300
 
+# Product affirmation header: WavePresence uses no camera, microphone, or
+# geolocation. Browsers enforce this at the HTTP layer regardless of page JS.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
