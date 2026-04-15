@@ -165,7 +165,10 @@
 
   /* ── Phone mockups section ── */
   .phones-section {
-    background: var(--ink-deep);
+    background:
+      radial-gradient(ellipse 900px 500px at 30% 30%, rgba(168, 78, 47, 0.18), transparent 60%),
+      radial-gradient(ellipse 700px 400px at 75% 75%, rgba(91, 117, 81, 0.12), transparent 55%),
+      linear-gradient(180deg, #241B15 0%, #1A130D 100%);
     overflow: hidden;
     padding: 96px 24px 64px;
   }
@@ -190,12 +193,15 @@
     width: var(--phone-w);
     height: var(--phone-h);
     border-radius: 38px;
-    background: #0A0805;
+    background:
+      linear-gradient(135deg, #3A3028 0%, #1A130D 50%, #2A211A 100%);
     padding: 10px;
     box-shadow:
-      0 1px 0 rgba(244, 237, 224, 0.05),
-      0 30px 60px -20px rgba(0,0,0,0.6),
-      0 0 0 1px rgba(244, 237, 224, 0.08);
+      inset 0 1px 0 rgba(244, 237, 224, 0.25),
+      inset 0 0 0 1px rgba(244, 237, 224, 0.08),
+      0 40px 80px -20px rgba(0, 0, 0, 0.7),
+      0 20px 40px -10px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(244, 237, 224, 0.15);
     position: relative;
     transform: perspective(900px) rotateY(-1deg) rotateX(0.4deg);
   }
