@@ -1,31 +1,638 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WavePresence — WiFi-based family presence</title>
-  <meta name="description" content="Know who's home and where, without cameras or wearables. WavePresence uses WiFi signals to track family presence across your home.">
-  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
-  <link rel="stylesheet" href="/assets/styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WavePresence — Know they're home, and okay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4EDE0;
+    --bg-warm: #EFE6D3;
+    --card: #FBF6EC;
+    --card-raised: #FFFFFF;
+    --ink: #1F1A14;
+    --ink-soft: #4A4237;
+    --ink-muted: #8A7F6E;
+    --line: #E3D9C4;
+    --line-soft: #EFE6D3;
+    --sage: #5B7551;
+    --sage-soft: #DCE5D0;
+    --amber: #B8702A;
+    --amber-soft: #F2DCC2;
+    --clay: #A84E2F;
+    --clay-soft: #F0D3C5;
+    --ink-deep: #0F0C08;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Hanken Grotesk', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(168, 78, 47, 0.06), transparent 60%),
+      radial-gradient(900px 500px at 95% 20%, rgba(91, 117, 81, 0.05), transparent 55%);
+  }
+  section { padding: 96px 24px; }
+  .shell { max-width: 900px; margin: 0 auto; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--clay);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--clay); }
+
+  /* HEADER */
+  header.site {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 24px 24px 0;
+    z-index: 10;
+  }
+  header.site .shell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  header.site .logo {
+    width: 32px;
+    height: 32px;
+    color: var(--clay);
+  }
+  header.site .wordmark {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    color: var(--ink-deep);
+  }
+  header.site .wordmark em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--clay);
+  }
+
+  /* HERO */
+  .hero { padding-top: 120px; padding-bottom: 80px; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 64px;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--ink-deep);
+    margin-bottom: 24px;
+    max-width: 18ch;
+  }
+  .hero h1 em { font-style: italic; font-weight: 400; color: var(--clay); }
+  .hero .lede {
+    font-size: 20px;
+    color: var(--ink-soft);
+    max-width: 48ch;
+    line-height: 1.5;
+    margin-bottom: 36px;
+  }
+  .waitlist {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    background: var(--card-raised);
+    padding: 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    max-width: 480px;
+    box-shadow: 0 1px 3px rgba(31,26,20,0.04);
+  }
+  .waitlist input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 10px 16px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    min-width: 180px;
+  }
+  .waitlist button {
+    background: var(--clay);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .waitlist button:hover { background: #8B3F26; }
+  .waitlist-note {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+  }
+
+  /* Section titles */
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink-deep);
+    margin-bottom: 16px;
+    max-width: 22ch;
+  }
+  h2 em { font-style: italic; color: var(--sage); }
+  .section-lede {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 58ch;
+    margin-bottom: 40px;
+  }
+
+  /* In the box */
+  .box-section { background: var(--card); }
+  .box-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 32px;
+  }
+  .box-card {
+    padding: 32px;
+    background: var(--card-raised);
+    border-radius: 28px;
+    border: 1px solid var(--line);
+  }
+  .box-card h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 26px;
+    margin-bottom: 8px;
+    letter-spacing: -0.015em;
+  }
+  .box-card .count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--clay);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .box-card p { color: var(--ink-soft); font-size: 15px; line-height: 1.55; }
+
+  /* Matrix */
+  .matrix {
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    overflow: hidden;
+    background: var(--card-raised);
+    margin-top: 32px;
+  }
+  .matrix-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .matrix-row:last-child { border-bottom: none; }
+  .matrix-row.head { background: var(--bg-warm); padding: 22px 28px; }
+  .matrix-row.head > div {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .matrix-row.head .corner { color: var(--ink-soft); }
+  .dim {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .dim .d-sub {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 400;
+    margin-top: 2px;
+    letter-spacing: 0;
+  }
+  .cell {
+    font-size: 14px;
+    color: var(--ink-soft);
+    display: flex; align-items: center;
+    gap: 8px;
+  }
+  .mark {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+  .mark.good { background: var(--sage-soft); color: var(--sage); }
+  .mark.mid  { background: var(--amber-soft); color: var(--amber); }
+  .mark.bad  { background: var(--clay-soft); color: var(--clay); }
+
+  /* Privacy */
+  .privacy-section { background: var(--ink-deep); color: #F4EDE0; }
+  .privacy-section h2, .privacy-section h2 em { color: #F4EDE0; }
+  .privacy-section em { color: #E4C19A; }
+  .privacy-section .section-lede { color: rgba(244, 237, 224, 0.7); }
+  .privacy-list {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    margin-top: 24px;
+    max-width: 60ch;
+  }
+  .privacy-list li {
+    padding-left: 26px;
+    position: relative;
+    color: rgba(244, 237, 224, 0.85);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .privacy-list li::before {
+    content: "";
+    position: absolute; left: 0; top: 10px;
+    width: 12px; height: 1px; background: #E4C19A;
+  }
+
+  /* Pricing */
+  .pricing { background: var(--bg-warm); }
+  .price-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .price-card {
+    padding: 36px 28px;
+    background: var(--card-raised);
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .price-card.featured {
+    border-color: var(--clay);
+    box-shadow: 0 2px 12px rgba(168, 78, 47, 0.1);
+  }
+  .price-card.featured::before {
+    content: "Service";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--clay);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    padding: 3px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+  .price-tag {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink-deep);
+  }
+  .price-card.featured .price-tag { color: var(--clay); }
+  .price-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 6px;
+    margin-bottom: 20px;
+  }
+  .price-card h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .price-card p {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .pricing .footnote {
+    margin-top: 28px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-family: var(--font-display);
+    text-align: center;
+  }
+
+  /* Add-ons */
+  .addons { background: var(--card); }
+  .addons .add-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .addon {
+    padding: 32px;
+    background: var(--card-raised);
+    border-radius: 28px;
+    border: 1px solid var(--line);
+  }
+  .addon h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .addon p { color: var(--ink-soft); font-size: 15px; line-height: 1.55; }
+
+  /* Final CTA */
+  .final-cta { text-align: center; padding: 120px 24px; }
+  .final-cta h2 { margin: 0 auto 24px; }
+
+  footer {
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--ink-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px) {
+    .hero h1 { font-size: 44px; }
+    .hero .lede { font-size: 17px; }
+    h2 { font-size: 34px; }
+    .box-grid, .addons .add-grid, .price-grid { grid-template-columns: 1fr; }
+    .matrix-row { grid-template-columns: 1fr; gap: 6px; padding: 14px 20px; }
+    .matrix-row.head { display: none; }
+    .cell::before {
+      content: attr(data-col);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      min-width: 100px;
+      display: inline-block;
+    }
+  }
+</style>
 </head>
 <body>
-  <main>
-    <header class="brand">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" fill="currentColor"/><path d="M16 36 Q24 24 32 36 T48 36" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M12 42 Q22 26 32 42 T52 42" stroke="white" stroke-width="2" stroke-linecap="round" stroke-opacity="0.6" fill="none"/><path d="M20 30 Q26 22 32 30 T44 30" stroke="white" stroke-width="2" stroke-linecap="round" stroke-opacity="0.6" fill="none"/></svg>
-      <span class="wordmark">WavePresence</span>
-    </header>
 
-    <h1>WiFi-based family presence. No cameras. No wearables.</h1>
+<!-- HEADER -->
+<header class="site">
+  <div class="shell">
+    <svg class="logo" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <circle cx="32" cy="32" r="30" fill="currentColor"/>
+      <path d="M16 36 Q24 24 32 36 T48 36" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M12 42 Q22 26 32 42 T52 42" stroke="white" stroke-width="2" stroke-linecap="round" stroke-opacity="0.6" fill="none"/>
+      <path d="M20 30 Q26 22 32 30 T44 30" stroke="white" stroke-width="2" stroke-linecap="round" stroke-opacity="0.6" fill="none"/>
+    </svg>
+    <span class="wordmark">Wave<em>Presence</em></span>
+  </div>
+</header>
 
-    <p>WavePresence quietly tracks who's home and which room they're in by listening to ordinary WiFi signals from the phone they already carry. There's nothing to wear, nothing to charge, and no camera in any room.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="shell">
+    <div class="eyebrow">Home care · no cameras</div>
+    <h1>Know they're <em>home, and okay.</em></h1>
+    <p class="lede">Whether it's a parent aging at home, a family member recovering from surgery, or a kid on their own for the first time — WavePresence tells you which room they're in, whether they're up at 3 a.m., and if something's wrong, before it turns into a phone call.</p>
+    <form class="waitlist" onsubmit="return submitWaitlist(event, 'hero')">
+      <input type="email" name="email" placeholder="you@email.com" required>
+      <button type="submit">Join the waitlist</button>
+    </form>
+    <p class="waitlist-note">We'll email when kits are ready to ship. No payment now.</p>
+  </div>
+</section>
 
-    <p class="muted">Built for families caring for aging parents who want to stay independent at home, without giving up their privacy.</p>
+<!-- IN THE BOX -->
+<section class="box-section">
+  <div class="shell">
+    <div class="eyebrow">What you'll get</div>
+    <h2>One kit, <em>everything you need.</em></h2>
+    <p class="section-lede">Every WavePresence order ships with a wristband and three room sensors. Plug the sensors in, put the wristband on the person you're looking after — they'll show up on your dashboard within a minute.</p>
+    <div class="box-grid">
+      <div class="box-card">
+        <div class="count">1 included</div>
+        <h3>Wristband</h3>
+        <p>Comfortable, water-resistant, with a discreet SOS button. Detects falls or long periods of stillness, and works from any room in the house.</p>
+      </div>
+      <div class="box-card">
+        <div class="count">3 included</div>
+        <h3>Room sensors</h3>
+        <p>Small. Plug-and-forget. Covers the rooms that matter — living room, bedroom, kitchen. Add more rooms later as needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <a class="cta" href="mailto:support@wavepresence.com?subject=Notify%20me%20when%20WavePresence%20launches">Get notified when we launch</a>
+<!-- ADD-ONS (moved above matrix, reframed) -->
+<section class="addons">
+  <div class="shell">
+    <div class="eyebrow">One kit · the whole household</div>
+    <h2>Closest watch for one. <em>Everyone on the dashboard.</em></h2>
+    <p class="section-lede">The wristband goes to the person you're watching most closely — the parent, the person recovering, the kid home alone. It's the most reliable signal: never left behind, detects falls, triggers an SOS at the press of a button. Everyone else in the household shows up on the same dashboard through the phone or Apple Watch they already carry. No extra hardware. No apps on their devices.</p>
+    <div class="add-grid">
+      <div class="addon">
+        <h3>Wristband <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;color:var(--clay);text-transform:uppercase;margin-left:6px;">Primary</span></h3>
+        <p>For the person you want the closest watch on. Most accurate tracking, fall detection, SOS button, and it can't be forgotten on the counter. One is included in every kit.</p>
+      </div>
+      <div class="addon">
+        <h3>iPhone <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;color:var(--ink-muted);text-transform:uppercase;margin-left:6px;">Bring your own</span></h3>
+        <p>Most household members carry one. Pair once and they're on the dashboard too — no app to install on their phone.</p>
+      </div>
+      <div class="addon">
+        <h3>Apple Watch <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;color:var(--ink-muted);text-transform:uppercase;margin-left:6px;">Bring your own</span></h3>
+        <p>Always worn, always reporting. A body-worn signal that beats a phone left on the nightstand.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer>
-      <p>© 2026 WavePresence · <a href="mailto:support@wavepresence.com">support@wavepresence.com</a></p>
-    </footer>
-  </main>
+<!-- MATRIX -->
+<section>
+  <div class="shell">
+    <div class="eyebrow">What each device covers</div>
+    <h2>Different devices, <em>different alerts.</em></h2>
+    <p class="section-lede">The wristband handles the urgent stuff — falls, SOS, always-worn reliability. Phones and watches add sharper room-by-room accuracy. Here's what each contributes to the dashboard.</p>
+    <div class="matrix">
+      <div class="matrix-row head">
+        <div class="corner">What you get</div>
+        <div>Wristband</div>
+        <div>+ iPhone</div>
+        <div>+ Apple Watch</div>
+      </div>
+      <div class="matrix-row">
+        <div class="dim">Which room they're in<span class="d-sub">Live dashboard + history</span></div>
+        <div class="cell" data-col="Wristband"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ iPhone"><span class="mark good">Sharper</span></div>
+        <div class="cell" data-col="+ Apple Watch"><span class="mark good">Worn-body</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="dim">Fall detection<span class="d-sub">Alerts you within a minute</span></div>
+        <div class="cell" data-col="Wristband"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ iPhone"><span class="mark mid">Wristband does this</span></div>
+        <div class="cell" data-col="+ Apple Watch"><span class="mark mid">Wristband does this</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="dim">SOS button<span class="d-sub">Long-press on the wristband</span></div>
+        <div class="cell" data-col="Wristband"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ iPhone"><span class="mark mid">—</span></div>
+        <div class="cell" data-col="+ Apple Watch"><span class="mark mid">—</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="dim">Out-of-bed at night<span class="d-sub">Nighttime wandering alerts</span></div>
+        <div class="cell" data-col="Wristband"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ iPhone"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ Apple Watch"><span class="mark good">Yes</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="dim">Hasn't come downstairs<span class="d-sub">Morning check-in alert</span></div>
+        <div class="cell" data-col="Wristband"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ iPhone"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ Apple Watch"><span class="mark good">Yes</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="dim">Away from home<span class="d-sub">Left longer than usual</span></div>
+        <div class="cell" data-col="Wristband"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ iPhone"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ Apple Watch"><span class="mark good">Yes</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="dim">Always worn<span class="d-sub">vs. left on the counter</span></div>
+        <div class="cell" data-col="Wristband"><span class="mark good">Yes</span></div>
+        <div class="cell" data-col="+ iPhone"><span class="mark bad">Often left</span></div>
+        <div class="cell" data-col="+ Apple Watch"><span class="mark good">Yes</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="shell">
+    <div class="eyebrow">Honest pricing</div>
+    <h2>The goal is <em>knowing they're okay.</em> Not nickel and diming you.</h2>
+    <p class="section-lede">One flat kit price. One flat monthly service fee. Add a wristband when another family member needs one. That's the whole menu.</p>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-tag">$69</div>
+        <div class="price-label">one-time</div>
+        <h3>Starter kit</h3>
+        <p>One wristband and three sensors. Ships with everything you need to get started.</p>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tag">$19.99</div>
+        <div class="price-label">per month</div>
+        <h3>WavePresence service</h3>
+        <p>Live dashboard, alerts to your phone, location history, and ongoing firmware updates. No tiers.</p>
+      </div>
+      <div class="price-card">
+        <div class="price-tag">$29</div>
+        <div class="price-label">each</div>
+        <h3>Extra wristbands</h3>
+        <p>For every household member who needs one — a second parent, a recovering spouse, a kid staying home.</p>
+      </div>
+    </div>
+    <p class="footnote">That's it. No per-room charges, no premium tier, no paywalled alerts.</p>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy-section">
+  <div class="shell">
+    <div class="eyebrow" style="color: #E4C19A;">Why no cameras</div>
+    <h2>Dignity <em>first.</em></h2>
+    <p class="section-lede">A parent aging at home. A family member recovering from surgery. A teenager staying alone for the weekend. People deserve to be looked after without being watched.</p>
+    <ul class="privacy-list">
+      <li>No cameras. No microphones. No video or audio, ever.</li>
+      <li>No photos of faces, rooms, or household activity leave the house.</li>
+      <li>Signals stay on the sensors. You see "Dad, Living Room" — never what Dad is doing.</li>
+      <li>Shareable only with the people you invite to the household.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="shell">
+    <h2>Be the first to know <em>they're home.</em></h2>
+    <form class="waitlist" style="margin: 0 auto;" onsubmit="return submitWaitlist(event, 'final_cta')">
+      <input type="email" name="email" placeholder="you@email.com" required>
+      <button type="submit">Join the waitlist</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  WavePresence · support@wavepresence.com
+</footer>
+
+<script>
+  const WAITLIST_ENDPOINT = 'https://wavepresence-api-develop.up.railway.app/waitlist';
+
+  async function submitWaitlist(event, source) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const input = form.querySelector('input[name="email"]');
+    const button = form.querySelector('button');
+    const email = input.value.trim();
+    if (!email) return false;
+
+    const originalLabel = button.innerText;
+    button.disabled = true;
+    button.innerText = 'Saving…';
+
+    try {
+      const res = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source }),
+      });
+      if (!res.ok) throw new Error('save failed');
+      const data = await res.json().catch(() => ({}));
+      button.innerText = data.already_subscribed ? 'Already on the list ✓' : 'On the list ✓';
+      input.value = '';
+    } catch (err) {
+      button.disabled = false;
+      button.innerText = originalLabel;
+      alert("Sorry — couldn't save that. Please try again in a moment.");
+    }
+    return false;
+  }
+</script>
+
 </body>
 </html>
