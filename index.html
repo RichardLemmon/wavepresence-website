@@ -163,6 +163,390 @@
     margin-bottom: 40px;
   }
 
+  /* ── Phone mockups section ── */
+  .phones-section {
+    background: var(--ink-deep);
+    overflow: hidden;
+    padding: 96px 24px 64px;
+  }
+  .phones-section .shell { max-width: 1080px; }
+  .phones-section .eyebrow { color: #E4C19A; }
+  .phones-section h2, .phones-section h2 em { color: #F4EDE0; }
+  .phones-section h2 em { color: #E4C19A; }
+  .phones-section .section-lede { color: rgba(244, 237, 224, 0.7); }
+
+  .phones-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 48px 40px;
+    margin-top: 40px;
+    justify-items: center;
+    justify-content: center;
+  }
+
+  .phone {
+    --phone-w: 260px;
+    --phone-h: 540px;
+    width: var(--phone-w);
+    height: var(--phone-h);
+    border-radius: 38px;
+    background: #0A0805;
+    padding: 10px;
+    box-shadow:
+      0 1px 0 rgba(244, 237, 224, 0.05),
+      0 30px 60px -20px rgba(0,0,0,0.6),
+      0 0 0 1px rgba(244, 237, 224, 0.08);
+    position: relative;
+    transform: perspective(900px) rotateY(-1deg) rotateX(0.4deg);
+  }
+  .phone .screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    background: #1C1612;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Hanken Grotesk', -apple-system, sans-serif;
+    color: #F4EDE0;
+  }
+  .phone .notch {
+    position: absolute;
+    top: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 22px;
+    background: #0A0805;
+    border-radius: 999px;
+    z-index: 4;
+  }
+  .phone .statusbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 22px 0;
+    height: 38px;
+    position: relative;
+    z-index: 3;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: #F4EDE0;
+    letter-spacing: 0.02em;
+  }
+  .phone .statusbar .right { display: flex; gap: 6px; align-items: center; font-size: 10px; opacity: 0.85; }
+  .phone .sbody {
+    padding: 16px 16px;
+    height: calc(100% - 38px);
+    overflow: hidden;
+  }
+  .phone .caption {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgba(244, 237, 224, 0.5);
+    margin-top: 18px;
+  }
+
+  /* Dashboard screen */
+  .s-greeting {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    margin-bottom: 3px;
+  }
+  .s-greeting em { font-style: italic; color: #E4C19A; }
+  .s-sub {
+    font-size: 11px;
+    color: rgba(244, 237, 224, 0.5);
+    margin-bottom: 18px;
+  }
+  .s-card {
+    background: #241C17;
+    border-radius: 18px;
+    padding: 14px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .s-card.hero {
+    background: linear-gradient(135deg, #3A2A1E, #241C17);
+    border: 1px solid rgba(242, 168, 63, 0.25);
+  }
+  .s-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(242, 168, 63, 0.2);
+    color: #F2A83F;
+    display: grid; place-items: center;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .s-name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+  .s-room {
+    font-size: 11px;
+    color: rgba(244, 237, 224, 0.65);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-top: 2px;
+  }
+  .s-dot { width: 5px; height: 5px; border-radius: 50%; background: #9AAA72; display: inline-block; }
+  .s-dot.away { background: rgba(244, 237, 224, 0.3); }
+  .s-dot.warn { background: #F2A83F; }
+  .s-time {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    color: rgba(244, 237, 224, 0.4);
+    letter-spacing: 0.04em;
+    margin-left: auto;
+  }
+  .s-ok {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(154, 170, 114, 0.1);
+    border-radius: 12px;
+    font-size: 11px;
+    color: #9AAA72;
+    text-align: center;
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+  }
+
+  /* Alert screen (lock-screen style) */
+  .phone.lock .screen { background: #0F0A06; }
+  .lock-time {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: 74px;
+    line-height: 0.95;
+    text-align: center;
+    margin-top: 18px;
+    letter-spacing: -0.04em;
+  }
+  .lock-date {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(244, 237, 224, 0.6);
+    margin-bottom: 20px;
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+  }
+  .lock-notif {
+    margin: 10px 10px 0;
+    padding: 14px 14px;
+    background: rgba(36, 28, 23, 0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(244, 237, 224, 0.05);
+  }
+  .lock-notif .hdr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, 0.4);
+    margin-bottom: 6px;
+  }
+  .lock-notif .hdr .app { color: #E4C19A; }
+  .lock-notif .title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 3px;
+    letter-spacing: -0.01em;
+  }
+  .lock-notif .body {
+    font-size: 12px;
+    color: rgba(244, 237, 224, 0.75);
+    line-height: 1.4;
+  }
+
+  /* Timeline screen */
+  .tl-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .tl-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .tl-title em { font-style: italic; color: #E4C19A; }
+  .tl-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    color: rgba(244, 237, 224, 0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .tl-row {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(244, 237, 224, 0.06);
+    align-items: start;
+  }
+  .tl-row:last-child { border-bottom: none; }
+  .tl-when {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    color: rgba(244, 237, 224, 0.45);
+    letter-spacing: 0.02em;
+    padding-top: 2px;
+  }
+  .tl-room {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: -0.005em;
+  }
+  .tl-room.active em {
+    font-style: normal;
+    color: #F2A83F;
+  }
+  .tl-dur {
+    font-size: 10px;
+    color: rgba(244, 237, 224, 0.5);
+    margin-top: 2px;
+  }
+
+  /* Insights screen */
+  .in-head {
+    margin-bottom: 14px;
+  }
+  .in-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .in-title em { font-style: italic; color: #E4C19A; }
+  .in-sub {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, 0.4);
+    margin-top: 3px;
+  }
+  .in-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .in-stat {
+    background: #241C17;
+    padding: 12px 12px;
+    border-radius: 14px;
+  }
+  .in-stat .val {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: #F4EDE0;
+    line-height: 1;
+  }
+  .in-stat .val .unit {
+    font-size: 11px;
+    color: rgba(244, 237, 224, 0.5);
+    margin-left: 3px;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 400;
+  }
+  .in-stat .lab {
+    font-size: 10px;
+    color: rgba(244, 237, 224, 0.55);
+    margin-top: 5px;
+  }
+  .in-stat .delta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #9AAA72;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+  .in-stat .delta.warn { color: #F2A83F; }
+  .in-chart-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, 0.4);
+    margin-bottom: 8px;
+  }
+  .in-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 60px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(244, 237, 224, 0.08);
+  }
+  .in-bar {
+    flex: 1;
+    background: rgba(242, 168, 63, 0.3);
+    border-radius: 3px 3px 0 0;
+    min-height: 4px;
+  }
+  .in-bar.hi { background: #F2A83F; }
+  .in-bar.mid { background: rgba(242, 168, 63, 0.55); }
+  .in-bar.lo { background: rgba(242, 168, 63, 0.2); }
+  .in-days {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .in-days span {
+    flex: 1;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: rgba(244, 237, 224, 0.4);
+    letter-spacing: 0.04em;
+  }
+  .in-note {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: rgba(242, 168, 63, 0.1);
+    border-left: 2px solid #F2A83F;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.45;
+    color: rgba(244, 237, 224, 0.85);
+  }
+  .in-note strong {
+    color: #F2A83F;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-style: italic;
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    margin-bottom: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .phones-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+
   /* In the box */
   .box-section { background: var(--card); }
   .box-grid {
@@ -434,6 +818,206 @@
       <button type="submit">Join the waitlist</button>
     </form>
     <p class="waitlist-note">We'll email when kits are ready to ship. No payment now.</p>
+  </div>
+</section>
+
+<!-- PHONES -->
+<section class="phones-section">
+  <div class="shell">
+    <div class="eyebrow">What you see on your phone</div>
+    <h2>A quiet signal, <em>in your pocket.</em></h2>
+    <p class="section-lede">No dashboard to check obsessively. Just a calm daily picture, with nudges only when something's worth knowing.</p>
+
+    <div class="phones-grid">
+
+      <!-- Phone 1: Dashboard -->
+      <div>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="statusbar">
+              <span>9:41</span>
+              <span class="right">●●●● 93%</span>
+            </div>
+            <div class="sbody">
+              <div class="s-greeting">Good morning, <em>Sarah</em></div>
+              <div class="s-sub">Everyone's accounted for</div>
+              <div class="s-card hero">
+                <div class="s-avatar">M</div>
+                <div>
+                  <div class="s-name">Mom</div>
+                  <div class="s-room"><span class="s-dot"></span>Living Room</div>
+                </div>
+                <span class="s-time">2 MIN</span>
+              </div>
+              <div class="s-card">
+                <div class="s-avatar" style="background:rgba(154,170,114,0.2);color:#9AAA72">T</div>
+                <div>
+                  <div class="s-name">Topper</div>
+                  <div class="s-room"><span class="s-dot"></span>Kitchen</div>
+                </div>
+                <span class="s-time">NOW</span>
+              </div>
+              <div class="s-card">
+                <div class="s-avatar" style="background:rgba(244,237,224,0.1);color:rgba(244,237,224,0.6)">R</div>
+                <div>
+                  <div class="s-name">Rick</div>
+                  <div class="s-room"><span class="s-dot away"></span>Away</div>
+                </div>
+                <span class="s-time">2 HR</span>
+              </div>
+              <div class="s-ok">All quiet at home</div>
+            </div>
+          </div>
+        </div>
+        <div class="caption">Dashboard</div>
+      </div>
+
+      <!-- Phone 2: Lock-screen alert -->
+      <div>
+        <div class="phone lock">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="statusbar">
+              <span>9:15</span>
+              <span class="right">●●●● 87%</span>
+            </div>
+            <div class="sbody" style="padding-top:0">
+              <div class="lock-time">9:15</div>
+              <div class="lock-date">Tuesday · April 16</div>
+              <div class="lock-notif">
+                <div class="hdr"><span class="app">WavePresence</span><span>9:00 AM</span></div>
+                <div class="title">Good morning</div>
+                <div class="body">Mom slept through the night. Topper got in at 11:45 PM.</div>
+              </div>
+              <div class="lock-notif" style="opacity:0.5">
+                <div class="hdr"><span class="app">Calendar</span><span>9:30 AM</span></div>
+                <div class="title" style="font-size:13px">Coffee with Dad</div>
+                <div class="body" style="font-size:11px">Coral Café · in 45 min</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="caption">A morning you can trust</div>
+      </div>
+
+      <!-- Phone 3: Timeline -->
+      <div>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="statusbar">
+              <span>2:08</span>
+              <span class="right">●●●● 78%</span>
+            </div>
+            <div class="sbody">
+              <div class="tl-head">
+                <div>
+                  <div class="tl-title">Mom's <em>day</em></div>
+                </div>
+                <div class="tl-date">Tuesday</div>
+              </div>
+              <div class="tl-row">
+                <div class="tl-when">Now</div>
+                <div>
+                  <div class="tl-room active"><em>Living Room</em></div>
+                  <div class="tl-dur">Since 1:14 PM · 54 min</div>
+                </div>
+              </div>
+              <div class="tl-row">
+                <div class="tl-when">11:40 AM</div>
+                <div>
+                  <div class="tl-room">Kitchen</div>
+                  <div class="tl-dur">Lunch · 1 hr 34 min</div>
+                </div>
+              </div>
+              <div class="tl-row">
+                <div class="tl-when">8:20 AM</div>
+                <div>
+                  <div class="tl-room">Living Room</div>
+                  <div class="tl-dur">Morning · 3 hr 20 min</div>
+                </div>
+              </div>
+              <div class="tl-row">
+                <div class="tl-when">7:45 AM</div>
+                <div>
+                  <div class="tl-room">Kitchen</div>
+                  <div class="tl-dur">Breakfast · 35 min</div>
+                </div>
+              </div>
+              <div class="tl-row">
+                <div class="tl-when">Until 7:45</div>
+                <div>
+                  <div class="tl-room">Bedroom</div>
+                  <div class="tl-dur">Overnight · 9 hr 15 min</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="caption">Where they've been</div>
+      </div>
+
+      <!-- Phone 4: Insights -->
+      <div>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="statusbar">
+              <span>5:22</span>
+              <span class="right">●●●● 64%</span>
+            </div>
+            <div class="sbody">
+              <div class="in-head">
+                <div class="in-title">Mom's <em>week</em></div>
+                <div class="in-sub">Apr 10 – Apr 16</div>
+              </div>
+              <div class="in-stats">
+                <div class="in-stat">
+                  <div class="val">8.4<span class="unit">hrs</span></div>
+                  <div class="lab">Avg. sleep</div>
+                  <div class="delta">↑ 0.6 vs last week</div>
+                </div>
+                <div class="in-stat">
+                  <div class="val">42</div>
+                  <div class="lab">Room changes / day</div>
+                  <div class="delta">steady</div>
+                </div>
+                <div class="in-stat">
+                  <div class="val">3<span class="unit">nights</span></div>
+                  <div class="lab">Out of bedroom 2–5 AM</div>
+                  <div class="delta warn">↑ up from 1</div>
+                </div>
+                <div class="in-stat">
+                  <div class="val">0</div>
+                  <div class="lab">Falls detected</div>
+                  <div class="delta">steady</div>
+                </div>
+              </div>
+              <div class="in-chart-label">Time in Living Room · by day</div>
+              <div class="in-chart">
+                <div class="in-bar mid" style="height:50%"></div>
+                <div class="in-bar mid" style="height:55%"></div>
+                <div class="in-bar lo" style="height:30%"></div>
+                <div class="in-bar hi" style="height:78%"></div>
+                <div class="in-bar mid" style="height:60%"></div>
+                <div class="in-bar hi" style="height:85%"></div>
+                <div class="in-bar hi" style="height:90%"></div>
+              </div>
+              <div class="in-days">
+                <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+              </div>
+              <div class="in-note">
+                <strong>Worth noting</strong>
+                Three nights awake this week is more than usual. Could be unrelated, but patterns like this often show up before something else.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="caption">Patterns over time</div>
+      </div>
+
+    </div>
   </div>
 </section>
 
