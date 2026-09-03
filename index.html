@@ -70,25 +70,35 @@
     background: var(--paper); padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); }
   .lg i { width: 9px; height: 9px; border-radius: 50%; display: block; }
 
-  /* Kit / products */
-  .kitgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
-  @media (max-width: 860px) { .kitgrid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .kitgrid { grid-template-columns: 1fr; } }
-  .prod { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 22px 22px 24px; }
-  .prod .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-  .prod b { font-weight: 800; letter-spacing: -.02em; font-size: 17px; }
-  .prod .pr { font-weight: 800; letter-spacing: -.02em; white-space: nowrap; }
-  .prod .rm { font-size: 13px; font-weight: 700; color: var(--ink-3); margin-top: 2px; }
-  .prod p { color: var(--ink-2); font-size: 15.5px; margin-top: 11px; }
+  /* Kit contents — a moss slab, typeset as a list, with a photo breaking its edge. */
+  .kitband { overflow: visible; padding-right: 40px; position: relative; }
+  .kitband::after { display: none; }
+  /* Specificity note: .band ul in organic.css sets 3 columns; .band ul.kitlist
+     takes that back so this list owns its own responsive steps. */
+  .band ul.kitlist { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0 40px; margin-top: 28px; position: relative; }
+  @media (max-width: 1000px) { .band ul.kitlist { grid-template-columns: 1fr 1fr; gap: 0 34px; } }
+  @media (max-width: 680px) { .band ul.kitlist { grid-template-columns: 1fr; } }
+  .kitlist li { padding: 18px 0; border-top: 1px solid rgba(195,245,60,.28); }
+  .kitlist .hd { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+  .kitlist b { font-weight: 800; letter-spacing: -.02em; font-size: 17.5px; }
+  .kitlist .pr { font-weight: 800; letter-spacing: -.02em; white-space: nowrap; color: var(--lime); }
+  .kitlist .rm { display: block; font-size: 12px; font-weight: 800; letter-spacing: .1em;
+    text-transform: uppercase; color: rgba(234,243,230,.55); margin-top: 3px; }
+  .kitlist p { color: rgba(234,243,230,.8); font-size: 15.5px; margin-top: 9px; max-width: 42ch; }
+  .medallion { position: absolute; right: -46px; top: -58px; width: 168px; height: 168px;
+    border-radius: 50%; overflow: hidden; margin: 0; border: 7px solid var(--ground);
+    box-shadow: 0 18px 44px rgba(14,31,23,.28); }
+  .medallion img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 1180px) { .medallion { right: -24px; top: -46px; width: 132px; height: 132px; } }
+  @media (max-width: 760px) { .medallion { display: none; } }
 
   /* Pricing */
   .price-band { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
   @media (max-width: 700px) { .price-band { grid-template-columns: 1fr; } }
   .pc { border-radius: var(--r-lg); padding: 30px 30px 32px; }
   .pc.one { background: var(--paper); border: 1px solid var(--line); }
-  .pc.sub { background: var(--moss); color: #EAF3E6; position: relative; overflow: hidden; }
-  .pc.sub::after { content: ""; position: absolute; right: -120px; bottom: -150px; width: 320px; height: 320px;
-    border-radius: 50%; border: 44px solid rgba(195,245,60,.12); }
+  .pc.sub { background: var(--moss); color: #EAF3E6; position: relative; }
   .pc h3 { font-size: 20px; font-weight: 800; letter-spacing: -.03em; position: relative; }
   .pc .big { font-size: clamp(2.4rem,5vw,3.2rem); font-weight: 800; letter-spacing: -.055em;
     line-height: 1; margin: 12px 0 4px; position: relative; }
@@ -140,7 +150,7 @@
   <!-- HERO -->
   <section class="hero">
     <div>
-      <h1>Monitoring a loved one's safety <em>without being intrusive.</em></h1>
+      <h1>Monitoring a loved one's safety <em>without</em> being intrusive.</h1>
       <p class="lede">Sensors that look like something you already own. They know a room is in use, when it went quiet, and when someone needs you.</p>
       <div class="hero-actions">
         <a class="btn" href="/start/">Find your kit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -214,30 +224,33 @@
     <h2 class="gallery-title">Made to blend in.</h2>
     <p class="gallery-lede">All of our sensors hide their technology in style. Pick the sensor that fits your home. A plant for the kitchen counter, a stone for the nightstand, a slim stalk or a disc where you want it out of the way.</p>
     <div class="gallery">
-      <figure><img src="assets/devices/plant.webp" alt="A concrete planter with a succulent on a kitchen counter, with a sensor inside" loading="lazy" /><figcaption><b>Plant.</b> A succulent in a planter. The sensor is in the pot.</figcaption></figure>
-      <figure><img src="assets/devices/stone.webp" alt="A smooth grey stone sensor glowing softly on a nightstand at night" loading="lazy" /><figcaption><b>Stone with nightlight.</b> A soft glow when activity is detected to help guide someone safely. All the tech is hidden inside.</figcaption></figure>
-      <figure><img src="assets/devices/disc.webp" alt="A round cream disc sensor on a wooden nightstand beside a bed" loading="lazy" /><figcaption><b>Disc.</b> The base sensor. Sits on a stand and aims at the bed or the room.</figcaption></figure>
-      <figure><img src="assets/devices/wand.webp" alt="A slim cream sensor on a stalk and round base on a nightstand" loading="lazy" /><figcaption><b>Stalk.</b> The same base sensor, when extra height is needed over a mattress.</figcaption></figure>
+      <figure><img src="assets/devices/plant.webp" alt="A concrete planter with a succulent on a kitchen counter, with a sensor inside" /><figcaption><b>Plant.</b> A succulent in a planter. The sensor is in the pot.</figcaption></figure>
+      <figure><img src="assets/devices/stone.webp" alt="A smooth grey stone sensor glowing softly on a nightstand at night" /><figcaption><b>Stone with nightlight.</b> A soft glow when activity is detected to help guide someone safely. All the tech is hidden inside.</figcaption></figure>
+      <figure><img src="assets/devices/disc.webp" alt="A round cream disc sensor on a wooden nightstand beside a bed" /><figcaption><b>Disc.</b> The base sensor. Sits on a stand and aims at the bed or the room.</figcaption></figure>
+      <figure><img src="assets/devices/wand.webp" alt="A slim cream sensor on a stalk and round base on a nightstand" /><figcaption><b>Stalk.</b> The same base sensor, when extra height is needed over a mattress.</figcaption></figure>
     </div>
   </section>
 
   <!-- WHAT GOES IN A KIT -->
   <section>
-    <h2>What goes in a kit.</h2>
-    <p class="lede">You only buy the rooms you care about. The kit finder builds it with you, room by room, and says what each part is for.</p>
-    <div class="kitgrid">
-      <div class="prod"><div class="top"><b>Bedroom sensor</b><span class="pr">$49–69</span></div><div class="rm">ONE PER BEDSIDE</div>
-        <p>Breathing and heart micro-motion, body motion using radar, and heat sensing. This is the one that knows asleep from gone.</p></div>
-      <div class="prod"><div class="top"><b>Living-space sensor</b><span class="pr">$49–59</span></div><div class="rm">KITCHEN · LIVING ROOM</div>
-        <p>Presence and movement only. It tells you which room is in use when the bedroom is empty.</p></div>
-      <div class="prod"><div class="top"><b>Floor pressure mat</b><span class="pr">$49</span></div><div class="rm">BESIDE THE BED</div>
-        <p>Sits on the floor or under a rug, right where the feet land. The primary sensor that knows someone is up.</p></div>
-      <div class="prod"><div class="top"><b>Door sensor</b><span class="pr">$19</span></div><div class="rm">ANY WATCHED DOOR</div>
-        <p>Attaches to the door frame and the door. Hears it open and close, so leaving a room is never a guess.</p></div>
-      <div class="prod"><div class="top"><b>Fall sensor</b><span class="pr">$89</span></div><div class="rm">ONE PER FLOOR</div>
-        <p>Feels the floor itself. One per floor senses a fall anywhere on it, in any room, with nothing worn.</p></div>
-      <div class="prod"><div class="top"><b>Hallway mini-puck</b><span class="pr">$19</span></div><div class="rm">PLUGS INTO AN OUTLET</div>
-        <p>Catches anyone passing through, which is how you know about wandering between rooms at night.</p></div>
+    <div class="band kitband">
+      <strong>What goes in a kit.</strong>
+      <p>You only buy the rooms you care about. The kit finder builds it with you, room by room, and says what each part is for.</p>
+      <ul class="kitlist">
+        <li><span class="hd"><b>Bedroom sensor</b><span class="pr">$49&ndash;69</span></span><span class="rm">One per bedside</span>
+          <p>Breathing and heart micro-motion, body motion using radar, and heat sensing. This is the one that knows asleep from gone.</p></li>
+        <li><span class="hd"><b>Living-space sensor</b><span class="pr">$49&ndash;59</span></span><span class="rm">Kitchen &middot; living room</span>
+          <p>Presence and movement only. It tells you which room is in use when the bedroom is empty.</p></li>
+        <li><span class="hd"><b>Floor pressure mat</b><span class="pr">$49</span></span><span class="rm">Beside the bed</span>
+          <p>Sits on the floor or under a rug, right where the feet land. The primary sensor that knows someone is up.</p></li>
+        <li><span class="hd"><b>Door sensor</b><span class="pr">$19</span></span><span class="rm">Any watched door</span>
+          <p>Attaches to the door frame and the door. Hears it open and close, so leaving a room is never a guess.</p></li>
+        <li><span class="hd"><b>Fall sensor</b><span class="pr">$89</span></span><span class="rm">One per floor</span>
+          <p>Feels the floor itself. One per floor senses a fall anywhere on it, in any room, with nothing worn.</p></li>
+        <li><span class="hd"><b>Hallway mini-puck</b><span class="pr">$19</span></span><span class="rm">Plugs into an outlet</span>
+          <p>Catches anyone passing through, which is how you know about wandering between rooms at night.</p></li>
+      </ul>
+      <figure class="medallion"><img src="assets/devices/stone.webp" alt="The stone sensor glowing on a nightstand" /></figure>
     </div>
   </section>
 
@@ -268,6 +281,8 @@
       <input id="wl-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
       <button class="btn sage" type="submit">Join the waitlist</button>
     </form>
+    <p class="error" id="wl-email-err">That email doesn't look right. Check it and try again.</p>
+    <p class="error" id="wl-net-err">We couldn't save that. Check your connection and try again.</p>
     <p class="wl-note">Not ready to choose? We'll email when kits are ready to ship. No payment now.</p>
   </section>
 </div>
@@ -275,6 +290,31 @@
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
 <script>
+  /* One authored moment: sections settle into place on first sight.
+     Content is visible without JS, under reduced motion, and if the observer
+     never fires — a reveal that can strand content is worse than no reveal. */
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var targets = [].slice.call(document.querySelectorAll(
+      '.hero > div, .shot, .band, .how > div, .dialcol, .gallery figure, .pc, .close > *'));
+    if (!targets.length) return;
+    var reveal = function (el) { el.classList.add('in'); };
+    targets.forEach(function (el, i) {
+      el.classList.add('settle');
+      el.style.transitionDelay = (i % 4) * 70 + 'ms';
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    targets.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) reveal(el); else io.observe(el);
+    });
+    // Failsafe: nothing stays hidden, whatever the observer does.
+    setTimeout(function () { targets.forEach(reveal); io.disconnect(); }, 2500);
+  })();
+
   const WAITLIST_ENDPOINT = 'https://wavepresence-api-develop.up.railway.app/waitlist';
   async function submitWaitlist(event, source) {
     event.preventDefault();
@@ -282,7 +322,13 @@
     const input = form.querySelector('input[name="email"]');
     const button = form.querySelector('button');
     const email = input.value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { input.focus(); return false; }
+    const emailErr = document.getElementById('wl-email-err');
+    const netErr = document.getElementById('wl-net-err');
+    emailErr.classList.remove('show'); netErr.classList.remove('show');
+    input.removeAttribute('aria-invalid');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      input.setAttribute('aria-invalid','true'); emailErr.classList.add('show'); input.focus(); return false;
+    }
     button.disabled = true; button.textContent = 'Saving…';
     try {
       const res = await fetch(WAITLIST_ENDPOINT, {
@@ -293,7 +339,7 @@
       form.innerHTML = '<p style="font-weight:700">Thank you. We\'ll email ' + email + ' when kits are ready.</p>';
     } catch (err) {
       button.disabled = false; button.textContent = 'Join the waitlist';
-      input.setAttribute('aria-invalid','true');
+      netErr.classList.add('show');
     }
     return false;
   }
