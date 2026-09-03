@@ -104,7 +104,7 @@
     lines.push({
       sku: bedSku, qty: bedsides, room: bedroom, group: bedroom, required: true,
       why: bedsides === 2
-        ? 'One per bedside. Each reads breathing and heart micro-motion, body motion using radar and heat sensing for the person on its side, so two sleepers never blur into one.'
+        ? 'You mentioned ' + who + ' shares a bed. We recommend one sensor on each side, so you always know who got up. Each reads breathing and heart micro-motion, body motion using radar and heat sensing for the person on its side.'
         : 'Reads breathing and heart micro-motion, body motion using radar and heat sensing. With the floor pressure mat and door sensor, that combination is what gives families peace of mind. Nothing needs to be worn.'
     });
 
@@ -198,8 +198,10 @@
       var key = prod.family + '|' + l.room;
       var adjustable = !!ADJUSTABLE[prod.family];
       var qty = adjustable && qtyOverride[key] ? Math.max(1, Math.min(9, qtyOverride[key] | 0)) : l.qty;
+      var warn = '';
+      if (prod.family === 'bedroom' && a.sharesBed && qty < 2) warn = 'With two people in the bed, one sensor can’t tell who got up. Add a second for the other side.';
       var out = {
-        key: key, sku: l.sku, name: prod.name, price: prod.price, qty: qty, adjustable: adjustable,
+        key: key, sku: l.sku, name: prod.name, price: prod.price, qty: qty, adjustable: adjustable, warn: warn,
         room: l.room, group: l.group, family: prod.family, style: l.style || null, why: l.why, skip: l.skip || '', optional: !!l.optional,
         required: !!l.required,
         selected: l.required ? true : ((key in sel) ? !!sel[key] : !l.optional)

@@ -201,6 +201,7 @@
   .line .qtyctl output { min-width: 34px; text-align: center; font-weight: 500; font-size: 16px; }
   .line .qtyctl .lbl { font-size: 14px; color: var(--ink-muted); padding: 0 12px 0 4px; }
   .line[aria-checked="false"] .qtyctl { display: none; }
+  .line .warn { grid-column: 2 / -1; font-size: 15px; color: var(--amber); }
   .line .req { grid-column: 2 / -1; font-size: 14px; color: var(--sage-deep); }
   .line[aria-disabled="true"] { cursor: default; }
   .line[aria-disabled="true"] .box { background: #B9C4B0; border-color: #B9C4B0; }
@@ -449,7 +450,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=17"></script>
+<script src="kit.js?v=18"></script>
 <script>
 (function () {
   'use strict';
@@ -658,6 +659,7 @@
         '<output>' + l.qty + '</output>' +
         '<button type="button" data-qinc aria-label="One more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>' +
         '<span class="lbl">' + ({ door: 'doors', hallway: 'hallways', mat: 'mats', bedroom: 'bedsides' }[l.family] || '') + '</span></div>' : '') +
+      (l.warn ? '<div class="warn">' + esc(l.warn) + '</div>' : '') +
       (l.required ? '<div class="req">Required. This is the sensor that watches the bed. Everything else on this page is optional.</div>' : '') +
       (l.skip ? '<div class="skip">' + esc(l.skip) + '</div>' : '') +
       '<div class="off">Left out for now. You can add it any time.</div>' +
