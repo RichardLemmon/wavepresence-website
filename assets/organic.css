@@ -104,6 +104,10 @@ input[aria-invalid="true"] { border-color: #A8452B; }
 .gallery figcaption b { color: var(--ink); font-weight: 800; letter-spacing: -.015em; }
 .gallery + h2 { margin-top: 46px; }
 
+/* Tick marks sit ON lime, so they are drawn in ink. A white tick on #C3F53C is
+   invisible — this rule beats the inline stroke attribute on every check icon. */
+.mark svg, .box svg { stroke: var(--ink); stroke-width: 3.4; }
+
 /* Small lime tag used over photography and beside a live reading. */
 .chip { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 800;
   letter-spacing: .02em; padding: 6px 12px; border-radius: 999px; background: var(--lime); color: var(--ink); }
