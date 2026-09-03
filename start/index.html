@@ -217,6 +217,10 @@
   .sum .p { text-align: right; font-weight: 500; }
   .total { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 18px; border-top: 2px solid var(--ink); margin-top: 6px; }
   .total .amt { font-family: var(--font-display); font-size: 30px; font-weight: 500; }
+  .total .onetime { display: block; font-size: 13px; font-weight: 400; color: var(--ink-muted); margin-top: 2px; }
+  .total.sub { border-top: none; padding-top: 4px; }
+  .total.sub .amt { font-size: 22px; }
+  .total.sub .permo { font-size: 14px; font-weight: 400; color: var(--ink-muted); }
   .notes { display: grid; gap: 10px; margin: 18px 0; }
   .note { padding: 14px 16px; border-radius: 12px; background: var(--amber-soft); color: var(--ink); font-size: 16px; }
   .styles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 6px; }
@@ -412,7 +416,8 @@
     <h2 id="hs">Here’s <span data-name>Mom</span>’s <em>kit</em>.</h2>
     <p class="lede">Room by room. Go back to change anything. Nothing here records video or audio.</p>
     <div class="kit" id="summary"></div>
-    <div class="total"><span>Kit total</span><span class="amt" id="total">$0</span></div>
+    <div class="total"><span>Kit total <span class="onetime">one-time</span></span><span class="amt" id="total">$0</span></div>
+    <div class="total sub"><span>WavePresence Care <span class="onetime">$19/month, monitoring and alerts</span></span><span class="amt">$19<span class="permo">/mo</span></span></div>
     <div class="notes" id="notes"></div>
 
     <div class="reserve" id="reserve">
