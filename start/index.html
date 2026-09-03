@@ -168,7 +168,9 @@
   .gallery figcaption { padding: 10px 14px 12px; font-size: 15px; color: var(--ink-soft); }
   .gallery figcaption b { color: var(--ink); font-weight: 500; }
   .gallery-title { font-family: var(--font-display); font-weight: 500; font-size: 26px; margin: 0 0 6px; }
-  .step .band:first-child { margin-top: 0; margin-bottom: 36px; }
+  .page-title { margin-bottom: 24px; }
+  .page-title + .band { margin-top: 0; margin-bottom: 36px; }
+  .find-title { font-size: clamp(2rem, 6vw, 3rem); margin-bottom: 16px; }
   .gallery + h1 { margin-top: 44px; }
   .gallery-lede { margin-bottom: 4px; }
   .gallery { margin-top: 14px; }
@@ -247,6 +249,7 @@
 
   <!-- 0 · Intro -->
   <section class="step active" data-step="0" aria-labelledby="h0">
+    <h1 id="h0" class="page-title">Monitoring a loved one’s safety <em>without being intrusive</em>.</h1>
     <div class="band">
       <strong>We don’t watch people. <em>We watch rooms.</em></strong>
       <p>People deserve to be looked after without being watched. WavePresence never uses a camera or a microphone. It uses radar, pressure, door, light and humidity sensors, and each one only sees what it needs to.</p>
@@ -264,7 +267,7 @@
       <figure><img src="../assets/devices/wand.webp" alt="A slim cream sensor on a stalk and round base on a nightstand" loading="lazy" /><figcaption><b>Stalk.</b> The same base sensor, raised to see over a mattress.</figcaption></figure>
       <figure><img src="../assets/devices/disc.webp" alt="A round cream disc sensor on a wooden nightstand beside a bed" loading="lazy" /><figcaption><b>Disc.</b> The base sensor. Sits on a stand and aims at the bed or the room.</figcaption></figure>
     </div>
-    <h1 id="h0">Let’s find the <em>right kit</em>.</h1>
+    <h2 id="h0b" class="find-title">Let’s find the <em>right kit</em>.</h2>
     <p class="lede">Seven short questions about who you’re looking after and the home they live in. At the end you’ll see exactly which sensors go where, and why. About two minutes.</p>
     <div class="nav">
       <span></span>
