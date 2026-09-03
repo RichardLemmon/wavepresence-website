@@ -205,7 +205,8 @@
       var adjustable = !!ADJUSTABLE[prod.family];
       var qty = adjustable && qtyOverride[key] ? Math.max(1, Math.min(9, qtyOverride[key] | 0)) : l.qty;
       var warn = '';
-      if (prod.family === 'bedroom' && a.sharesBed && qty < 2) warn = 'With two people in the bed, one sensor can’t tell who got up. Add a second for the other side.';
+      /* An offer, not a correction — same rule as the summary lines. */
+      if (prod.family === 'bedroom' && a.sharesBed && qty < 2) warn = 'A second sensor on the other side would tell you which of them got up. You can add it any time.';
       var out = {
         key: key, sku: l.sku, name: prod.name, price: prod.price, qty: qty, adjustable: adjustable, warn: warn,
         room: l.room, group: l.group, family: prod.family, style: l.style || null, why: l.why, skip: l.skip || '', optional: !!l.optional,
