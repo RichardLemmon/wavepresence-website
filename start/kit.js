@@ -127,7 +127,7 @@
         sku: 'door', qty: 1, room: a.floors > 1 ? 'Top of the stairs or kitchen door' : 'Kitchen door',
         group: a.rooms.kitchen ? 'Kitchen' : 'The whole home',
         why: 'Turns “left the room” into “went downstairs” at 3 a.m. That is the one you asked about.',
-        skip: 'If trips downstairs at night aren’t a worry, leave this one out.'
+        skip: 'If trips downstairs or potential wandering isn’t an issue, leave this one out.'
       });
     }
 
