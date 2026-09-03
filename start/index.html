@@ -58,6 +58,10 @@
   .choice > span:last-child { display: block; min-width: 0; }
   .choice .t { display: block; font-weight: 700; letter-spacing: -.015em; }
   .choice .d { display: block; color: var(--ink-2); font-size: 15.5px; margin-top: 3px; }
+  /* The bathroom is where a buyer hesitates. Answer it in place. */
+  .choice .d.note { font-size: 14.5px; color: var(--ink-2); margin-top: 7px;
+    padding-top: 7px; border-top: 1px solid var(--line); }
+  .choice[aria-checked="true"] .d.note { border-top-color: rgba(46,77,58,.22); }
 
   .stepper { display: inline-flex; align-items: center; border: 1.5px solid var(--line);
     border-radius: var(--r-sm); background: var(--paper); overflow: hidden; }
@@ -328,7 +332,7 @@
       <button class="choice" role="checkbox" data-kind="check" data-value="kitchen"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Kitchen</span><span class="d">Meals are the clearest daily rhythm there is.</span></span></button>
       <button class="choice" role="checkbox" data-kind="check" data-value="living"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Living room</span><span class="d">The afternoon chair, the evening TV.</span></span></button>
       <button class="choice" role="checkbox" data-kind="check" data-value="hallway"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Hallway</span><span class="d">Catches wandering between rooms at night. A mini-puck plugs into an outlet.</span></span></button>
-      <button class="choice" role="checkbox" data-kind="check" data-value="bathroom"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Bathroom</span><span class="d">Showers, and visits that run long.</span></span></button>
+      <button class="choice" role="checkbox" data-kind="check" data-value="bathroom"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Bathroom</span><span class="d">Showers, and visits that run long.</span><span class="d note">* Humidity and movement only. No camera or microphone is ever used, here or anywhere.</span></span></button>
     </div>
     <div class="field" style="margin-top:18px">
       <label>Any other rooms?</label>
