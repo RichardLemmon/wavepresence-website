@@ -151,11 +151,15 @@
   .total.sub .amt { font-size: 24px; }
   .total.sub .permo { font-size: 14px; font-weight: 600; color: var(--ink-3); }
 
-  .sum { display: grid; grid-template-columns: 1fr auto; gap: 5px 16px; padding: 16px 20px;
+  .sum { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 18px 20px;
     border: 1.5px solid var(--line); border-radius: var(--r-md); background: var(--paper); }
   .sum .r { font-weight: 800; letter-spacing: -.015em; }
-  .sum .items { grid-column: 1 / -1; color: var(--ink-2); font-size: 15px; }
   .sum .p { text-align: right; font-weight: 800; letter-spacing: -.02em; }
+  /* What it buys comes before what is in the box. */
+  .sum .assure { grid-column: 1 / -1; color: var(--ink-2); font-size: 15.5px; max-width: 62ch; }
+  .sum .items { grid-column: 1 / -1; color: var(--ink-3); font-size: 14px; font-weight: 600;
+    padding-top: 8px; border-top: 1px solid var(--line-soft); }
+  .sum.empty { background: var(--ground-2); border-style: dashed; border-color: var(--ink-4); }
 
   .styles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 6px; }
   @media (max-width: 560px) { .styles { grid-template-columns: 1fr; } }
@@ -406,7 +410,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=25"></script>
+<script src="kit.js?v=26"></script>
 <script>
 (function () {
   'use strict';
@@ -646,7 +650,9 @@
     var k = WPKit.recommend(a);
     $('#summary').innerHTML = k.groups.map(function (g) {
       var items = g.lines.filter(function (l) { return l.selected; }).map(function (l) { return (l.qty > 1 ? l.qty + ' × ' : '') + l.name; });
-      return '<div class="sum"><div class="r">' + esc(g.name) + '</div><div class="p">$' + g.subtotal + '</div>' +
+      return '<div class="sum' + (items.length ? '' : ' empty') + '">' +
+        '<div class="r">' + esc(g.name) + '</div><div class="p">$' + g.subtotal + '</div>' +
+        (g.assurance ? '<div class="assure">' + esc(g.assurance) + '</div>' : '') +
         '<div class="items">' + (items.length ? esc(items.join(' · ')) : 'Nothing selected') + '</div></div>';
     }).join('');
     $('#total').textContent = '$' + k.total;

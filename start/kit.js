@@ -230,6 +230,48 @@
       if (l.selected && l.price != null) g.subtotal += l.price * l.qty;
     });
 
+    /* One sentence per room saying what the SELECTED parts actually buy. It has
+       to stay honest: a bedroom sensor on its own cannot tell you someone got
+       up, so it does not claim to. */
+    groups.forEach(function (g) {
+      var has = {};
+      g.lines.forEach(function (l) { if (l.selected) has[l.family] = true; });
+      var subj = cap(p.subj), S = p.s, is = p.is, poss = p.poss, obj = p.obj;
+      var t = '';
+
+      if (has.bedroom) {
+        if (has.mat && has.door) {
+          t = 'You’ll know ' + p.subj + ' ' + is + ' asleep, know the moment ' + p.subj + ' get' + S + ' out of bed, and know whether ' + p.subj + ' came back or left the room.';
+        } else if (has.mat) {
+          t = 'You’ll know ' + p.subj + ' ' + is + ' asleep and know the moment ' + p.subj + ' get' + S + ' out of bed. Without a door sensor you won’t know if ' + p.subj + ' left the room.';
+        } else if (has.door) {
+          t = 'You’ll know ' + p.subj + ' ' + is + ' asleep and hear the door if ' + p.subj + ' leave' + S + ' at night. Without a mat you won’t know if ' + p.subj + ' ' + is + ' up but still in the room.';
+        } else {
+          t = 'You’ll know ' + p.subj + ' ' + is + ' in bed and breathing. On its own it can’t tell you when ' + p.subj + ' get' + S + ' up.';
+        }
+      } else if (g.name === REST) {
+        var bits = [];
+        if (has.fall) bits.push('a fall anywhere on that floor is caught, in any room');
+        if (has.hallway) bits.push('wandering between rooms at night doesn’t go unseen');
+        if (has.bathroom) bits.push('a shower or a visit that runs long is told apart from silence');
+        if (bits.length) t = cap(bits[0]) + (bits.length > 1 ? ', and ' + bits.slice(1).join(', and ') : '') + '.';
+      } else if (has.living || has.door) {
+        var room = g.name.toLowerCase();
+        if (has.living && has.door) {
+          t = 'You’ll know ' + p.subj + ' used the ' + room + ' today, and hear the door if ' + p.subj + ' head' + S + ' out at night.';
+        } else if (has.living) {
+          t = 'When the bedroom is empty, this is what tells you ' + p.subj + ' ' + is + ' in the ' + room + ' and not somewhere ' + p.subj + ' shouldn’t be.';
+        } else {
+          t = 'The door is heard, so leaving the ' + room + ' at night is never a guess.';
+        }
+      }
+
+      if (!t && g.subtotal === 0) {
+        t = 'Nothing here for now. You can add this room any time without buying the kit again.';
+      }
+      g.assurance = t;
+    });
+
     groups.sort(function (x, y) { return (x.name === REST ? 1 : 0) - (y.name === REST ? 1 : 0); });
 
     return { lines: lines, groups: groups, notes: notes, total: total, restName: REST };
