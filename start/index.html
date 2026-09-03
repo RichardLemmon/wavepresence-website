@@ -436,7 +436,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=10"></script>
+<script src="kit.js?v=11"></script>
 <script>
 (function () {
   'use strict';
@@ -623,11 +623,10 @@
     stone: ['stone', 'Stone with nightlight. A soft glow for the floor at night, and a sensor inside.'],
     plant: ['plant', 'Plant. A real succulent in a planter. The sensor is in the pot.']
   };
-  function paintPhoto(fams) {
+  function paintPhoto(fams, styleKey) {
     var fig = $('#kit-photo');
-    var f = fams.bedroom ? 'bedroom' : (fams.living ? 'living' : null);
-    if (!f) { fig.hidden = true; return; }
-    var ph = PHOTOS[a.style[f]] || PHOTOS.base;
+    if (!styleKey) { fig.hidden = true; return; }
+    var ph = PHOTOS[styleKey] || PHOTOS.base;
     $('#kit-photo-img').src = '../assets/devices/' + ph[0] + '.webp';
     $('#kit-photo-img').alt = ph[1];
     $('#kit-photo-cap').textContent = ph[1];
@@ -650,19 +649,21 @@
     if (!g) return k;
     var fams = {};
     g.lines.forEach(function (l) { fams[l.family] = true; });
+    var livingLine = g.lines.filter(function (l) { return l.family === 'living'; })[0];
     $('#kit-count').textContent = 'Room ' + (kitPage + 1) + ' of ' + k.groups.length;
     $('#hk').textContent = g.name;
     $('#kit-lede').textContent = kitPage === 0
       ? 'Everything here is a suggestion. Untick anything that doesn’t fit, and we’ll say what changes.'
       : 'Untick anything that doesn’t fit. You can always add it later.';
-    paintPhoto(fams);
+    paintPhoto(fams, fams.bedroom ? a.style.bedroom : (livingLine ? livingLine.style : null));
     $('#kit-explain').innerHTML = Object.keys(EXPLAIN).filter(function (f) { return fams[f]; }).map(function (f) {
       return '<div><h3>' + esc(EXPLAIN[f][0]) + '</h3><p>' + esc(EXPLAIN[f][1]) + '</p></div>';
     }).join('');
+    var current = { bedroom: a.style.bedroom, living: livingLine ? livingLine.style : a.style.living };
     $('#kit-styles').innerHTML = ['bedroom', 'living'].filter(function (f) { return fams[f]; }).map(function (f) {
       return '<div class="field"><label for="style-' + f + '">' + (f === 'bedroom' ? 'Bedroom' : 'Living-space') + ' sensor style</label>' +
-        '<select id="style-' + f + '" data-style="' + f + '">' + STYLE_OPTS[f].map(function (o) {
-          return '<option value="' + o[0] + '"' + (a.style[f] === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
+        '<select id="style-' + f + '" data-style="' + f + '" data-room="' + esc(g.name) + '">' + STYLE_OPTS[f].map(function (o) {
+          return '<option value="' + o[0] + '"' + (current[f] === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
         }).join('') + '</select></div>';
     }).join('');
     $('#kit').innerHTML = g.lines.map(lineHtml).join('');
@@ -682,7 +683,10 @@
   }
   $('#kit-styles').addEventListener('change', function (e) {
     var f = e.target.getAttribute('data-style');
-    if (f) { a.style[f] = e.target.value; save(); paintKit(); }
+    if (!f) return;
+    if (f === 'living') { a.roomStyle = a.roomStyle || {}; a.roomStyle[e.target.getAttribute('data-room')] = e.target.value; }
+    else a.style[f] = e.target.value;
+    save(); paintKit();
   });
 
   function toggleLine(el) {

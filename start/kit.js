@@ -51,6 +51,8 @@
       ensuite: false,
       level: 'medium',
       style: { bedroom: 'stone', living: 'base' },
+      /* per-room overrides of the living-space style, keyed by room name */
+      roomStyle: { Kitchen: 'plant' },
       selected: {}
     };
   }
@@ -93,7 +95,7 @@
     var bedroom = n + '’s bedroom';
     var who = whoIs(a);
     var bedSku = 'bedroom_' + (a.style.bedroom || 'base');
-    var livSku = 'living_' + (a.style.living || 'base');
+    var livingStyle = function (room) { return (a.roomStyle && a.roomStyle[room]) || a.style.living || 'base'; };
 
     lines.push({
       sku: bedSku, qty: bedsides, room: bedroom, group: bedroom,
@@ -137,7 +139,7 @@
     });
     livingRooms.forEach(function (room, i) {
       lines.push({
-        sku: livSku, qty: 1, room: room, group: room,
+        sku: 'living_' + livingStyle(room), qty: 1, room: room, group: room, style: livingStyle(room),
         why: i === 0
           ? 'Presence and movement only. It does not read breathing or heart rate, and it does not need to. If ' + n + ' isn’t in ' + p.poss + ' room, this will tell you which room ' + p.subj + ' ' + p.is + ' in.'
           : 'Presence and movement only.',
@@ -190,7 +192,7 @@
       var key = prod.family + '|' + l.room;
       var out = {
         key: key, sku: l.sku, name: prod.name, price: prod.price, qty: l.qty,
-        room: l.room, group: l.group, family: prod.family, why: l.why, skip: l.skip || '', optional: !!l.optional,
+        room: l.room, group: l.group, family: prod.family, style: l.style || null, why: l.why, skip: l.skip || '', optional: !!l.optional,
         selected: (key in sel) ? !!sel[key] : !l.optional
       };
       if (out.selected && out.price != null) total += out.price * out.qty;
