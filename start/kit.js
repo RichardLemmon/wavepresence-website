@@ -112,7 +112,7 @@
       sku: 'mat', qty: bedsides, room: bedroom, group: bedroom, optional: a.level === 'low',
       why: bedsides === 2
         ? 'One strip per side, where the feet land. The only sensor that knows someone stood up.'
-        : 'A strip where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up.',
+        : 'A strip where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up. If ' + p.subj + ' sleep' + p.s + ' with the door open, add a second mat just inside the door and skip the door sensor.',
       skip: 'If ' + who + ' rarely gets up at night, the mat can wait. You can add it any time.'
     });
 
@@ -192,7 +192,7 @@
     var total = 0;
     var sel = a.selected || {};
     var qtyOverride = a.qty || {};
-    var ADJUSTABLE = { door: true, hallway: true };
+    var ADJUSTABLE = { door: true, hallway: true, mat: true };
     lines = lines.map(function (l) {
       var prod = PRODUCTS[l.sku];
       var key = prod.family + '|' + l.room;
