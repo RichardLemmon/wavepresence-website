@@ -45,7 +45,7 @@ anything.
 Products and prices (Rich, 2026-09-03; placeholders for testing the flow):
 - Bedroom sensor: base $49, stone with nightlight $69, plant $69. One per
   bedside. Reads breathing and heart micro-motion plus presence.
-- Pressure mat: $49. One per bedside. A strip where the feet land.
+- Floor pressure mat: $49. One per bedside. A strip where the feet land.
 - Door sensor: $19. Reports a door opening. Needs the door hub, one per home.
   *(inferred: hub price not yet set)*
 - Living-space sensor: base $49, stone $59, plant $59. Presence and movement

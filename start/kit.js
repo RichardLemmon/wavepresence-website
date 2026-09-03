@@ -9,7 +9,7 @@
     bedroom_base:  { name: 'Bedroom sensor',                     price: 49, family: 'bedroom' },
     bedroom_stone: { name: 'Bedroom sensor, stone with nightlight', price: 69, family: 'bedroom' },
     bedroom_plant: { name: 'Bedroom sensor, plant',              price: 69, family: 'bedroom' },
-    mat:           { name: 'Pressure mat',                       price: 49, family: 'mat' },
+    mat:           { name: 'Floor pressure mat',                       price: 49, family: 'mat' },
     door:          { name: 'Door sensor',                        price: 19, family: 'door' },
     living_base:   { name: 'Living-space sensor',                price: 49, family: 'living' },
     living_stone:  { name: 'Living-space sensor, stone',         price: 59, family: 'living' },
