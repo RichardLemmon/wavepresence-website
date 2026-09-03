@@ -55,7 +55,9 @@
       style: { bedroom: 'stone', living: 'base' },
       /* per-room overrides of the living-space style, keyed by room name */
       roomStyle: { Kitchen: 'plant', 'Living room': 'stalk' },
-      selected: {}
+      selected: {},
+      /* per-line quantity overrides for adjustable lines (doors, hallway pucks) */
+      qty: {}
     };
   }
 
@@ -189,11 +191,15 @@
 
     var total = 0;
     var sel = a.selected || {};
+    var qtyOverride = a.qty || {};
+    var ADJUSTABLE = { door: true, hallway: true };
     lines = lines.map(function (l) {
       var prod = PRODUCTS[l.sku];
       var key = prod.family + '|' + l.room;
+      var adjustable = !!ADJUSTABLE[prod.family];
+      var qty = adjustable && qtyOverride[key] ? Math.max(1, Math.min(9, qtyOverride[key] | 0)) : l.qty;
       var out = {
-        key: key, sku: l.sku, name: prod.name, price: prod.price, qty: l.qty,
+        key: key, sku: l.sku, name: prod.name, price: prod.price, qty: qty, adjustable: adjustable,
         room: l.room, group: l.group, family: prod.family, style: l.style || null, why: l.why, skip: l.skip || '', optional: !!l.optional,
         required: !!l.required,
         selected: l.required ? true : ((key in sel) ? !!sel[key] : !l.optional)

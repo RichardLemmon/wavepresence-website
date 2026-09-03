@@ -194,6 +194,13 @@
   .line .price { text-align: right; font-weight: 500; white-space: nowrap; }
   .line .qty { color: var(--ink-muted); font-size: 15px; text-align: right; }
   .line .skip { grid-column: 2 / -1; font-size: 15px; color: var(--ink-muted); }
+  .line .qtyctl { grid-column: 2 / -1; display: inline-flex; align-items: center; gap: 0; margin-top: 4px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--card); width: max-content; }
+  .line .qtyctl button { width: 40px; height: 38px; border: 0; background: transparent; cursor: pointer; display: grid; place-items: center; color: var(--ink-soft); }
+  .line .qtyctl button:hover { background: var(--bg-warm); color: var(--ink); }
+  .line .qtyctl button svg { width: 14px; height: 14px; }
+  .line .qtyctl output { min-width: 34px; text-align: center; font-weight: 500; font-size: 16px; }
+  .line .qtyctl .lbl { font-size: 14px; color: var(--ink-muted); padding: 0 12px 0 4px; }
+  .line[aria-checked="false"] .qtyctl { display: none; }
   .line .req { grid-column: 2 / -1; font-size: 14px; color: var(--sage-deep); }
   .line[aria-disabled="true"] { cursor: default; }
   .line[aria-disabled="true"] .box { background: #B9C4B0; border-color: #B9C4B0; }
@@ -441,7 +448,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=14"></script>
+<script src="kit.js?v=15"></script>
 <script>
 (function () {
   'use strict';
@@ -645,6 +652,11 @@
       '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
       '<div><div class="price">' + (l.price == null ? 'Price to come' : '$' + (l.price * l.qty)) + '</div>' + (l.qty > 1 && l.price != null ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
       '<div class="why">' + esc(l.why) + '</div>' +
+      (l.adjustable ? '<div class="qtyctl" data-qty="' + esc(l.key) + '">' +
+        '<button type="button" data-qdec aria-label="One fewer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg></button>' +
+        '<output>' + l.qty + '</output>' +
+        '<button type="button" data-qinc aria-label="One more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>' +
+        '<span class="lbl">' + (l.family === 'door' ? 'doors' : 'hallways') + '</span></div>' : '') +
       (l.required ? '<div class="req">Required. This is the sensor that watches the bed. Everything else on this page is optional.</div>' : '') +
       (l.skip ? '<div class="skip">' + esc(l.skip) + '</div>' : '') +
       '<div class="off">Left out for now. You can add it any time.</div>' +
@@ -702,7 +714,18 @@
     var now = el.getAttribute('aria-checked') === 'true';
     a.selected[key] = !now; save(); paintKit();
   }
-  $('#kit').addEventListener('click', function (e) { var el = e.target.closest('.line'); if (el) toggleLine(el); });
+  $('#kit').addEventListener('click', function (e) {
+    var q = e.target.closest('[data-qinc],[data-qdec]');
+    if (q) {
+      e.stopPropagation();
+      var key = q.closest('[data-qty]').getAttribute('data-qty');
+      var k = WPKit.recommend(a); var line = k.lines.filter(function (l) { return l.key === key; })[0];
+      var next = (line ? line.qty : 1) + (q.hasAttribute('data-qinc') ? 1 : -1);
+      a.qty = a.qty || {}; a.qty[key] = Math.max(1, Math.min(9, next)); save(); paintKit();
+      return;
+    }
+    var el = e.target.closest('.line'); if (el) toggleLine(el);
+  });
   $('#kit').addEventListener('keydown', function (e) {
     var el = e.target.closest('.line');
     if (el && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); toggleLine(el); }
