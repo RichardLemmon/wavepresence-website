@@ -165,6 +165,7 @@
   .explain p { color: var(--ink-2); }
   .explain p.more { margin-top: 11px; color: var(--ink); font-weight: 600; }
   #kit-explain { grid-template-columns: 1fr; margin: 12px 0 22px; }
+  #kit-explain:empty { display: none; margin: 0; }
   #kit-explain div { padding: 20px 22px; }
 
   .reserve { margin-top: 30px; padding: 26px; border-radius: var(--r-lg); background: var(--moss);
@@ -401,7 +402,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=22"></script>
+<script src="kit.js?v=25"></script>
 <script>
 (function () {
   'use strict';
@@ -611,13 +612,18 @@
     var fams = {};
     g.lines.forEach(function (l) { fams[l.family] = true; });
     var livingLine = g.lines.filter(function (l) { return l.family === 'living'; })[0];
-    $('#kit-count').textContent = 'Room ' + (kitPage + 1) + ' of ' + k.groups.length;
+    $('#kit-count').textContent = g.name === k.restName
+      ? 'Last one of ' + k.groups.length
+      : 'Room ' + (kitPage + 1) + ' of ' + k.groups.length;
     $('#hk').textContent = g.name;
-    $('#kit-lede').textContent = kitPage === 0
-      ? 'Everything here is a suggestion. Untick anything that doesn’t fit, and we’ll say what changes.'
-      : 'Untick anything that doesn’t fit. You can always add it later.';
+    $('#kit-lede').textContent = g.name === k.restName
+      ? 'The parts that cover the whole home rather than one room. Untick anything that doesn’t fit.'
+      : (kitPage === 0
+        ? 'Everything here is a suggestion. Untick anything that doesn’t fit, and we’ll say what changes.'
+        : 'Untick anything that doesn’t fit. You can always add it later.');
     paintPhoto(fams, fams.bedroom ? a.style.bedroom : (livingLine ? livingLine.style : null));
-    $('#kit-explain').innerHTML = Object.keys(EXPLAIN).filter(function (f) { return fams[f]; }).map(function (f) {
+    var EXPLAINED = { bedroom: true, living: true };
+    $('#kit-explain').innerHTML = Object.keys(EXPLAIN).filter(function (f) { return fams[f] && EXPLAINED[f]; }).map(function (f) {
       return '<div><h3>' + esc(EXPLAIN[f][0]) + '</h3><p>' + esc(EXPLAIN[f][1]) + '</p>' + (EXPLAIN[f][2] ? '<p class="more">' + esc(EXPLAIN[f][2]) + '</p>' : '') + '</div>';
     }).join('');
     var current = { bedroom: a.style.bedroom, living: livingLine ? livingLine.style : a.style.living };
@@ -628,6 +634,7 @@
         }).join('') + '</select></div>';
     }).join('');
     $('#kit').innerHTML = g.lines.map(lineHtml).join('');
+    $('#kit-sub-label').textContent = g.name === k.restName ? 'These parts' : 'This room';
     $('#kit-sub').textContent = '$' + g.subtotal;
     return k;
   }

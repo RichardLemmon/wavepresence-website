@@ -92,6 +92,10 @@
    * buyer has touched it, otherwise it defaults to !optional. Only selected
    * lines count toward the total.
    */
+  /* Small single-item rooms share one page. Three pages carrying one line each
+     read as padding; together they read as "the rest of the home". */
+  var REST = 'The rest of the home';
+
   function recommend(a) {
     var n = a.person.name || 'Mom';
     var p = pronouns(a.person.pronouns);
@@ -127,7 +131,7 @@
     if (a.rooms.kitchen || a.floors > 1) {
       lines.push({
         sku: 'door', qty: 1, room: a.floors > 1 ? 'Top of the stairs or kitchen door' : 'Kitchen door',
-        group: a.rooms.kitchen ? 'Kitchen' : 'The whole home',
+        group: a.rooms.kitchen ? 'Kitchen' : REST,
         why: 'Turns “left the room” into “went downstairs” at 3 a.m. That is the one you asked about.',
         skip: 'If trips downstairs at night or potential wandering isn’t an issue, leave this one out.'
       });
@@ -155,7 +159,7 @@
 
     hallways.forEach(function (room) {
       lines.push({
-        sku: 'minipuck', qty: 1, room: room, group: room,
+        sku: 'minipuck', qty: 1, room: room, group: REST,
         why: 'A small puck that plugs straight into a wall outlet. Presence and movement only. It catches anyone passing through, which is how you know about wandering between rooms at night.',
         skip: 'If ' + who + ' doesn’t wander at night, the hallway can wait.'
       });
@@ -165,14 +169,14 @@
     if (wantBath) {
       lines.push({
         sku: 'bathroom', qty: 1, optional: !a.rooms.bathroom,
-        room: a.ensuite ? n + '’s bathroom' : 'Bathroom', group: a.ensuite ? n + '’s bathroom' : 'Bathroom',
+        room: a.ensuite ? n + '’s bathroom' : 'Bathroom', group: REST,
         why: 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.',
         skip: 'If showers and long visits aren’t a concern, this one can wait.'
       });
     }
 
     lines.push({
-      sku: 'fall', qty: a.floors || 1, room: (a.floors || 1) > 1 ? 'One per floor' : 'Main floor', group: 'The whole home',
+      sku: 'fall', qty: a.floors || 1, room: (a.floors || 1) > 1 ? 'One per floor' : 'Main floor', group: REST,
       why: 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room, with nothing worn.',
       skip: 'If falls aren’t the worry, you can add this later.'
     });
@@ -226,7 +230,9 @@
       if (l.selected && l.price != null) g.subtotal += l.price * l.qty;
     });
 
-    return { lines: lines, groups: groups, notes: notes, total: total };
+    groups.sort(function (x, y) { return (x.name === REST ? 1 : 0) - (y.name === REST ? 1 : 0); });
+
+    return { lines: lines, groups: groups, notes: notes, total: total, restName: REST };
   }
 
   var api = { PRODUCTS: PRODUCTS, defaults: defaults, recommend: recommend, levelCopy: levelCopy, pronouns: pronouns };
