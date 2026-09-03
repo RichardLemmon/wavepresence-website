@@ -40,3 +40,19 @@ The fall sensor may read differently on carpet vs. hard floor. Not tested.
 Add a note to the /start page once the sensors project has a real finding,
 not before. See wavepresence-sensors/docs/setup-interview.md's open question
 "Is the bedroom carpeted?" (currently unanswered, parked for the floor mat).
+
+## Waiting on photography (2026-09-03)
+
+These five parts show an authored line-art mark on the kit cards because no
+photograph exists yet. Rich will supply images. To swap one in: crop it square,
+save as `assets/styles/<family>.webp`, and extend `thumbHtml()` in
+`start/index.html` to prefer the photo for that family.
+
+| Family key | Part | Has photo? |
+|---|---|---|
+| `bedroom` / `living` | the four shells (plant, stone, disc, stalk) | yes — `assets/styles/` |
+| `mat` | Floor pressure mat | no, drawn mark |
+| `door` | Door sensor | no, drawn mark |
+| `fall` | Fall sensor | no, drawn mark |
+| `hallway` | Hallway mini-puck | no, drawn mark |
+| `bathroom` | Bathroom sensor | no, drawn mark |
