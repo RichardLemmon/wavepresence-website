@@ -194,6 +194,9 @@
   .line .price { text-align: right; font-weight: 500; white-space: nowrap; }
   .line .qty { color: var(--ink-muted); font-size: 15px; text-align: right; }
   .line .skip { grid-column: 2 / -1; font-size: 15px; color: var(--ink-muted); }
+  .line .req { grid-column: 2 / -1; font-size: 14px; color: var(--sage-deep); }
+  .line[aria-disabled="true"] { cursor: default; }
+  .line[aria-disabled="true"] .box { background: var(--sage-deep); border-color: var(--sage-deep); opacity: 0.8; }
   .line .off { grid-column: 2 / -1; font-size: 14px; color: var(--amber); display: none; }
   .line[aria-checked="false"] { background: transparent; border-style: dashed; }
   .line[aria-checked="false"] .name, .line[aria-checked="false"] .price, .line[aria-checked="false"] .qty { color: var(--ink-muted); }
@@ -436,7 +439,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=12"></script>
+<script src="kit.js?v=13"></script>
 <script>
 (function () {
   'use strict';
@@ -635,11 +638,12 @@
   }
   var kitPage = 0;
   function lineHtml(l) {
-    return '<div class="line" role="checkbox" tabindex="0" aria-checked="' + l.selected + '" data-key="' + esc(l.key) + '">' +
+    return '<div class="line" role="checkbox" tabindex="0" aria-checked="' + l.selected + '"' + (l.required ? ' aria-disabled="true"' : '') + ' data-key="' + esc(l.key) + '">' +
       '<span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
       '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
       '<div><div class="price">' + (l.price == null ? 'Price to come' : '$' + (l.price * l.qty)) + '</div>' + (l.qty > 1 && l.price != null ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
       '<div class="why">' + esc(l.why) + '</div>' +
+      (l.required ? '<div class="req">Required. This is the sensor that watches the bed. Everything else on this page is optional.</div>' : '') +
       (l.skip ? '<div class="skip">' + esc(l.skip) + '</div>' : '') +
       '<div class="off">Left out for now. You can add it any time.</div>' +
       '</div>';
@@ -691,6 +695,7 @@
   });
 
   function toggleLine(el) {
+    if (el.getAttribute('aria-disabled') === 'true') return;
     var key = el.getAttribute('data-key');
     var now = el.getAttribute('aria-checked') === 'true';
     a.selected[key] = !now; save(); paintKit();

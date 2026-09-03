@@ -100,7 +100,7 @@
     var livingStyle = function (room) { return (a.roomStyle && a.roomStyle[room]) || a.style.living || 'base'; };
 
     lines.push({
-      sku: bedSku, qty: bedsides, room: bedroom, group: bedroom,
+      sku: bedSku, qty: bedsides, room: bedroom, group: bedroom, required: true,
       why: bedsides === 2
         ? 'One per bedside. Each reads breathing and heart micro-motion, body motion using radar and heat sensing for the person on its side, so two sleepers never blur into one.'
         : 'Reads breathing and heart micro-motion, body motion using radar and heat sensing. With the floor pressure mat and door sensor, that combination is what gives families peace of mind. Nothing needs to be worn.'
@@ -195,7 +195,8 @@
       var out = {
         key: key, sku: l.sku, name: prod.name, price: prod.price, qty: l.qty,
         room: l.room, group: l.group, family: prod.family, style: l.style || null, why: l.why, skip: l.skip || '', optional: !!l.optional,
-        selected: (key in sel) ? !!sel[key] : !l.optional
+        required: !!l.required,
+        selected: l.required ? true : ((key in sel) ? !!sel[key] : !l.optional)
       };
       if (out.selected && out.price != null) total += out.price * out.qty;
       return out;
