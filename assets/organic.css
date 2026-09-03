@@ -18,6 +18,27 @@ body {
   background: var(--ground); color: var(--ink); font-family: var(--f);
   font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased;
 }
+/* Ambient rings. The same concentric arcs the product uses to draw a day,
+   held far back so they read as ground, never as content. Fixed so they stay
+   put on a long page; pointer-events off; behind everything. */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(circle at 86% 4%, transparent 0 286px, rgba(46,77,58,.055) 286px 350px, transparent 350px),
+    radial-gradient(circle at 86% 4%, transparent 0 430px, rgba(46,77,58,.04) 430px 478px, transparent 478px),
+    radial-gradient(circle at 86% 4%, transparent 0 560px, rgba(46,77,58,.028) 560px 596px, transparent 596px),
+    radial-gradient(circle at 2% 74%, transparent 0 214px, rgba(46,77,58,.05) 214px 272px, transparent 272px),
+    radial-gradient(circle at 2% 74%, transparent 0 342px, rgba(46,77,58,.034) 342px 384px, transparent 384px);
+}
+@media (max-width: 700px) {
+  body::before {
+    background:
+      radial-gradient(circle at 92% 3%, transparent 0 180px, rgba(46,77,58,.05) 180px 228px, transparent 228px),
+      radial-gradient(circle at 92% 3%, transparent 0 286px, rgba(46,77,58,.032) 286px 320px, transparent 320px),
+      radial-gradient(circle at -6% 78%, transparent 0 160px, rgba(46,77,58,.042) 160px 205px, transparent 205px);
+  }
+}
+
 a { color: inherit; }
 button, input, select { font: inherit; color: inherit; }
 
