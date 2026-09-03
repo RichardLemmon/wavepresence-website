@@ -130,12 +130,16 @@
   .line .req { grid-column: 2 / -1; font-size: 14px; color: var(--ink-2); font-weight: 700; }
   .line .skip { grid-column: 2 / -1; font-size: 15px; color: var(--ink-3); }
   .line .off { grid-column: 2 / -1; font-size: 14px; color: var(--ink-3); font-weight: 700; display: none; }
-  .line[aria-checked="false"] { background: transparent; border-style: dashed; }
+  /* Left out, not faded out. The off state is carried by the surface, the
+     dashed edge, the empty box and the "Left out" line — never by dimming the
+     copy a buyer needs in order to change their mind. */
+  .line[aria-checked="false"] { background: var(--ground-2); border-style: dashed;
+    border-color: var(--ink-4); }
   .line[aria-checked="false"] .name, .line[aria-checked="false"] .price,
-  .line[aria-checked="false"] .qty { color: var(--ink-3); }
-  .line[aria-checked="false"] .room { color: var(--ink-3); }
-  .line[aria-checked="false"] .why { color: var(--ink-3); }
-  .line[aria-checked="false"] .off { display: block; }
+  .line[aria-checked="false"] .qty, .line[aria-checked="false"] .room,
+  .line[aria-checked="false"] .why, .line[aria-checked="false"] .skip { color: var(--ink-2); }
+  .line[aria-checked="false"] .box { background: var(--paper); border-color: var(--ink-4); }
+  .line[aria-checked="false"] .off { display: block; color: var(--ink-2); }
   .line[aria-disabled="true"] { cursor: default; background: var(--lime-wash); border-color: var(--ink-2); }
   .line[aria-disabled="true"] .box { background: var(--lime); border-color: var(--ink-2); }
 
