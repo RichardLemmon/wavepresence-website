@@ -16,8 +16,7 @@
     living_plant:  { name: 'Living-space sensor, plant',         price: 59, family: 'living' },
     bathroom:      { name: 'Bathroom sensor',                    price: 29, family: 'bathroom' },
     fall:          { name: 'Fall sensor',                        price: 89, family: 'fall' },
-    /* price: null means "not priced yet". Shown, never counted. */
-    minipuck:      { name: 'Hallway mini-puck',                  price: null, family: 'hallway' }
+    minipuck:      { name: 'Hallway mini-puck',                  price: 19, family: 'hallway' }
   };
 
   var PRONOUNS = {

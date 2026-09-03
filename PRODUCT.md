@@ -52,6 +52,7 @@ Products and prices (Rich, 2026-09-03; placeholders for testing the flow):
   only. No breathing or heart reading.
 - Bathroom sensor: $29. Humidity and movement.
 - Fall sensor (working name; a seismometer): $89. One per floor. Senses a fall anywhere on that floor.
+- Hallway mini-puck: $19. Plugs into a wall outlet. Presence and movement. Catches wandering between rooms.
 
 Constraints:
 - Two people in one bed need one bedroom sensor and one mat per bedside. Two
