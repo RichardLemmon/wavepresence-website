@@ -52,8 +52,10 @@
   .steps li { display: grid; grid-template-columns: auto 1fr; gap: 18px; padding: 20px 0;
     border-top: 1px solid var(--line); }
   .steps li:last-child { border-bottom: 1px solid var(--line); }
-  .steps .n { width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: var(--ink);
-    display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+  /* An ordinal is not a live reading. Lime-wash is the field, not the signal. */
+  .steps .n { width: 34px; height: 34px; border-radius: 50%; background: var(--lime-wash);
+    color: var(--ink-2); border: 1.5px solid var(--line); display: grid; place-items: center;
+    font-weight: 800; font-size: 15px; }
   .steps b { display: block; font-weight: 800; letter-spacing: -.02em; font-size: 18px; margin-bottom: 3px; }
   .steps p { color: var(--ink-2); font-size: 16px; }
   .dial { position: relative; width: 100%; max-width: 440px; justify-self: center; aspect-ratio: 1;

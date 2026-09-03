@@ -49,3 +49,19 @@ watch her rooms. The tension is known and accepted, not an oversight. Do not
 
 The muted tone in the headline marks a single pivot word ("without"), which is
 the comp's own two-tone mechanic; that part was a real defect and was fixed.
+
+## Known follow-up — type ramp drift (2026-09-03)
+
+Once DESIGN.md existed, the detector could compare the code against the recorded
+type ramp and found 44 literal font sizes off it: 10, 10.5, 13, 13.5, 14, 14.5,
+15, 15.5, 16, 19, 20, 21, 23px and three clamp endpoints, spread across
+index.html (17), start/index.html (18) and assets/organic.css (9).
+
+This is real drift, not a false positive. Several sizes do the same job at
+different values (14 / 14.5 / 15 / 15.5 for small supporting text; 19 / 20 / 21
+for titles). It is cosmetic only and nothing is broken.
+
+**Deliberately not fixed before Rich's review**, because normalising 44 sites
+shifts layout everywhere and the finish reviewer had already said ship. It
+should be cleaned before the Flutter app inherits this system, since the app
+will port the ramp — a ramp with thirteen steps is a list, not a ramp.

@@ -70,8 +70,13 @@ Constraints:
 - Name: WavePresence. Support: support@wavepresence.com.
 - Voice: calm, plain, dignified. "People deserve to be looked after without
   being watched." Never clinical, never alarming, never cute.
-- Visual world already in `index.html`: parchment ground, sage and amber and
-  clay accents, Fraunces display, Hanken Grotesk body. New pages inherit it.
+- Visual world: "organic tech", recorded in DESIGN.md and implemented in
+  `assets/organic.css`. Pale mint ground, deep moss slabs, one acid lime signal
+  meaning live-or-chosen, Manrope. Chosen by Rich on 2026-09-03; the previous
+  parchment / Fraunces / Hanken world it replaced is superseded.
+- Rich's landing headline, "Monitoring a loved one's safety without being
+  intrusive.", is his own wording and is kept deliberately. See
+  `.impeccable/approved-direction.md`.
 
 ## Evidence on Hand
 - Real bench data from Rich's own bedroom, kitchen, and living room, nightly
