@@ -162,14 +162,24 @@
 
   /* Kit */
   .kit { display: grid; gap: 12px; margin: 20px 0; }
-  .line { display: grid; grid-template-columns: 1fr auto; gap: 6px 18px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--card-raised); }
-  .line.optional { background: transparent; border-style: dashed; }
+  .line { display: grid; grid-template-columns: auto 1fr auto; gap: 6px 14px; padding: 16px 18px; border: 1.5px solid var(--line); border-radius: 14px; background: var(--card-raised); cursor: pointer; transition: background 160ms ease, border-color 160ms ease; }
+  .line:hover { border-color: #CDBFA4; }
+  .line:focus-visible { outline: 3px solid var(--sage-soft); outline-offset: 2px; }
+  .line .box { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid #CDBFA4; background: var(--card-raised); display: grid; place-items: center; margin-top: 2px; }
+  .line .box svg { width: 14px; height: 14px; opacity: 0; }
+  .line[aria-checked="true"] .box { background: var(--sage); border-color: var(--sage); }
+  .line[aria-checked="true"] .box svg { opacity: 1; }
   .line .name { font-weight: 500; }
   .line .room { color: var(--sage-deep); font-size: 15px; }
-  .line .why { grid-column: 1 / -1; color: var(--ink-soft); font-size: 16px; }
+  .line .why { grid-column: 2 / -1; color: var(--ink-soft); font-size: 16px; transition: color 160ms ease; }
   .line .price { text-align: right; font-weight: 500; white-space: nowrap; }
   .line .qty { color: var(--ink-muted); font-size: 15px; text-align: right; }
-  .line .opt { grid-column: 1 / -1; font-size: 14px; color: var(--amber); }
+  .line .off { grid-column: 2 / -1; font-size: 14px; color: var(--amber); display: none; }
+  .line[aria-checked="false"] { background: transparent; border-style: dashed; }
+  .line[aria-checked="false"] .name, .line[aria-checked="false"] .price, .line[aria-checked="false"] .qty { color: var(--ink-muted); }
+  .line[aria-checked="false"] .room { color: #9C9585; }
+  .line[aria-checked="false"] .why { color: #A79E8E; }
+  .line[aria-checked="false"] .off { display: block; }
   .total { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 18px; border-top: 2px solid var(--ink); margin-top: 6px; }
   .total .amt { font-family: var(--font-display); font-size: 30px; font-weight: 500; }
   .notes { display: grid; gap: 10px; margin: 18px 0; }
@@ -347,7 +357,7 @@
   <!-- 7 · Kit -->
   <section class="step" data-step="7" aria-labelledby="h7">
     <h2 id="h7">Here’s <span data-name>Mom</span>’s <em>kit</em>.</h2>
-    <p class="lede">Every sensor has one job, and each line says what it is. Nothing here records video or audio.</p>
+    <p class="lede">Every sensor has one job, and each line says what it is. Untick anything you don’t want. You’ll see what you give up. Nothing here records video or audio.</p>
 
     <div class="explain">
       <div>
@@ -589,17 +599,29 @@
     $('#style-living').value = a.style.living;
     var k = WPKit.recommend(a);
     $('#kit').innerHTML = k.lines.map(function (l) {
-      return '<div class="line' + (l.optional ? ' optional' : '') + '">' +
+      return '<div class="line" role="checkbox" tabindex="0" aria-checked="' + l.selected + '" data-key="' + esc(l.key) + '">' +
+        '<span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
         '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
         '<div><div class="price">$' + (l.price * l.qty) + '</div>' + (l.qty > 1 ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
         '<div class="why">' + esc(l.why) + '</div>' +
-        (l.optional ? '<div class="opt">Optional at this level. Not in the total.</div>' : '') +
+        '<div class="off">Not in your kit. You give up what’s described above.</div>' +
         '</div>';
     }).join('');
     $('#total').textContent = '$' + k.total;
     $('#notes').innerHTML = k.notes.map(function (n) { return '<div class="note">' + esc(n) + '</div>'; }).join('');
     return k;
   }
+
+  function toggleLine(el) {
+    var key = el.getAttribute('data-key');
+    var now = el.getAttribute('aria-checked') === 'true';
+    a.selected[key] = !now; save(); paintKit();
+  }
+  $('#kit').addEventListener('click', function (e) { var el = e.target.closest('.line'); if (el) toggleLine(el); });
+  $('#kit').addEventListener('keydown', function (e) {
+    var el = e.target.closest('.line');
+    if (el && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); toggleLine(el); }
+  });
 
   /* ---- reserve ---- */
   $('#reserve-form').addEventListener('submit', async function (e) {
@@ -613,7 +635,7 @@
     try {
       var res = await fetch(WAITLIST_ENDPOINT, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, source: 'start', answers: a, kit: kit.lines })
+        body: JSON.stringify({ email: email, source: 'start', answers: a, kit: kit.lines.filter(function (l) { return l.selected; }) })
       });
       if (!res.ok) throw new Error('bad status ' + res.status);
       $('#reserve').hidden = true;

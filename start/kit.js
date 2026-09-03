@@ -43,7 +43,8 @@
       sharesBed: false,
       ensuite: false,
       level: 'medium',
-      style: { bedroom: 'base', living: 'base' }
+      style: { bedroom: 'base', living: 'base' },
+      selected: {}
     };
   }
 
@@ -71,8 +72,10 @@
   }
 
   /* Build the kit. Returns { lines, notes, total }.
-   * A line: { sku, name, price, qty, room, why, optional }.
-   * Optional lines are shown but not counted in the total.
+   * A line: { key, sku, name, price, qty, room, why, optional, selected }.
+   * Every line is a checkbox. `selected` comes from a.selected[key] when the
+   * buyer has touched it, otherwise it defaults to !optional. Only selected
+   * lines count toward the total.
    */
   function recommend(a) {
     var n = a.person.name || 'Mom';
@@ -123,10 +126,10 @@
       });
     });
 
-    var wantBath = a.rooms.bathroom || (a.ensuite && a.level === 'high');
+    var wantBath = a.rooms.bathroom || a.ensuite;
     if (wantBath) {
       lines.push({
-        sku: 'bathroom', qty: 1, optional: a.ensuite && a.level !== 'high' && !a.rooms.bathroom,
+        sku: 'bathroom', qty: 1, optional: !a.rooms.bathroom && a.level !== 'high',
         room: a.ensuite ? n + '’s bathroom' : 'Bathroom',
         why: 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.'
       });
@@ -152,13 +155,16 @@
     }
 
     var total = 0;
+    var sel = a.selected || {};
     lines = lines.map(function (l) {
       var prod = PRODUCTS[l.sku];
+      var key = prod.family + '|' + l.room;
       var out = {
-        sku: l.sku, name: prod.name, price: prod.price, qty: l.qty,
-        room: l.room, why: l.why, optional: !!l.optional
+        key: key, sku: l.sku, name: prod.name, price: prod.price, qty: l.qty,
+        room: l.room, why: l.why, optional: !!l.optional,
+        selected: (key in sel) ? !!sel[key] : !l.optional
       };
-      if (!out.optional) total += out.price * out.qty;
+      if (out.selected) total += out.price * out.qty;
       return out;
     });
 
