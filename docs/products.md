@@ -13,8 +13,11 @@ Set by Rich for testing the purchase flow. Not final.
 | Living-space sensor, stone | $59 | same | same |
 | Living-space sensor, plant | $59 | same | same |
 | Bathroom sensor | $29 | bathroom or en suite | humidity and movement |
+| Fall sensor (working name, seismometer) | $89 | one per floor | floor vibration; senses a fall anywhere on that floor |
 
 Open: the door hub (one per home) has no price yet. The page does not mention it.
+Open: the seismometer needs a real name. "Fall sensor" is the working name on the page.
+Note: the door line promises open AND close. Current Secrui hardware only hears opens; the GS-WDS07 (open and close) is the planned part.
 
 Rules the page uses are in `start/kit.js` (`recommend()`), tested by hand with node.
 The privacy line is on every screen: no cameras, no microphones, ever.

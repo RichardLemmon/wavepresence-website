@@ -14,7 +14,8 @@
     living_base:   { name: 'Living-space sensor',                price: 49, family: 'living' },
     living_stone:  { name: 'Living-space sensor, stone',         price: 59, family: 'living' },
     living_plant:  { name: 'Living-space sensor, plant',         price: 59, family: 'living' },
-    bathroom:      { name: 'Bathroom sensor',                    price: 29, family: 'bathroom' }
+    bathroom:      { name: 'Bathroom sensor',                    price: 29, family: 'bathroom' },
+    fall:          { name: 'Fall sensor',                        price: 89, family: 'fall' }
   };
 
   var PRONOUNS = {
@@ -59,12 +60,12 @@
       medium: {
         title: 'Medium',
         lede: n + ' gets up two or three times a night.',
-        body: 'That is normal for ' + p.obj + '. Sometimes ' + p.subj + ' forget' + p.s + ' and go' + (p.s ? 'es' : '') + ' downstairs.'
+        body: 'That is normal for ' + p.obj + '. Sometimes ' + p.subj + ' forget' + p.s + ' and go' + (p.s ? 'es' : '') + ' downstairs. We want to know any time ' + p.subj + ' leave' + p.s + ' ' + p.poss + ' room.'
       },
       high: {
         title: 'High',
         lede: 'When in bed, ' + n + ' should be asleep.',
-        body: 'I want to know if ' + p.subj + ' get' + p.s + ' up more than a routine bathroom break. ' + cap(p.subj) + ' should not be turning lights on or taking a shower in the middle of the night. We want to know any time ' + p.subj + ' leave' + p.s + ' ' + p.poss + ' room.'
+        body: cap(p.subj) + ' should not be turning lights on or taking a shower in the middle of the night. We want to know any time ' + p.subj + ' ' + p.is + ' out of bed for more than a bathroom break.'
       }
     };
   }
@@ -86,20 +87,20 @@
     lines.push({
       sku: bedSku, qty: bedsides, room: bedroom,
       why: bedsides === 2
-        ? 'One per bedside. Each reads breathing and heart micro-motion for the person on its side, so two sleepers never blur into one.'
-        : 'Reads breathing and heart micro-motion, so it knows asleep from gone. Nothing else in the kit can.'
+        ? 'One per bedside. Each holds several sensors that read breathing and heart micro-motion, body motion and heat for the person on its side, so two sleepers never blur into one.'
+        : 'Holds several sensors that read breathing and heart micro-motion, along with body motion and heat. With the floor mat and door sensor, this is what gives the peace of mind families are looking for.'
     });
 
     lines.push({
       sku: 'mat', qty: bedsides, room: bedroom, optional: a.level === 'low',
       why: bedsides === 2
         ? 'One strip per side, where the feet land. The only sensor that knows someone stood up.'
-        : 'A strip where ' + p.poss + ' feet land. The only sensor that knows ' + p.subj + ' stood up.'
+        : 'A strip where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up.'
     });
 
     lines.push({
       sku: 'door', qty: 1, room: bedroom,
-      why: 'Hears the bedroom door open, so “left the room” is never a guess.'
+      why: 'Hears the bedroom door open and close, so “entering or leaving the room” is never a guess.'
     });
 
     if (a.level !== 'low' && (a.rooms.kitchen || a.floors > 1)) {
@@ -117,7 +118,7 @@
       lines.push({
         sku: livSku, qty: 1, room: room,
         why: i === 0
-          ? 'Presence and movement only. It does not read breathing or heart rate, and it does not need to. It knows the room is in use.'
+          ? 'Presence and movement only. It does not read breathing or heart rate, and it does not need to. If ' + n + ' isn’t in ' + p.poss + ' room, this will tell you which room ' + p.subj + ' ' + p.is + ' in.'
           : 'Presence and movement only.'
       });
     });
@@ -130,6 +131,11 @@
         why: 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.'
       });
     }
+
+    lines.push({
+      sku: 'fall', qty: a.floors || 1, room: (a.floors || 1) > 1 ? 'One per floor' : 'Main floor',
+      why: 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room, with nothing worn.'
+    });
 
     if (a.ensuite) {
       notes.push(n + '’s bedroom has its own bathroom, so ' + p.subj + ' can be out of bed for minutes without opening a door. We set the alarm clock for that, and ask you how long a normal visit is.');

@@ -51,7 +51,7 @@ Products and prices (Rich, 2026-09-03; placeholders for testing the flow):
 - Living-space sensor: base $49, stone $59, plant $59. Presence and movement
   only. No breathing or heart reading.
 - Bathroom sensor: $29. Humidity and movement.
-- Coming: seismometer (may cover a whole floor).
+- Fall sensor (working name; a seismometer): $89. One per floor. Senses a fall anywhere on that floor.
 
 Constraints:
 - Two people in one bed need one bedroom sensor and one mat per bedside. Two
