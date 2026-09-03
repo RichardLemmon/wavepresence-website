@@ -159,10 +159,22 @@
     padding-top: 8px; border-top: 1px solid var(--line-soft); }
   .sum.empty { background: var(--ground-2); border-style: dashed; border-color: var(--ink-4); }
 
-  .styles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 6px; }
-  @media (max-width: 560px) { .styles { grid-template-columns: 1fr; } }
+  .styles { display: grid; gap: 22px; margin: 18px 0 10px; }
   .styles .field { margin: 0; }
-  .styles select { width: 100%; padding: 13px 15px; padding-right: 42px; }
+  /* Pick a shell by looking at it. A native select cannot show a photograph. */
+  .picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 520px) { .picker { grid-template-columns: repeat(2, 1fr); } }
+  .pick { padding: 0; border: 1.5px solid var(--line); border-radius: var(--r-md);
+    background: var(--paper); cursor: pointer; overflow: hidden; text-align: left;
+    display: block; width: 100%; transition: border-color 160ms ease, background 160ms ease; }
+  .pick img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .pick .lab { display: block; padding: 9px 11px 11px; }
+  .pick .lab b { display: block; font-weight: 800; font-size: 14.5px; letter-spacing: -.015em; }
+  .pick .lab span { display: block; font-size: 13px; color: var(--ink-3); font-weight: 600; margin-top: 1px; }
+  .pick[aria-checked="true"] { border-color: var(--ink-2); background: var(--lime-wash); }
+  .pick[aria-checked="true"] .lab span { color: var(--ink-2); }
+  .pick[aria-checked="true"] .lab b::after { content: " ✓"; color: var(--ink-2); }
+  .pick:focus-visible { outline: 3px solid var(--lime); outline-offset: 2px; }
   .explain { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; }
   @media (max-width: 620px) { .explain { grid-template-columns: 1fr; } }
   .explain div { padding: 20px 22px; border-radius: var(--r-md); background: var(--ground-2);
@@ -418,7 +430,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=28"></script>
+<script src="kit.js?v=29"></script>
 <script>
 (function () {
   'use strict';
@@ -585,8 +597,14 @@
     hallway: ['Hallway mini-puck', 'A small puck that plugs into a wall outlet. Presence and movement only. It catches anyone passing through, so wandering between rooms at night is never missed.']
   };
   var STYLE_OPTS = {
-    bedroom: [['stone', 'Stone with nightlight, $69'], ['plant', 'Plant, $69'], ['base', 'Disc, $49'], ['stalk', 'Stalk, $49']],
-    living:  [['plant', 'Plant, $59'], ['stone', 'Stone, $59'], ['base', 'Disc, $49'], ['stalk', 'Stalk, $49']]
+    bedroom: [['stone', 'Stone', 69], ['plant', 'Plant', 69], ['base', 'Disc', 49], ['stalk', 'Stalk', 49]],
+    living:  [['plant', 'Plant', 59], ['stone', 'Stone', 59], ['base', 'Disc', 49], ['stalk', 'Stalk', 49]]
+  };
+  var STYLE_ALT = {
+    stone: 'A stone sensor glowing softly on a nightstand',
+    plant: 'A succulent in a planter on a counter',
+    base:  'A round disc sensor on a stand',
+    stalk: 'A slim sensor raised on a stalk'
   };
   var PHOTOS = {
     base:  ['disc',  'Disc. The base sensor. Sits on a stand and aims at the bed or the room.'],
@@ -644,10 +662,13 @@
     }).join('');
     var current = { bedroom: a.style.bedroom, living: livingLine ? livingLine.style : a.style.living };
     $('#kit-styles').innerHTML = ['bedroom', 'living'].filter(function (f) { return fams[f]; }).map(function (f) {
-      return '<div class="field"><label for="style-' + f + '">' + (f === 'bedroom' ? 'Bedroom' : 'Living-space') + ' sensor style</label>' +
-        '<select id="style-' + f + '" data-style="' + f + '" data-room="' + esc(g.name) + '">' + STYLE_OPTS[f].map(function (o) {
-          return '<option value="' + o[0] + '"' + (current[f] === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
-        }).join('') + '</select></div>';
+      return '<div class="field"><label>' + (f === 'bedroom' ? 'Bedroom' : 'Living-space') + ' sensor style</label>' +
+        '<div class="picker" role="radiogroup" aria-label="' + (f === 'bedroom' ? 'Bedroom' : 'Living-space') + ' sensor style" data-style="' + f + '" data-room="' + esc(g.name) + '">' +
+        STYLE_OPTS[f].map(function (o) {
+          return '<button type="button" class="pick" role="radio" aria-checked="' + (current[f] === o[0]) + '" data-val="' + o[0] + '">' +
+            '<img src="../assets/styles/' + o[0] + '.webp" alt="' + esc(STYLE_ALT[o[0]]) + '" />' +
+            '<span class="lab"><b>' + o[1] + '</b><span>$' + o[2] + '</span></span></button>';
+        }).join('') + '</div></div>';
     }).join('');
     $('#kit').innerHTML = g.lines.map(lineHtml).join('');
     $('#kit-sub-label').textContent = g.name === k.restName ? 'These parts' : 'This room';
@@ -666,11 +687,14 @@
     $('#total').textContent = '$' + k.total;
     return k;
   }
-  $('#kit-styles').addEventListener('change', function (e) {
-    var f = e.target.getAttribute('data-style');
-    if (!f) return;
-    if (f === 'living') { a.roomStyle = a.roomStyle || {}; a.roomStyle[e.target.getAttribute('data-room')] = e.target.value; }
-    else a.style[f] = e.target.value;
+  $('#kit-styles').addEventListener('click', function (e) {
+    var b = e.target.closest('.pick');
+    if (!b) return;
+    var group = b.closest('[data-style]');
+    var f = group.getAttribute('data-style');
+    var val = b.getAttribute('data-val');
+    if (f === 'living') { a.roomStyle = a.roomStyle || {}; a.roomStyle[group.getAttribute('data-room')] = val; }
+    else a.style[f] = val;
     save(); paintKit();
   });
 
