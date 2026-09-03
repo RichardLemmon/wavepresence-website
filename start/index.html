@@ -332,10 +332,10 @@
     <h2 id="h5">About <span data-name>Mom</span>’s bedroom.</h2>
     <p class="lede">Two questions that change the most important alarm in the system.</p>
     <div class="field">
-      <label>Does anyone else sleep in the same bed?</label>
+      <label>Does <span data-subj>she</span> sleep alone?</label>
       <div class="choices cols" role="radiogroup" data-radio="sharesBed">
-        <button class="choice" role="radio" data-value="no"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">No</span></span></button>
-        <button class="choice" role="radio" data-value="yes"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Yes</span><span class="d">Then the kit comes one per bedside.</span></span></button>
+        <button class="choice" role="radio" data-value="no"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Yes</span></span></button>
+        <button class="choice" role="radio" data-value="yes"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">No, someone shares the bed</span><span class="d">Then the kit comes one per bedside.</span></span></button>
       </div>
     </div>
     <div class="field">
@@ -460,6 +460,8 @@
   function paintNames() {
     var n = a.person.name.trim() || 'Mom';
     $$('[data-name]').forEach(function (el) { el.textContent = n; });
+    var p = WPKit.pronouns(a.person.pronouns);
+    $$('[data-subj]').forEach(function (el) { el.textContent = p.subj; });
   }
 
   /* ---- radios ---- */
