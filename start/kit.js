@@ -91,8 +91,8 @@
     lines.push({
       sku: bedSku, qty: bedsides, room: bedroom, group: bedroom,
       why: bedsides === 2
-        ? 'One per bedside. Each holds several sensors that read breathing and heart micro-motion, body motion and heat for the person on its side, so two sleepers never blur into one.'
-        : 'Holds several sensors that read breathing and heart micro-motion, along with body motion and heat. With the floor mat and door sensor, this is what gives the peace of mind families are looking for.'
+        ? 'One per bedside. Each reads breathing and heart micro-motion, body motion using radar and heat sensing for the person on its side, so two sleepers never blur into one.'
+        : 'Reads breathing and heart micro-motion, body motion using radar and heat sensing. With the floor pressure mat and door sensor, that combination is what gives families peace of mind. Nothing needs to be worn.'
     });
 
     lines.push({
