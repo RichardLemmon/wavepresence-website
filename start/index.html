@@ -436,7 +436,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=11"></script>
+<script src="kit.js?v=12"></script>
 <script>
 (function () {
   'use strict';
@@ -615,13 +615,14 @@
     hallway: ['Hallway mini-puck', 'A small puck that plugs into a wall outlet. Presence and movement only. It catches anyone passing through, so wandering between rooms at night is never missed.']
   };
   var STYLE_OPTS = {
-    bedroom: [['base', 'Base, $49'], ['stone', 'Stone with nightlight, $69'], ['plant', 'Plant, $69']],
-    living:  [['base', 'Base, $49'], ['stone', 'Stone, $59'], ['plant', 'Plant, $59']]
+    bedroom: [['stone', 'Stone with nightlight, $69'], ['plant', 'Plant, $69'], ['stalk', 'Stalk, $49'], ['base', 'Disc, $49']],
+    living:  [['plant', 'Plant, $59'], ['stone', 'Stone, $59'], ['stalk', 'Stalk, $49'], ['base', 'Disc, $49']]
   };
   var PHOTOS = {
-    base:  ['disc',  'The base sensor. Sits on a stand and aims at the bed or the room.'],
+    base:  ['disc',  'Disc. The base sensor. Sits on a stand and aims at the bed or the room.'],
     stone: ['stone', 'Stone with nightlight. A soft glow for the floor at night, and a sensor inside.'],
-    plant: ['plant', 'Plant. A real succulent in a planter. The sensor is in the pot.']
+    plant: ['plant', 'Plant. A real succulent in a planter. The sensor is in the pot.'],
+    stalk: ['wand',  'Stalk. The same base sensor, raised to see across the room.']
   };
   function paintPhoto(fams, styleKey) {
     var fig = $('#kit-photo');

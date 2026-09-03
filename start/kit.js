@@ -9,11 +9,13 @@
     bedroom_base:  { name: 'Bedroom sensor',                     price: 49, family: 'bedroom' },
     bedroom_stone: { name: 'Bedroom sensor, stone with nightlight', price: 69, family: 'bedroom' },
     bedroom_plant: { name: 'Bedroom sensor, plant',              price: 69, family: 'bedroom' },
+    bedroom_stalk: { name: 'Bedroom sensor, stalk',              price: 49, family: 'bedroom' },
     mat:           { name: 'Floor pressure mat',                       price: 49, family: 'mat' },
     door:          { name: 'Door sensor',                        price: 19, family: 'door' },
     living_base:   { name: 'Living-space sensor',                price: 49, family: 'living' },
     living_stone:  { name: 'Living-space sensor, stone',         price: 59, family: 'living' },
     living_plant:  { name: 'Living-space sensor, plant',         price: 59, family: 'living' },
+    living_stalk:  { name: 'Living-space sensor, stalk',         price: 49, family: 'living' },
     bathroom:      { name: 'Bathroom sensor',                    price: 29, family: 'bathroom' },
     fall:          { name: 'Fall sensor',                        price: 89, family: 'fall' },
     minipuck:      { name: 'Hallway mini-puck',                  price: 19, family: 'hallway' }
@@ -52,7 +54,7 @@
       level: 'medium',
       style: { bedroom: 'stone', living: 'base' },
       /* per-room overrides of the living-space style, keyed by room name */
-      roomStyle: { Kitchen: 'plant' },
+      roomStyle: { Kitchen: 'plant', 'Living room': 'stalk' },
       selected: {}
     };
   }
