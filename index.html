@@ -70,28 +70,35 @@
     background: var(--paper); padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); }
   .lg i { width: 9px; height: 9px; border-radius: 50%; display: block; }
 
-  /* Kit contents — a moss slab, typeset as a list, with a photo breaking its edge. */
-  .kitband { overflow: visible; padding-right: 40px; position: relative; }
+  /* Kit contents — pale ground, lime hairlines, a photo breaking its edge.
+     Moss is reserved for the privacy claim, so it keeps its stopping power. */
+  .kitband { background: var(--paper); color: var(--ink); border: 1px solid var(--line);
+    overflow: visible; padding-right: 40px; position: relative; }
   .kitband::after { display: none; }
+  /* organic.css's .band li sets near-white for the moss slab; on this pale
+     slab every text role has to be taken back explicitly. */
+  .kitband strong { color: var(--ink); }
+  .kitband p, .kitband li { color: var(--ink-2); }
+  .kitband li b, .kitband li .pr { color: var(--ink); }
   /* Specificity note: .band ul in organic.css sets 3 columns; .band ul.kitlist
      takes that back so this list owns its own responsive steps. */
   .band ul.kitlist { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 0 40px; margin-top: 28px; position: relative; }
   @media (max-width: 1000px) { .band ul.kitlist { grid-template-columns: 1fr 1fr; gap: 0 34px; } }
   @media (max-width: 680px) { .band ul.kitlist { grid-template-columns: 1fr; } }
-  .kitlist li { padding: 18px 0; border-top: 1px solid rgba(195,245,60,.28); }
+  .kitlist li { padding: 18px 0; border-top: 2px solid var(--lime); }
   .kitlist .hd { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
   .kitlist b { font-weight: 800; letter-spacing: -.02em; font-size: 17.5px; }
-  .kitlist .pr { font-weight: 800; letter-spacing: -.02em; white-space: nowrap; color: var(--lime); }
+  .kitlist .pr { font-weight: 800; letter-spacing: -.02em; white-space: nowrap; }
   .kitlist .rm { display: block; font-size: 12px; font-weight: 800; letter-spacing: .1em;
-    text-transform: uppercase; color: rgba(234,243,230,.55); margin-top: 3px; }
-  .kitlist p { color: rgba(234,243,230,.8); font-size: 15.5px; margin-top: 9px; max-width: 42ch; }
+    text-transform: uppercase; color: var(--ink-3); margin-top: 3px; }
+  .kitlist p { color: var(--ink-2); font-size: 15.5px; margin-top: 9px; max-width: 42ch; }
   .medallion { position: absolute; right: -46px; top: -58px; width: 168px; height: 168px;
     border-radius: 50%; overflow: hidden; margin: 0; border: 7px solid var(--ground);
-    box-shadow: 0 18px 44px rgba(14,31,23,.28); }
+    box-shadow: 0 18px 44px rgba(14,31,23,.22); }
   .medallion img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  @media (max-width: 1180px) { .medallion { right: -24px; top: -46px; width: 132px; height: 132px; } }
-  @media (max-width: 760px) { .medallion { display: none; } }
+  @media (max-width: 1180px) { .medallion { right: -22px; top: -48px; width: 136px; height: 136px; } }
+  @media (max-width: 680px) { .medallion { right: -14px; top: -40px; width: 96px; height: 96px; border-width: 5px; } }
 
   /* Pricing */
   .price-band { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
@@ -115,6 +122,7 @@
   .wl input { flex: 1 1 240px; padding: 15px 18px; border: 1.5px solid var(--line);
     border-radius: 999px; background: var(--paper); outline: none; }
   .wl input:focus { border-color: var(--ink-2); box-shadow: 0 0 0 4px rgba(195,245,60,.4); }
+  .wl input[aria-invalid="true"] { border-color: #A8452B; }
   .wl-note { font-size: 14px; color: var(--ink-3); margin-top: 14px; }
 </style>
 </head>
@@ -250,7 +258,7 @@
         <li><span class="hd"><b>Hallway mini-puck</b><span class="pr">$19</span></span><span class="rm">Plugs into an outlet</span>
           <p>Catches anyone passing through, which is how you know about wandering between rooms at night.</p></li>
       </ul>
-      <figure class="medallion"><img src="assets/devices/stone.webp" alt="The stone sensor glowing on a nightstand" /></figure>
+      <figure class="medallion"><img src="assets/devices/plant-round.webp" alt="The succulent that hides a WavePresence sensor" /></figure>
     </div>
   </section>
 
@@ -276,7 +284,7 @@
     <h2>Find the kit for <em>their home.</em></h2>
     <p class="lede">Six short questions about who you're looking after and the rooms that matter. You'll see exactly which sensors go where, and why.</p>
     <a class="btn" href="/start/">Find your kit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <form class="wl" onsubmit="return submitWaitlist(event,'final_cta')">
+    <form class="wl" novalidate onsubmit="return submitWaitlist(event,'final_cta')">
       <label class="sr" for="wl-email">Email</label>
       <input id="wl-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
       <button class="btn sage" type="submit">Join the waitlist</button>
