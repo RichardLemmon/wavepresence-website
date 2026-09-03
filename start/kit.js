@@ -44,7 +44,7 @@
       sharesBed: false,
       ensuite: false,
       level: 'medium',
-      style: { bedroom: 'base', living: 'base' },
+      style: { bedroom: 'stone', living: 'base' },
       selected: {}
     };
   }
