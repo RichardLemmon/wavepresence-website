@@ -283,7 +283,7 @@
       <figure><img src="../assets/devices/wand.webp" alt="A slim cream sensor on a stalk and round base on a nightstand" loading="lazy" /><figcaption><b>Stalk.</b> The same base sensor, when extra height is needed over a mattress.</figcaption></figure>
     </div>
     <h2 id="h0b" class="find-title">Let’s find the <em>right kit</em>.</h2>
-    <p class="lede">Seven short questions about who you’re looking after and the home they live in. At the end you’ll see exactly which sensors go where, and why. About two minutes.</p>
+    <p class="lede">Six short questions about who you’re looking after and the home they live in. At the end you’ll see exactly which sensors go where, and why. About two minutes.</p>
     <div class="nav">
       <span></span>
       <button class="btn" data-next>Start <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -378,7 +378,7 @@
   <!-- 5 · Bedroom -->
   <section class="step" data-step="5" aria-labelledby="h5">
     <h2 id="h5">About <span data-name>Mom</span>’s bedroom.</h2>
-    <p class="lede">Two questions that change the most important alarm in the system.</p>
+    <p class="lede">Two questions that change which sensors go in this room.</p>
     <div class="field">
       <label>Does <span data-subj>she</span> sleep alone?</label>
       <div class="choices cols" role="radiogroup" data-radio="sharesBed">
@@ -393,13 +393,6 @@
         <button class="choice" role="radio" data-value="no"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">No</span><span class="d">Using the bathroom means <span data-subj>she</span> needs to leave <span data-poss>her</span> room.</span></span></button>
       </div>
     </div>
-  </section>
-
-  <!-- 6 · Level -->
-  <section class="step" data-step="6" aria-labelledby="h6">
-    <h2 id="h6">How closely do you want to watch?</h2>
-    <p class="lede">Pick the one that sounds most like you. For the first week WavePresence learns <span data-name>Mom</span>’s pattern and sends a daily report. Then you can tune anything.</p>
-    <div class="choices" role="radiogroup" data-radio="level" id="levels"></div>
   </section>
 
   <!-- 7 · Kit, one page per room -->
@@ -450,13 +443,13 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=20"></script>
+<script src="kit.js?v=21"></script>
 <script>
 (function () {
   'use strict';
   var WAITLIST_ENDPOINT = 'https://wavepresence-api-develop.up.railway.app/waitlist';
   var STORE = 'wp_start_v2';
-  var SEGMENTS = 8; /* 6 questions, the kit pages, the summary */
+  var SEGMENTS = 7; /* 5 questions, the kit pages, the summary */
 
   var a = WPKit.defaults();
   try {
@@ -474,8 +467,8 @@
   var prog = $('#progress');
   for (var i = 0; i < SEGMENTS; i++) { var sp = document.createElement('span'); prog.appendChild(sp); }
   function paintProgress() {
-    /* segment index: questions 1..6 -> 0..5, kit pages -> 6, summary -> 7 */
-    var seg = step < 7 ? step - 1 : (step < lastStep() ? 6 : 7);
+    /* segment index: questions 1..5 -> 0..4, kit pages -> 5, summary -> 6 */
+    var seg = step < QUESTIONS ? step - 1 : (step < lastStep() ? QUESTIONS - 1 : QUESTIONS);
     $$('span', prog).forEach(function (el, i) {
       el.className = i < seg ? 'is-done' : (i === seg ? 'is-now' : '');
     });
@@ -607,18 +600,6 @@
     a.person.name = e.target.value; save(); paintNames();
     e.target.removeAttribute('aria-invalid'); $('#name-err').classList.remove('show');
   });
-
-  /* ---- levels ---- */
-  function paintLevels() {
-    var c = WPKit.levelCopy(a);
-    var host = $('#levels');
-    host.innerHTML = ['low', 'medium', 'high'].map(function (k) {
-      return '<button class="choice" role="radio" data-value="' + k + '">' +
-        '<span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
-        '<span><span class="t">' + c[k].title + '</span><span class="d q">“' + esc(c[k].lede) + '”</span><span class="d">' + esc(c[k].body) + '</span></span></button>';
-    }).join('');
-    paintRadios();
-  }
 
   /* ---- kit, one page per room ---- */
   var EXPLAIN = {
@@ -763,7 +744,7 @@
   /* ---- navigation ----
    * 0..6 are the question screens. Then one kit page per room, then summary.
    */
-  var QUESTIONS = 7;
+  var QUESTIONS = 6; /* screens 0..5: intro, person, lives, household, rooms, bedroom */
   function kitPages() { return WPKit.recommend(a).groups.length; }
   function lastStep() { return QUESTIONS + kitPages(); }
   function validate() {
@@ -786,7 +767,6 @@
     paintProgress(); paintNames(); paintRadios(); paintChecks(); paintSteppers();
     if (step === 3) paintPets();
     if (step === 4) paintRooms();
-    if (step === 6) paintLevels();
     if (which === 'kit') paintKit();
     if (which === 'summary') paintSummary();
     window.scrollTo({ top: 0, behavior: 'smooth' });

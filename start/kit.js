@@ -51,7 +51,9 @@
       floors: 1,
       sharesBed: false,
       ensuite: false,
-      level: 'medium',
+      /* Notification level is asked in the app, not here. Kept null so the
+       * app knows it was never answered. */
+      level: null,
       style: { bedroom: 'stone', living: 'base' },
       /* per-room overrides of the living-space style, keyed by room name */
       roomStyle: { Kitchen: 'plant', 'Living room': 'stalk' },
@@ -109,7 +111,7 @@
     });
 
     lines.push({
-      sku: 'mat', qty: bedsides, room: bedroom, group: bedroom, optional: a.level === 'low',
+      sku: 'mat', qty: bedsides, room: bedroom, group: bedroom,
       why: bedsides === 2
         ? 'One strip per side, where the feet land. The only sensor that knows someone stood up.'
         : 'A strip where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up. If ' + p.subj + ' sleep' + p.s + ' with the door open, add a second mat just inside the door and skip the door sensor.',
@@ -122,7 +124,7 @@
       skip: 'If ' + who + ' sleeps with the door open, a door sensor may not be necessary.'
     });
 
-    if (a.level !== 'low' && (a.rooms.kitchen || a.floors > 1)) {
+    if (a.rooms.kitchen || a.floors > 1) {
       lines.push({
         sku: 'door', qty: 1, room: a.floors > 1 ? 'Top of the stairs or kitchen door' : 'Kitchen door',
         group: a.rooms.kitchen ? 'Kitchen' : 'The whole home',
@@ -162,7 +164,7 @@
     var wantBath = a.rooms.bathroom || a.ensuite;
     if (wantBath) {
       lines.push({
-        sku: 'bathroom', qty: 1, optional: !a.rooms.bathroom && a.level !== 'high',
+        sku: 'bathroom', qty: 1, optional: !a.rooms.bathroom,
         room: a.ensuite ? n + '’s bathroom' : 'Bathroom', group: a.ensuite ? n + '’s bathroom' : 'Bathroom',
         why: 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.',
         skip: 'If showers and long visits aren’t a concern, this one can wait.'
