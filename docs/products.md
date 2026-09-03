@@ -33,3 +33,10 @@ should be insides + shell. A shell is only offered for a room type once the
 bench has proven the radar sees out of it well enough. Today: bedroom gets
 stone, stalk, disc. Plant in the bedroom needs a test first (concrete pot and
 pebbles may block the radar). Living space likely takes all four.
+
+## Open: fall sensor on carpet (Rich, 2026-09-03)
+
+The fall sensor may read differently on carpet vs. hard floor. Not tested.
+Add a note to the /start page once the sensors project has a real finding,
+not before. See wavepresence-sensors/docs/setup-interview.md's open question
+"Is the bedroom carpeted?" (currently unanswered, parked for the floor mat).
