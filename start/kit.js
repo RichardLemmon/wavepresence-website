@@ -192,7 +192,7 @@
     var total = 0;
     var sel = a.selected || {};
     var qtyOverride = a.qty || {};
-    var ADJUSTABLE = { door: true, hallway: true, mat: true };
+    var ADJUSTABLE = { door: true, hallway: true, mat: true, bedroom: true };
     lines = lines.map(function (l) {
       var prod = PRODUCTS[l.sku];
       var key = prod.family + '|' + l.room;
