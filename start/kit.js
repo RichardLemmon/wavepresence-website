@@ -239,15 +239,17 @@
       var subj = cap(p.subj), S = p.s, is = p.is, poss = p.poss, obj = p.obj;
       var t = '';
 
+      /* Say what they get. Where a part is missing, offer it for later —
+         never tell someone what they failed to buy. */
       if (has.bedroom) {
         if (has.mat && has.door) {
           t = 'You’ll know ' + p.subj + ' ' + is + ' asleep, know the moment ' + p.subj + ' get' + S + ' out of bed, and know whether ' + p.subj + ' came back or left the room.';
         } else if (has.mat) {
-          t = 'You’ll know ' + p.subj + ' ' + is + ' asleep and know the moment ' + p.subj + ' get' + S + ' out of bed. Without a door sensor you won’t know if ' + p.subj + ' left the room.';
+          t = 'You’ll know ' + p.subj + ' ' + is + ' asleep and know the moment ' + p.subj + ' get' + S + ' out of bed. When you’re ready, a door sensor can tell you whether ' + p.subj + ' left the room.';
         } else if (has.door) {
-          t = 'You’ll know ' + p.subj + ' ' + is + ' asleep and hear the door if ' + p.subj + ' leave' + S + ' at night. Without a mat you won’t know if ' + p.subj + ' ' + is + ' up but still in the room.';
+          t = 'You’ll know ' + p.subj + ' ' + is + ' asleep and hear the door if ' + p.subj + ' leave' + S + ' at night. When you’re ready, a floor pressure mat can tell you the moment ' + p.subj + ' ' + is + ' out of bed.';
         } else {
-          t = 'You’ll know ' + p.subj + ' ' + is + ' in bed and breathing. On its own it can’t tell you when ' + p.subj + ' get' + S + ' up.';
+          t = 'You’ll know ' + p.subj + ' ' + is + ' in bed and breathing. When you’re ready, you can add a floor pressure mat or door sensor to know ' + p.subj + ' ' + (p.s ? 'hasn’t' : 'haven’t') + ' wandered.';
         }
       } else if (g.name === REST) {
         var bits = [];
@@ -260,7 +262,7 @@
         if (has.living && has.door) {
           t = 'You’ll know ' + p.subj + ' used the ' + room + ' today, and hear the door if ' + p.subj + ' head' + S + ' out at night.';
         } else if (has.living) {
-          t = 'When the bedroom is empty, this is what tells you ' + p.subj + ' ' + is + ' in the ' + room + ' and not somewhere ' + p.subj + ' shouldn’t be.';
+          t = 'When the bedroom is empty, this is what tells you ' + p.subj + ' ' + is + ' in the ' + room + '. When you’re ready, a door sensor here can tell you if ' + p.subj + ' head' + S + ' out at night.';
         } else {
           t = 'The door is heard, so leaving the ' + room + ' at night is never a guess.';
         }
