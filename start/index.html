@@ -313,6 +313,7 @@
       <button class="choice" role="checkbox" data-kind="check" aria-checked="true" aria-disabled="true" data-value="bedroom"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t"><span data-name>Mom</span>’s bedroom</span><span class="d">Always. This is where the important hours are.</span></span></button>
       <button class="choice" role="checkbox" data-kind="check" data-value="kitchen"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Kitchen</span><span class="d">Meals are the clearest daily rhythm there is.</span></span></button>
       <button class="choice" role="checkbox" data-kind="check" data-value="living"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Living room</span><span class="d">The afternoon chair, the evening TV.</span></span></button>
+      <button class="choice" role="checkbox" data-kind="check" data-value="hallway"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Hallway</span><span class="d">Catches wandering between rooms at night. A mini-puck plugs into an outlet.</span></span></button>
       <button class="choice" role="checkbox" data-kind="check" data-value="bathroom"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Bathroom</span><span class="d">Showers, and visits that run long.</span></span></button>
     </div>
     <div class="field" style="margin-top:18px">
@@ -405,7 +406,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js"></script>
+<script src="kit.js?v=4"></script>
 <script>
 (function () {
   'use strict';
@@ -579,7 +580,8 @@
     bedroom: ['Bedroom sensors', 'Each one holds several sensors: breathing and heart micro-motion, body motion, and heat. With the floor mat and door sensor, that combination is what gives families peace of mind. Nothing is worn.'],
     living:  ['Living-space sensors', 'Presence and movement only. No breathing or heart reading, and none needed. They tell you which room is in use when the bedroom is empty.'],
     bathroom:['Bathroom sensor', 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.'],
-    fall:    ['Fall sensor', 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room. Working name; we may rename it.']
+    fall:    ['Fall sensor', 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room. Working name; we may rename it.'],
+    hallway: ['Hallway mini-puck', 'A small puck that plugs into a wall outlet. Presence and movement only. It catches anyone passing through, so wandering between rooms at night is never missed.']
   };
   var STYLE_OPTS = {
     bedroom: [['base', 'Base, $49'], ['stone', 'Stone with nightlight, $69'], ['plant', 'Plant, $69']],
@@ -590,7 +592,7 @@
     return '<div class="line" role="checkbox" tabindex="0" aria-checked="' + l.selected + '" data-key="' + esc(l.key) + '">' +
       '<span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
       '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
-      '<div><div class="price">$' + (l.price * l.qty) + '</div>' + (l.qty > 1 ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
+      '<div><div class="price">' + (l.price == null ? 'Price to come' : '$' + (l.price * l.qty)) + '</div>' + (l.qty > 1 && l.price != null ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
       '<div class="why">' + esc(l.why) + '</div>' +
       '<div class="off">Not in your kit. You give up what’s described above.</div>' +
       '</div>';

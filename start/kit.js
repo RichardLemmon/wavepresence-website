@@ -15,7 +15,9 @@
     living_stone:  { name: 'Living-space sensor, stone',         price: 59, family: 'living' },
     living_plant:  { name: 'Living-space sensor, plant',         price: 59, family: 'living' },
     bathroom:      { name: 'Bathroom sensor',                    price: 29, family: 'bathroom' },
-    fall:          { name: 'Fall sensor',                        price: 89, family: 'fall' }
+    fall:          { name: 'Fall sensor',                        price: 89, family: 'fall' },
+    /* price: null means "not priced yet". Shown, never counted. */
+    minipuck:      { name: 'Hallway mini-puck',                  price: null, family: 'hallway' }
   };
 
   var PRONOUNS = {
@@ -38,7 +40,7 @@
       lives: 'nearby',
       others: 0,
       pets: [],
-      rooms: { kitchen: true, living: true, bathroom: false, other: [] },
+      rooms: { kitchen: true, living: true, bathroom: false, hallway: false, other: [] },
       floors: 1,
       sharesBed: false,
       ensuite: false,
@@ -115,15 +117,28 @@
     }
 
     var livingRooms = [];
+    var hallways = [];
+    var isHall = function (r) { return /\b(hall|hallway|corridor|landing|passage)\b/i.test(r); };
     if (a.rooms.kitchen) livingRooms.push('Kitchen');
     if (a.rooms.living) livingRooms.push('Living room');
-    (a.rooms.other || []).forEach(function (r) { if (r && r.trim()) livingRooms.push(r.trim()); });
+    if (a.rooms.hallway) hallways.push('Hallway');
+    (a.rooms.other || []).forEach(function (r) {
+      if (!r || !r.trim()) return;
+      (isHall(r) ? hallways : livingRooms).push(r.trim());
+    });
     livingRooms.forEach(function (room, i) {
       lines.push({
         sku: livSku, qty: 1, room: room, group: room,
         why: i === 0
           ? 'Presence and movement only. It does not read breathing or heart rate, and it does not need to. If ' + n + ' isn’t in ' + p.poss + ' room, this will tell you which room ' + p.subj + ' ' + p.is + ' in.'
           : 'Presence and movement only.'
+      });
+    });
+
+    hallways.forEach(function (room) {
+      lines.push({
+        sku: 'minipuck', qty: 1, room: room, group: room,
+        why: 'A small puck that plugs straight into a wall outlet. Presence and movement only. It catches anyone passing through, which is how you know about wandering between rooms at night.'
       });
     });
 
@@ -165,7 +180,7 @@
         room: l.room, group: l.group, family: prod.family, why: l.why, optional: !!l.optional,
         selected: (key in sel) ? !!sel[key] : !l.optional
       };
-      if (out.selected) total += out.price * out.qty;
+      if (out.selected && out.price != null) total += out.price * out.qty;
       return out;
     });
 
@@ -175,7 +190,7 @@
       var g = groups.filter(function (x) { return x.name === l.group; })[0];
       if (!g) { g = { name: l.group, lines: [], subtotal: 0 }; groups.push(g); }
       g.lines.push(l);
-      if (l.selected) g.subtotal += l.price * l.qty;
+      if (l.selected && l.price != null) g.subtotal += l.price * l.qty;
     });
 
     return { lines: lines, groups: groups, notes: notes, total: total };

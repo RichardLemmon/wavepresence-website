@@ -14,6 +14,7 @@ Set by Rich for testing the purchase flow. Not final.
 | Living-space sensor, plant | $59 | same | same |
 | Bathroom sensor | $29 | bathroom or en suite | humidity and movement |
 | Fall sensor (working name, seismometer) | $89 | one per floor | floor vibration; senses a fall anywhere on that floor |
+| Hallway mini-puck (plugs into an outlet) | not priced | hallways, landings | presence and movement; catches wandering between rooms |
 
 Open: the door hub (one per home) has no price yet. The page does not mention it.
 Open: the seismometer needs a real name. "Fall sensor" is the working name on the page.
