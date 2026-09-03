@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Find your kit — WavePresence</title>
+<meta name="description" content="Answer a few questions about who you're looking after. We'll put together the right WavePresence kit. No cameras, no microphones, ever." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4EDE0;
+    --bg-warm: #EFE6D3;
+    --card: #FBF6EC;
+    --card-raised: #FFFFFF;
+    --ink: #1F1A14;
+    --ink-soft: #4A4237;
+    --ink-muted: #6F6556;
+    --line: #E3D9C4;
+    --line-soft: #EFE6D3;
+    --sage: #5B7551;
+    --sage-deep: #465C3E;
+    --sage-soft: #DCE5D0;
+    --amber: #B8702A;
+    --amber-soft: #F2DCC2;
+    --clay: #A84E2F;
+    --clay-deep: #8B3F26;
+    --clay-soft: #F0D3C5;
+    --ink-deep: #0F0C08;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Hanken Grotesk', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  a { color: inherit; }
+  button, input { font: inherit; color: inherit; }
+
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px; max-width: 720px; width: 100%; margin: 0 auto;
+  }
+  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; text-decoration: none; }
+  .wordmark em { font-style: italic; color: var(--clay); }
+  .privacy-pill {
+    font-size: 13px; color: var(--sage-deep); background: var(--sage-soft);
+    padding: 6px 12px; border-radius: 999px; display: flex; gap: 8px; align-items: center; white-space: nowrap; flex: none;
+  }
+  @media (max-width: 420px) { .privacy-pill span { display: none; } }
+  .privacy-pill svg { width: 14px; height: 14px; }
+
+  .progress { max-width: 720px; width: 100%; margin: 0 auto; padding: 0 24px 8px; display: flex; gap: 6px; align-items: center; height: 14px; }
+  .progress span { display: block; flex: 1 1 0; height: 3px; max-height: 3px; align-self: center; background: var(--line); border-radius: 2px; transition: background 240ms ease; }
+  .progress span.is-done { background: var(--sage); }
+  .progress span.is-now { background: var(--clay); }
+
+  main { flex: 1; width: 100%; max-width: 720px; margin: 0 auto; padding: 24px 24px 64px; position: relative; }
+
+  .step { display: none; }
+  .step.active { display: block; animation: rise 420ms cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .step.active { animation: none; } .progress span { transition: none; } }
+
+  h1:focus, h2:focus { outline: none; }
+  h1, h2 { font-family: var(--font-display); font-weight: 500; line-height: 1.12; letter-spacing: -0.01em; text-wrap: balance; }
+  h1 { font-size: clamp(2rem, 6vw, 3rem); margin-bottom: 16px; }
+  h2 { font-size: clamp(1.7rem, 5vw, 2.4rem); margin-bottom: 10px; }
+  h2 em, h1 em { font-style: italic; color: var(--clay); }
+  .lede { color: var(--ink-soft); max-width: 60ch; margin-bottom: 28px; }
+  .hint { font-size: 15px; color: var(--ink-muted); margin-top: 10px; }
+
+  /* Fields */
+  .field { margin-bottom: 22px; }
+  .field label { display: block; font-weight: 500; margin-bottom: 8px; }
+  .field input[type="text"], .field input[type="email"] {
+    width: 100%; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 12px;
+    background: var(--card-raised); outline: none; transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+  .field input:focus { border-color: var(--sage); box-shadow: 0 0 0 4px var(--sage-soft); }
+  .field input[aria-invalid="true"] { border-color: var(--clay); }
+  .error { color: var(--clay); font-size: 15px; margin-top: 8px; display: none; }
+  .error.show { display: block; }
+
+  /* Choice rows (radio / checkbox look) */
+  .choices { display: grid; gap: 10px; }
+  .choices.cols { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .choice {
+    display: flex; align-items: flex-start; gap: 14px; text-align: left; width: 100%;
+    padding: 16px 18px; border: 1.5px solid var(--line); border-radius: 14px; background: var(--card);
+    cursor: pointer; transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+  }
+  .choice:hover { background: var(--card-raised); border-color: #CDBFA4; }
+  .choice:focus-visible { outline: 3px solid var(--sage-soft); outline-offset: 2px; }
+  .choice[aria-checked="true"] { border-color: var(--sage); background: var(--sage-soft); }
+  .choice[aria-disabled="true"] { cursor: default; opacity: 0.85; }
+  .choice .mark {
+    flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #CDBFA4; margin-top: 2px;
+    display: grid; place-items: center; background: var(--card-raised);
+  }
+  .choice[data-kind="check"] .mark { border-radius: 6px; }
+  .choice .mark svg { width: 14px; height: 14px; opacity: 0; transition: opacity 120ms ease; }
+  .choice[aria-checked="true"] .mark { background: var(--sage); border-color: var(--sage); }
+  .choice[aria-checked="true"] .mark svg { opacity: 1; }
+  .choice > span:last-child { display: block; min-width: 0; }
+  .choice .t { display: block; font-weight: 500; }
+  .choice .d { display: block; color: var(--ink-soft); font-size: 16px; margin-top: 2px; }
+  .choice .d.q { font-style: italic; font-family: var(--font-display); font-size: 17px; color: var(--ink); margin-bottom: 4px; }
+
+  /* Stepper */
+  .stepper { display: inline-flex; align-items: center; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card-raised); overflow: hidden; }
+  .stepper button { width: 48px; height: 48px; border: 0; background: transparent; cursor: pointer; display: grid; place-items: center; }
+  .stepper button:hover { background: var(--bg-warm); }
+  .stepper button svg { width: 16px; height: 16px; }
+  .stepper output { min-width: 56px; text-align: center; font-weight: 500; font-size: 20px; }
+
+  /* Small list rows (pets, other rooms) */
+  .rows { display: grid; gap: 8px; margin-top: 10px; }
+  .row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card-raised); font-size: 16px; }
+  .row .grow { flex: 1; }
+  .row select, .row input[type="text"] { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
+  .row .x { border: 0; background: transparent; cursor: pointer; color: var(--ink-muted); padding: 6px; display: grid; place-items: center; }
+  .row .x:hover { color: var(--clay); }
+  .row .x svg { width: 14px; height: 14px; }
+  .add { border: 1.5px dashed #CDBFA4; background: transparent; border-radius: 10px; padding: 10px 14px; cursor: pointer; color: var(--sage-deep); font-weight: 500; font-size: 16px; margin-top: 10px; }
+  .add:hover { background: var(--card-raised); }
+
+  /* Nav */
+  .nav { display: flex; align-items: center; justify-content: space-between; margin-top: 36px; gap: 16px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; border-radius: 999px; border: 0;
+    background: var(--clay); color: #fff; font-weight: 600; cursor: pointer; transition: background 160ms ease, transform 160ms ease;
+  }
+  .btn:hover { background: var(--clay-deep); }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: 0.55; cursor: default; }
+  .btn svg { width: 16px; height: 16px; }
+  .btn.ghost { background: transparent; color: var(--ink-soft); padding-left: 8px; }
+  .btn.ghost:hover { background: var(--bg-warm); color: var(--ink); }
+  .btn.sage { background: var(--sage); }
+  .btn.sage:hover { background: var(--sage-deep); }
+
+  /* Privacy band */
+  .band {
+    background: var(--ink-deep); color: #F4EDE0; border-radius: 18px; padding: 24px 26px; margin-top: 36px;
+  }
+  .band strong { font-family: var(--font-display); font-weight: 500; font-size: 22px; display: block; margin-bottom: 8px; }
+  .band strong em { color: #E4C19A; font-style: italic; }
+  .band p { color: rgba(244, 237, 224, 0.78); font-size: 16px; max-width: 58ch; }
+  .band ul { list-style: none; margin-top: 12px; display: grid; gap: 6px; font-size: 16px; }
+  .band li { display: flex; gap: 10px; align-items: flex-start; }
+  .band li svg { width: 16px; height: 16px; flex: none; margin-top: 4px; color: #9DB58F; }
+
+  /* Kit */
+  .kit { display: grid; gap: 12px; margin: 20px 0; }
+  .line { display: grid; grid-template-columns: 1fr auto; gap: 6px 18px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--card-raised); }
+  .line.optional { background: transparent; border-style: dashed; }
+  .line .name { font-weight: 500; }
+  .line .room { color: var(--sage-deep); font-size: 15px; }
+  .line .why { grid-column: 1 / -1; color: var(--ink-soft); font-size: 16px; }
+  .line .price { text-align: right; font-weight: 500; white-space: nowrap; }
+  .line .qty { color: var(--ink-muted); font-size: 15px; text-align: right; }
+  .line .opt { grid-column: 1 / -1; font-size: 14px; color: var(--amber); }
+  .total { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 18px; border-top: 2px solid var(--ink); margin-top: 6px; }
+  .total .amt { font-family: var(--font-display); font-size: 30px; font-weight: 500; }
+  .notes { display: grid; gap: 10px; margin: 18px 0; }
+  .note { padding: 14px 16px; border-radius: 12px; background: var(--amber-soft); color: var(--ink); font-size: 16px; }
+  .styles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 6px; }
+  @media (max-width: 520px) { .styles { grid-template-columns: 1fr; } }
+  .styles .field { margin: 0; }
+  .styles select { width: 100%; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card-raised); }
+  .explain { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; }
+  @media (max-width: 560px) { .explain { grid-template-columns: 1fr; } }
+  .explain div { padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--line-soft); font-size: 16px; }
+  .explain h3 { font-family: var(--font-display); font-weight: 500; font-size: 20px; margin-bottom: 6px; }
+  .explain p { color: var(--ink-soft); }
+
+  .reserve { margin-top: 28px; padding: 22px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+  .reserve h3 { font-family: var(--font-display); font-weight: 500; font-size: 24px; margin-bottom: 6px; }
+  .reserve p { color: var(--ink-soft); font-size: 16px; margin-bottom: 14px; }
+  .reserve form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .reserve input { flex: 1 1 240px; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--card-raised); outline: none; }
+  .reserve input:focus { border-color: var(--sage); box-shadow: 0 0 0 4px var(--sage-soft); }
+
+  .done { text-align: center; padding: 24px 0; }
+  .done .tick { width: 64px; height: 64px; border-radius: 50%; background: var(--sage-soft); display: grid; place-items: center; margin: 0 auto 18px; }
+  .done .tick svg { width: 30px; height: 30px; color: var(--sage-deep); }
+  .done p { color: var(--ink-soft); max-width: 52ch; margin: 0 auto 10px; }
+
+  footer { text-align: center; color: var(--ink-muted); font-size: 14px; padding: 24px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <a class="wordmark" href="/">Wave<em>Presence</em></a>
+  <span class="privacy-pill" title="WavePresence uses no cameras and no microphones.">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.5 10.5a2 2 0 0 0 3 3"/><path d="M8 5h6l2 2h4v10"/><path d="M4 7h1v10h12"/></svg>
+    <span>No cameras, no mics</span>
+  </span>
+</header>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<main>
+
+  <!-- 0 · Intro -->
+  <section class="step active" data-step="0" aria-labelledby="h0">
+    <h1 id="h0">Let’s find the <em>right kit</em>.</h1>
+    <p class="lede">Seven short questions about who you’re looking after and the home they live in. At the end you’ll see exactly which sensors go where, and why. About two minutes.</p>
+    <div class="nav">
+      <span></span>
+      <button class="btn" data-next>Start <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="band">
+      <strong>We don’t watch people. <em>We watch rooms.</em></strong>
+      <p>People deserve to be looked after without being watched. WavePresence never uses a camera or a microphone. It uses radar, pressure, door, light and humidity sensors, and each one only sees what it needs to.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>No video or audio, ever. Nothing to record, nothing to leak.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Nothing to wear. No wristband, no tag, no phone in a pocket.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>You see “the bedroom was quiet”, never what anyone is doing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 1 · Person -->
+  <section class="step" data-step="1" aria-labelledby="h1">
+    <h2 id="h1">Who are you looking after?</h2>
+    <p class="lede">We use the name and pronouns in every message you get, so it never sounds like a machine wrote it.</p>
+    <div class="field">
+      <label for="name">Their first name</label>
+      <input type="text" id="name" autocomplete="off" placeholder="Mom" />
+      <div class="error" id="name-err">Please add a name. It can be “Mom” or “Dad”.</div>
+    </div>
+    <div class="field">
+      <label>They are my</label>
+      <div class="choices cols" role="radiogroup" data-radio="relationship">
+        <button class="choice" role="radio" data-value="mother"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Mother</span></span></button>
+        <button class="choice" role="radio" data-value="father"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Father</span></span></button>
+        <button class="choice" role="radio" data-value="spouse"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Spouse</span></span></button>
+        <button class="choice" role="radio" data-value="other"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Someone else</span></span></button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Pronouns</label>
+      <div class="choices cols" role="radiogroup" data-radio="pronouns">
+        <button class="choice" role="radio" data-value="she"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">She / her</span></span></button>
+        <button class="choice" role="radio" data-value="he"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">He / him</span></span></button>
+        <button class="choice" role="radio" data-value="they"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">They / them</span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Where they live -->
+  <section class="step" data-step="2" aria-labelledby="h2">
+    <h2 id="h2">Where does <span data-name>Mom</span> live?</h2>
+    <p class="lede">This changes who needs to be told, and how fast.</p>
+    <div class="choices" role="radiogroup" data-radio="lives">
+      <button class="choice" role="radio" data-value="with_me"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">With me</span><span class="d">Same home. I’m nearby most of the time, but not every minute.</span></span></button>
+      <button class="choice" role="radio" data-value="nearby"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">In their own home, nearby</span><span class="d">I can be there in under an hour.</span></span></button>
+      <button class="choice" role="radio" data-value="far"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">In their own home, far away</span><span class="d">Another town or another state. Someone closer would need to check.</span></span></button>
+    </div>
+  </section>
+
+  <!-- 3 · Household -->
+  <section class="step" data-step="3" aria-labelledby="h3">
+    <h2 id="h3">Who else is in the home?</h2>
+    <p class="lede">Other people and pets both make rooms look busy. Knowing about them keeps the alerts honest.</p>
+    <div class="field">
+      <label>Other adults living there</label>
+      <div class="stepper" data-stepper="others" data-min="0" data-max="6">
+        <button type="button" data-dec aria-label="Fewer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+        <output>0</output>
+        <button type="button" data-inc aria-label="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Pets</label>
+      <div class="rows" id="pets"></div>
+      <button type="button" class="add" id="add-pet">+ Add a pet</button>
+    </div>
+  </section>
+
+  <!-- 4 · Rooms -->
+  <section class="step" data-step="4" aria-labelledby="h4">
+    <h2 id="h4">Which rooms matter?</h2>
+    <p class="lede">Only rooms you want to know about. Fewer is fine. You can add more later.</p>
+    <div class="choices" data-checks="rooms">
+      <button class="choice" role="checkbox" data-kind="check" aria-checked="true" aria-disabled="true" data-value="bedroom"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t"><span data-name>Mom</span>’s bedroom</span><span class="d">Always. This is where the important hours are.</span></span></button>
+      <button class="choice" role="checkbox" data-kind="check" data-value="kitchen"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Kitchen</span><span class="d">Meals are the clearest daily rhythm there is.</span></span></button>
+      <button class="choice" role="checkbox" data-kind="check" data-value="living"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Living room</span><span class="d">The afternoon chair, the evening TV.</span></span></button>
+      <button class="choice" role="checkbox" data-kind="check" data-value="bathroom"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Bathroom</span><span class="d">Showers, and visits that run long.</span></span></button>
+    </div>
+    <div class="field" style="margin-top:18px">
+      <label>Any other rooms?</label>
+      <div class="rows" id="other-rooms"></div>
+      <button type="button" class="add" id="add-room">+ Add a room</button>
+    </div>
+    <div class="field">
+      <label>How many floors does the home have?</label>
+      <div class="stepper" data-stepper="floors" data-min="1" data-max="4">
+        <button type="button" data-dec aria-label="Fewer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+        <output>1</output>
+        <button type="button" data-inc aria-label="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <p class="hint">Stairs at night are worth knowing about on their own.</p>
+    </div>
+  </section>
+
+  <!-- 5 · Bedroom -->
+  <section class="step" data-step="5" aria-labelledby="h5">
+    <h2 id="h5">About <span data-name>Mom</span>’s bedroom.</h2>
+    <p class="lede">Two questions that change the most important alarm in the system.</p>
+    <div class="field">
+      <label>Does anyone else sleep in the same bed?</label>
+      <div class="choices cols" role="radiogroup" data-radio="sharesBed">
+        <button class="choice" role="radio" data-value="no"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">No</span></span></button>
+        <button class="choice" role="radio" data-value="yes"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Yes</span><span class="d">Then the kit comes one per bedside.</span></span></button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Does the bedroom have its own bathroom?</label>
+      <div class="choices cols" role="radiogroup" data-radio="ensuite">
+        <button class="choice" role="radio" data-value="no"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">No</span><span class="d">Leaving the bed means opening the door.</span></span></button>
+        <button class="choice" role="radio" data-value="yes"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Yes</span><span class="d">A bathroom trip must never sound like a fall.</span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · Level -->
+  <section class="step" data-step="6" aria-labelledby="h6">
+    <h2 id="h6">How closely do you want to watch?</h2>
+    <p class="lede">Pick the one that sounds most like you. For the first week WavePresence learns <span data-name>Mom</span>’s pattern and sends a daily report. Then you can tune anything.</p>
+    <div class="choices" role="radiogroup" data-radio="level" id="levels"></div>
+  </section>
+
+  <!-- 7 · Kit -->
+  <section class="step" data-step="7" aria-labelledby="h7">
+    <h2 id="h7">Here’s <span data-name>Mom</span>’s <em>kit</em>.</h2>
+    <p class="lede">Every sensor has one job, and each line says what it is. Nothing here records video or audio.</p>
+
+    <div class="explain">
+      <div>
+        <h3>Bedroom sensors</h3>
+        <p>Read breathing and heart micro-motion from across the room. That is how they know asleep from gone, and a person from a pet. Nothing is worn.</p>
+      </div>
+      <div>
+        <h3>Living-space sensors</h3>
+        <p>Presence and movement only. No breathing or heart reading, and none needed. They know a room is in use and when it went quiet.</p>
+      </div>
+    </div>
+
+    <div class="styles">
+      <div class="field">
+        <label for="style-bedroom">Bedroom sensor style</label>
+        <select id="style-bedroom">
+          <option value="base">Base, $49</option>
+          <option value="stone">Stone with nightlight, $69</option>
+          <option value="plant">Plant, $69</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="style-living">Living-space sensor style</label>
+        <select id="style-living">
+          <option value="base">Base, $49</option>
+          <option value="stone">Stone, $59</option>
+          <option value="plant">Plant, $59</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kit" id="kit"></div>
+    <div class="total"><span>Kit total</span><span class="amt" id="total">$0</span></div>
+    <div class="notes" id="notes"></div>
+
+    <div class="reserve" id="reserve">
+      <h3>Reserve this kit</h3>
+      <p>No payment now. We’ll email when it’s ready to ship. When the box arrives, scan the card inside and your answers will already be in the app.</p>
+      <form id="reserve-form" novalidate>
+        <label class="sr" for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+        <button class="btn sage" type="submit" id="reserve-btn">Reserve</button>
+      </form>
+      <div class="error" id="email-err">That email doesn’t look right. Check it and try again.</div>
+      <div class="error" id="net-err">We couldn’t save that. Check your connection and try again.</div>
+    </div>
+
+    <div class="done" id="done" hidden>
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+      <h2>Reserved.</h2>
+      <p id="done-copy"></p>
+      <p>No payment now. When the box arrives, scan the card inside. The app will already know <span data-name>Mom</span>, the rooms, and what you want to hear about.</p>
+    </div>
+  </section>
+
+  <div class="nav" id="nav">
+    <button class="btn ghost" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Back</button>
+    <button class="btn" data-next>Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+</main>
+
+<footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
+
+<script src="kit.js"></script>
+<script>
+(function () {
+  'use strict';
+  var WAITLIST_ENDPOINT = 'https://wavepresence-api-develop.up.railway.app/waitlist';
+  var STORE = 'wp_start_v1';
+  var STEPS = 8;
+
+  var a = WPKit.defaults();
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORE) || 'null');
+    if (saved && saved.person) a = Object.assign(WPKit.defaults(), saved);
+  } catch (e) {}
+
+  var step = 0;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  function save() { try { localStorage.setItem(STORE, JSON.stringify(a)); } catch (e) {} }
+
+  /* ---- progress ---- */
+  var prog = $('#progress');
+  for (var i = 1; i < STEPS; i++) { var s = document.createElement('span'); prog.appendChild(s); }
+  function paintProgress() {
+    $$('span', prog).forEach(function (el, i) {
+      var n = i + 1;
+      el.className = n < step ? 'is-done' : (n === step ? 'is-now' : '');
+    });
+    prog.style.visibility = step === 0 ? 'hidden' : 'visible';
+  }
+
+  /* ---- names everywhere ---- */
+  function paintNames() {
+    var n = a.person.name.trim() || 'Mom';
+    $$('[data-name]').forEach(function (el) { el.textContent = n; });
+  }
+
+  /* ---- radios ---- */
+  function paintRadios() {
+    $$('[data-radio]').forEach(function (g) {
+      var key = g.getAttribute('data-radio');
+      var val = a[key] !== undefined ? a[key] : a.person[key];
+      if (typeof val === 'boolean') val = val ? 'yes' : 'no';
+      $$('[role="radio"]', g).forEach(function (b) {
+        b.setAttribute('aria-checked', String(b.getAttribute('data-value') === val));
+      });
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[role="radio"]');
+    if (!b) return;
+    var g = b.closest('[data-radio]');
+    var key = g.getAttribute('data-radio');
+    var v = b.getAttribute('data-value');
+    if (key === 'relationship' || key === 'pronouns') a.person[key] = v;
+    else if (key === 'sharesBed' || key === 'ensuite') a[key] = (v === 'yes');
+    else a[key] = v;
+    save(); paintRadios();
+  });
+
+  /* ---- checkboxes (rooms) ---- */
+  function paintChecks() {
+    $$('[data-checks="rooms"] [role="checkbox"]').forEach(function (b) {
+      var v = b.getAttribute('data-value');
+      if (v === 'bedroom') return;
+      b.setAttribute('aria-checked', String(!!a.rooms[v]));
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[role="checkbox"]');
+    if (!b || b.getAttribute('aria-disabled') === 'true') return;
+    var v = b.getAttribute('data-value');
+    a.rooms[v] = !a.rooms[v];
+    save(); paintChecks();
+  });
+
+  /* ---- steppers ---- */
+  function paintSteppers() {
+    $$('[data-stepper]').forEach(function (s) {
+      $('output', s).textContent = a[s.getAttribute('data-stepper')];
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-inc],[data-dec]');
+    if (!b) return;
+    var s = b.closest('[data-stepper]');
+    var key = s.getAttribute('data-stepper');
+    var min = +s.getAttribute('data-min'), max = +s.getAttribute('data-max');
+    var d = b.hasAttribute('data-inc') ? 1 : -1;
+    a[key] = Math.min(max, Math.max(min, (a[key] || 0) + d));
+    save(); paintSteppers();
+  });
+
+  /* ---- pets ---- */
+  var petsEl = $('#pets');
+  function paintPets() {
+    petsEl.innerHTML = '';
+    a.pets.forEach(function (p, i) {
+      var row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML =
+        '<input type="text" class="grow" placeholder="Name" value="' + esc(p.name || '') + '" data-pet-name="' + i + '" />' +
+        '<select data-pet-type="' + i + '"><option value="cat">Cat</option><option value="dog">Dog</option><option value="other">Other</option></select>' +
+        '<select data-pet-size="' + i + '"><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option></select>' +
+        '<button type="button" class="x" data-pet-del="' + i + '" aria-label="Remove pet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+      $('[data-pet-type]', row).value = p.type || 'cat';
+      $('[data-pet-size]', row).value = p.size || 'small';
+      petsEl.appendChild(row);
+    });
+  }
+  $('#add-pet').addEventListener('click', function () { a.pets.push({ name: '', type: 'cat', size: 'small' }); save(); paintPets(); $$('[data-pet-name]').pop().focus(); });
+  petsEl.addEventListener('input', function (e) {
+    var t = e.target;
+    if (t.hasAttribute('data-pet-name')) a.pets[+t.getAttribute('data-pet-name')].name = t.value;
+    if (t.hasAttribute('data-pet-type')) a.pets[+t.getAttribute('data-pet-type')].type = t.value;
+    if (t.hasAttribute('data-pet-size')) a.pets[+t.getAttribute('data-pet-size')].size = t.value;
+    save();
+  });
+  petsEl.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-pet-del]');
+    if (!b) return;
+    a.pets.splice(+b.getAttribute('data-pet-del'), 1); save(); paintPets();
+  });
+
+  /* ---- other rooms ---- */
+  var roomsEl = $('#other-rooms');
+  function paintRooms() {
+    roomsEl.innerHTML = '';
+    a.rooms.other.forEach(function (r, i) {
+      var row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML =
+        '<input type="text" class="grow" placeholder="Den, hallway, garage…" value="' + esc(r) + '" data-room="' + i + '" />' +
+        '<button type="button" class="x" data-room-del="' + i + '" aria-label="Remove room"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+      roomsEl.appendChild(row);
+    });
+  }
+  $('#add-room').addEventListener('click', function () { a.rooms.other.push(''); save(); paintRooms(); $$('[data-room]').pop().focus(); });
+  roomsEl.addEventListener('input', function (e) {
+    if (e.target.hasAttribute('data-room')) { a.rooms.other[+e.target.getAttribute('data-room')] = e.target.value; save(); }
+  });
+  roomsEl.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-room-del]');
+    if (!b) return;
+    a.rooms.other.splice(+b.getAttribute('data-room-del'), 1); save(); paintRooms();
+  });
+
+  /* ---- name ---- */
+  $('#name').value = a.person.name;
+  $('#name').addEventListener('input', function (e) {
+    a.person.name = e.target.value; save(); paintNames();
+    e.target.removeAttribute('aria-invalid'); $('#name-err').classList.remove('show');
+  });
+
+  /* ---- levels ---- */
+  function paintLevels() {
+    var c = WPKit.levelCopy(a);
+    var host = $('#levels');
+    host.innerHTML = ['low', 'medium', 'high'].map(function (k) {
+      return '<button class="choice" role="radio" data-value="' + k + '">' +
+        '<span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
+        '<span><span class="t">' + c[k].title + '</span><span class="d q">“' + esc(c[k].lede) + '”</span><span class="d">' + esc(c[k].body) + '</span></span></button>';
+    }).join('');
+    paintRadios();
+  }
+
+  /* ---- kit ---- */
+  $('#style-bedroom').addEventListener('change', function (e) { a.style.bedroom = e.target.value; save(); paintKit(); });
+  $('#style-living').addEventListener('change', function (e) { a.style.living = e.target.value; save(); paintKit(); });
+  function paintKit() {
+    $('#style-bedroom').value = a.style.bedroom;
+    $('#style-living').value = a.style.living;
+    var k = WPKit.recommend(a);
+    $('#kit').innerHTML = k.lines.map(function (l) {
+      return '<div class="line' + (l.optional ? ' optional' : '') + '">' +
+        '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
+        '<div><div class="price">$' + (l.price * l.qty) + '</div>' + (l.qty > 1 ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
+        '<div class="why">' + esc(l.why) + '</div>' +
+        (l.optional ? '<div class="opt">Optional at this level. Not in the total.</div>' : '') +
+        '</div>';
+    }).join('');
+    $('#total').textContent = '$' + k.total;
+    $('#notes').innerHTML = k.notes.map(function (n) { return '<div class="note">' + esc(n) + '</div>'; }).join('');
+    return k;
+  }
+
+  /* ---- reserve ---- */
+  $('#reserve-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var input = $('#email'), btn = $('#reserve-btn');
+    var email = input.value.trim();
+    $('#email-err').classList.remove('show'); $('#net-err').classList.remove('show');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $('#email-err').classList.add('show'); input.focus(); return; }
+    var kit = WPKit.recommend(a);
+    btn.disabled = true; btn.textContent = 'Saving…';
+    try {
+      var res = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'start', answers: a, kit: kit.lines })
+      });
+      if (!res.ok) throw new Error('bad status ' + res.status);
+      $('#reserve').hidden = true;
+      $('#done').hidden = false;
+      $('#done-copy').textContent = 'We’ll email ' + email + ' when ' + (a.person.name.trim() || 'Mom') + '’s kit is ready to ship.';
+      $('#nav').style.visibility = 'hidden';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      $('#net-err').classList.add('show');
+      btn.disabled = false; btn.textContent = 'Reserve';
+    }
+  });
+
+  /* ---- navigation ---- */
+  function validate() {
+    if (step === 1 && !a.person.name.trim()) {
+      $('#name').setAttribute('aria-invalid', 'true'); $('#name-err').classList.add('show'); $('#name').focus();
+      return false;
+    }
+    return true;
+  }
+  function go(n) {
+    step = Math.max(0, Math.min(STEPS - 1, n));
+    $$('.step').forEach(function (s) { s.classList.toggle('active', +s.getAttribute('data-step') === step); });
+    var nav = $('#nav');
+    nav.style.display = step === 0 ? 'none' : 'flex';
+    nav.style.visibility = 'visible';
+    $('[data-next]', nav).style.visibility = step === STEPS - 1 ? 'hidden' : 'visible';
+    paintProgress(); paintNames(); paintRadios(); paintChecks(); paintSteppers();
+    if (step === 3) paintPets();
+    if (step === 4) paintRooms();
+    if (step === 6) paintLevels();
+    if (step === 7) paintKit();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    var h = $('.step.active h1, .step.active h2'); if (h) h.setAttribute('tabindex', '-1'), h.focus({ preventScroll: true });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-next]')) { if (validate()) go(step + 1); }
+    if (e.target.closest('[data-back]')) go(step - 1);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.id === 'name') { e.preventDefault(); if (validate()) go(step + 1); }
+  });
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  var qs = new URLSearchParams(location.search);
+  go(qs.has('step') ? +qs.get('step') : 0);
+})();
+</script>
+</body>
+</html>
