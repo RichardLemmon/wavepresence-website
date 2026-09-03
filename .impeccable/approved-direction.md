@@ -32,3 +32,20 @@ The same tokens and grammar in `assets/organic.css`: pale mint ground, moss slab
 one lime signal for live/chosen, Manrope 800 at tight tracking, large radii, glass
 over photography, rings for time-of-day data. The room-activity dial on the landing
 page is the data language the app's dashboard should inherit.
+
+## Headline decision — Rich, 2026-09-03
+
+The finish reviewer flagged that the landing headline says the product monitors
+a **person** while the slab below it, and PRODUCT.md, say it watches **rooms**:
+
+- Rich's headline: "Monitoring a loved one's safety without being intrusive."
+- The approved comp's: "Watching the room, never the person."
+- PRODUCT.md: "It does not track people. It watches rooms."
+
+**Rich chose to keep his headline.** It speaks in the buyer's own language — a
+worried adult child searches for a way to monitor their mother, not a way to
+watch her rooms. The tension is known and accepted, not an oversight. Do not
+"fix" this in a later pass without asking him.
+
+The muted tone in the headline marks a single pivot word ("without"), which is
+the comp's own two-tone mechanic; that part was a real defect and was fixed.
