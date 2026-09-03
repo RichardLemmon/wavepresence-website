@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A — The home is the nature</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_core.css">
+<style>
+  .hero{display:grid;grid-template-columns:1fr 1.06fr;gap:56px;align-items:center;padding:24px 0 72px}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;gap:34px;padding-bottom:48px}}
+  .shot{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/3.4;background:#DDE4D8}
+  .shot img{width:100%;height:100%;object-fit:cover;display:block}
+  .float{position:absolute;display:flex;align-items:center;gap:10px;padding:11px 15px;font-size:14px;font-weight:600}
+  .float i{width:8px;height:8px;border-radius:50%;background:var(--lime);flex:none;box-shadow:0 0 0 4px rgba(195,245,60,.25)}
+  .f1{top:18px;left:18px}
+  .f2{bottom:18px;left:18px;flex-direction:column;align-items:flex-start;gap:2px}
+  .f2 b{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .f2 span{font-size:12px;color:rgba(234,243,230,.72);font-weight:600}
+  .ring{position:absolute;right:18px;bottom:18px;width:118px;height:118px;border-radius:50%;
+    display:grid;place-items:center;text-align:center;
+    background:conic-gradient(var(--lime) 0 68%, rgba(255,255,255,.22) 68% 100%);padding:7px}
+  .ring>div{width:100%;height:100%;border-radius:50%;background:var(--glass);backdrop-filter:blur(14px);
+    display:grid;place-items:center;align-content:center;color:#EAF3E6}
+  .ring b{font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .ring span{font-size:10.5px;font-weight:600;color:rgba(234,243,230,.7);margin-top:3px}
+  .band{background:var(--moss);border-radius:var(--r-lg);padding:38px 40px;color:#EAF3E6;margin-bottom:64px}
+  .band h2{font-size:clamp(1.5rem,3vw,2.15rem);font-weight:800;letter-spacing:-.035em;max-width:22ch}
+  .band h2 em{font-style:normal;color:var(--lime)}
+  .band ul{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:26px}
+  @media(max-width:760px){.band ul{grid-template-columns:1fr;gap:14px}.band{padding:28px 24px}}
+  .band li{font-size:15px;color:rgba(234,243,230,.82);padding-top:16px;border-top:1px solid rgba(195,245,60,.28)}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .card{position:relative;border-radius:var(--r-md);overflow:hidden;background:var(--paper);aspect-ratio:4/5}
+  .card img{width:100%;height:74%;object-fit:cover;display:block}
+  .card .cap{padding:12px 14px}
+  .card .cap b{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .card .cap span{font-size:13px;color:var(--ink-3)}
+  .card .tag{position:absolute;top:11px;left:11px}
+</style></head><body>
+<div class="mocklabel">A · THE HOME IS THE NATURE</div>
+<div class="wrap">
+<header class="site"><div class="mark">Wave<span>Presence</span></div>
+  <span class="pill-priv"><i></i>No cameras, no mics</span></header>
+
+<section class="hero">
+  <div>
+    <h1>Watching the room, <em>never the person.</em></h1>
+    <p class="lede">Sensors that look like something you already own. They know a room is in use, when it went quiet, and when someone needs you.</p>
+    <button class="cta">Find your kit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+  <figure class="shot">
+    <img src="../../assets/devices/plant.webp" alt="A sensor hidden in a planter on a kitchen counter">
+    <span class="float glass f1"><i></i>Kitchen · in use now</span>
+    <span class="float glass f2"><b>6h 20m</b><span>ACTIVE TODAY</span></span>
+    <div class="ring"><div><b>68%</b><span>OF USUAL</span></div></div>
+  </figure>
+</section>
+
+<div class="band">
+  <h2>We don't watch people. <em>We watch their surroundings.</em></h2>
+  <ul>
+    <li>No video or audio, ever. Nothing to record, nothing to leak.</li>
+    <li>Nothing to wear. No wristband, no tag, no phone in a pocket.</li>
+    <li>You see "the bedroom was quiet", never what anyone is doing.</li>
+  </ul>
+</div>
+
+<h2 class="sec-t">Made to blend in.</h2>
+<p class="sec-l">All of our sensors hide their technology in style. A plant for the kitchen counter, a stone for the nightstand, a stalk or a disc where you want it out of the way.</p>
+<div class="grid">
+  <figure class="card"><img src="../../assets/devices/plant.webp" alt=""><span class="chip tag">Kitchen</span><figcaption class="cap"><b>Plant</b><span>$59</span></figcaption></figure>
+  <figure class="card"><img src="../../assets/devices/stone.webp" alt=""><span class="chip tag">Nightstand</span><figcaption class="cap"><b>Stone</b><span>$69 · nightlight</span></figcaption></figure>
+  <figure class="card"><img src="../../assets/devices/disc.webp" alt=""><span class="chip tag">Any room</span><figcaption class="cap"><b>Disc</b><span>$49</span></figcaption></figure>
+  <figure class="card"><img src="../../assets/devices/wand.webp" alt=""><span class="chip tag">Over a bed</span><figcaption class="cap"><b>Stalk</b><span>$49</span></figcaption></figure>
+</div>
+<footer>WavePresence · No cameras. No microphones. Ever.</footer>
+</div></body></html>

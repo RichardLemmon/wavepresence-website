@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B — Literal botanical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_core.css">
+<style>
+  body{background:
+    radial-gradient(900px 520px at 88% -6%, rgba(195,245,60,.30), transparent 62%),
+    radial-gradient(760px 520px at 4% 34%, rgba(27,53,39,.13), transparent 60%),
+    var(--ground);}
+  .hero{position:relative;padding:18px 0 78px;text-align:center}
+  .hero h1{max-width:15ch;margin:0 auto}
+  .hero .lede{margin:20px auto 0;text-align:center}
+  .orbit{position:relative;width:100%;max-width:760px;margin:44px auto 0;aspect-ratio:1/.62}
+  .orbit::before{content:"";position:absolute;inset:6% 12%;border-radius:50%;
+    border:1.5px dashed rgba(46,77,58,.28)}
+  .bub{position:absolute;border-radius:50%;overflow:hidden;box-shadow:0 10px 30px rgba(20,40,28,.14)}
+  .bub img{width:100%;height:100%;object-fit:cover;display:block}
+  .b1{width:29%;aspect-ratio:1;left:2%;top:16%}
+  .b2{width:20%;aspect-ratio:1;left:20%;bottom:-2%;background:var(--moss)}
+  .b3{width:23%;aspect-ratio:1;right:3%;top:6%}
+  .b4{width:17%;aspect-ratio:1;right:16%;bottom:2%;background:var(--lime);display:grid;place-items:center}
+  .b4 span{font-weight:800;font-size:15px;letter-spacing:-.02em;color:var(--ink);text-align:center;line-height:1.1}
+  .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:40%;aspect-ratio:1;
+    border-radius:50%;overflow:hidden;box-shadow:0 22px 60px rgba(20,40,28,.22)}
+  .core img{width:100%;height:100%;object-fit:cover}
+  .core .ov{position:absolute;inset:auto 0 0 0;padding:14px;background:linear-gradient(transparent,rgba(14,31,23,.86));
+    color:#EAF3E6;font-size:12.5px;font-weight:700;letter-spacing:.02em}
+  .datechip{position:absolute;padding:7px 12px;border-radius:12px;background:var(--paper);
+    font-size:12px;font-weight:700;box-shadow:0 6px 18px rgba(20,40,28,.12);text-align:center;line-height:1.15}
+  .datechip span{display:block;font-size:10px;color:var(--ink-3);font-weight:600}
+  .d1{left:34%;top:2%} .d2{right:34%;bottom:6%}
+  .cta{margin-top:34px}
+  .band{background:var(--moss);border-radius:var(--r-lg);padding:38px 40px;color:#EAF3E6;margin-bottom:58px;position:relative;overflow:hidden}
+  .band::after{content:"";position:absolute;right:-70px;top:-70px;width:280px;height:280px;border-radius:50%;
+    background:url(bot/herbs.jpg) center/cover;opacity:.30}
+  .band h2{font-size:clamp(1.5rem,3vw,2.15rem);font-weight:800;letter-spacing:-.035em;max-width:20ch;position:relative}
+  .band h2 em{font-style:normal;color:var(--lime)}
+  .band ul{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:26px;position:relative}
+  @media(max-width:760px){.band ul{grid-template-columns:1fr;gap:14px}.band{padding:28px 24px}}
+  .band li{font-size:15px;color:rgba(234,243,230,.82);padding-top:16px;border-top:1px solid rgba(195,245,60,.28)}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .card{text-align:center}
+  .card .ph{border-radius:50%;overflow:hidden;aspect-ratio:1;background:var(--paper)}
+  .card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .card b{display:block;margin-top:12px;font-size:15px;font-weight:700}
+  .card span{font-size:13px;color:var(--ink-3)}
+</style></head><body>
+<div class="mocklabel">B · LITERAL BOTANICAL</div>
+<div class="wrap">
+<header class="site"><div class="mark">Wave<span>Presence</span></div>
+  <span class="pill-priv"><i></i>No cameras, no mics</span></header>
+
+<section class="hero">
+  <h1>Watching the room, <em>never the person.</em></h1>
+  <p class="lede">Sensors that live among the things you already keep. They know a room is in use, when it went quiet, and when someone needs you.</p>
+  <div class="orbit">
+    <span class="datechip d1">Kitchen<span>in use now</span></span>
+    <span class="datechip d2">Bedroom<span>quiet 3h</span></span>
+    <div class="bub b1"><img src="bot/herbs.jpg" alt=""></div>
+    <div class="bub b2"><img src="bot/pot.jpg" alt=""></div>
+    <div class="bub b3"><img src="bot/glow.jpg" alt=""></div>
+    <div class="bub b4"><span>68%<br>of usual</span></div>
+    <div class="core"><img src="bot/succulent.jpg" alt="A succulent hiding a sensor"><div class="ov">PLANT SENSOR · KITCHEN</div></div>
+  </div>
+  <button class="cta">Find your kit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</section>
+
+<div class="band">
+  <h2>We don't watch people. <em>We watch their surroundings.</em></h2>
+  <ul>
+    <li>No video or audio, ever. Nothing to record, nothing to leak.</li>
+    <li>Nothing to wear. No wristband, no tag, no phone in a pocket.</li>
+    <li>You see "the bedroom was quiet", never what anyone is doing.</li>
+  </ul>
+</div>
+
+<h2 class="sec-t">Made to blend in.</h2>
+<p class="sec-l">All of our sensors hide their technology in style. A plant for the kitchen counter, a stone for the nightstand, a stalk or a disc where you want it out of the way.</p>
+<div class="grid">
+  <figure class="card"><div class="ph"><img src="../../assets/devices/plant.webp" alt=""></div><b>Plant</b><span>$59</span></figure>
+  <figure class="card"><div class="ph"><img src="../../assets/devices/stone.webp" alt=""></div><b>Stone</b><span>$69 · nightlight</span></figure>
+  <figure class="card"><div class="ph"><img src="../../assets/devices/disc.webp" alt=""></div><b>Disc</b><span>$49</span></figure>
+  <figure class="card"><div class="ph"><img src="../../assets/devices/wand.webp" alt=""></div><b>Stalk</b><span>$49</span></figure>
+</div>
+<footer>WavePresence · No cameras. No microphones. Ever.</footer>
+</div></body></html>

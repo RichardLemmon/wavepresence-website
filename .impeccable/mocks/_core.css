@@ -1,0 +1,36 @@
+/* Shared skeleton so the three mocks differ ONLY in nature treatment. */
+:root{
+  --ground:#F1F5EE; --paper:#FFFFFF;
+  --ink:#0E1F17; --ink-2:#2E4D3A; --ink-3:#5F7568;
+  --line:#DCE4D8;
+  --lime:#C3F53C; --lime-deep:#A8DC1E; --lime-wash:#EAFBC4;
+  --moss:#1B3527; --moss-2:#254735;
+  --glass:rgba(14,31,23,.74);
+  --r-lg:28px; --r-md:18px; --r-sm:12px;
+  --f:'Manrope',-apple-system,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ground);color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+header.site{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.mark{font-weight:800;font-size:20px;letter-spacing:-.03em}
+.mark span{color:var(--ink-3);font-weight:500}
+.pill-priv{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;
+  background:var(--moss);color:#EAF3E6;padding:8px 14px;border-radius:999px}
+.pill-priv i{width:6px;height:6px;border-radius:50%;background:var(--lime);display:block}
+h1{font-size:clamp(2.4rem,5.2vw,4.1rem);line-height:1.02;letter-spacing:-.045em;font-weight:800;text-wrap:balance}
+h1 em{font-style:normal;color:var(--ink-3)}
+.lede{color:var(--ink-2);font-size:19px;max-width:44ch;margin-top:18px}
+.cta{display:inline-flex;align-items:center;gap:12px;margin-top:28px;background:var(--lime);color:var(--ink);
+  border:0;font:inherit;font-weight:700;font-size:17px;padding:16px 26px;border-radius:999px;cursor:pointer}
+.cta svg{width:17px;height:17px}
+.cta:hover{background:var(--lime-deep)}
+.sec-t{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;letter-spacing:-.035em;margin-bottom:8px}
+.sec-l{color:var(--ink-3);max-width:56ch}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.02em;
+  padding:6px 11px;border-radius:999px;background:var(--lime);color:var(--ink)}
+.glass{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  color:#EAF3E6;border-radius:var(--r-md);border:1px solid rgba(255,255,255,.12)}
+.mocklabel{position:fixed;left:0;top:0;background:var(--moss);color:var(--lime);font-size:11px;font-weight:800;
+  letter-spacing:.14em;padding:6px 12px;border-bottom-right-radius:10px;z-index:99}
+footer{padding:44px 0 34px;color:var(--ink-3);font-size:14px}
