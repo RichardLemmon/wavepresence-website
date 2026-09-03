@@ -71,7 +71,6 @@ h1 em, h2 em { font-style: normal; color: var(--ink-3); }
   border: 0; background: var(--lime); color: var(--ink); font-weight: 800; font-size: 17px;
   letter-spacing: -.01em; cursor: pointer; text-decoration: none;
   transition: background 160ms ease, transform 120ms ease; }
-.btn:hover { background: var(--lime-deep); }
 .btn:active { transform: translateY(1px); }
 .btn:disabled { opacity: .5; cursor: default; }
 .btn:focus-visible, input:focus-visible, select:focus-visible, [role="radio"]:focus-visible,
@@ -91,9 +90,7 @@ select:focus { border-color: var(--ink-2); box-shadow: 0 0 0 4px rgba(195,245,60
 input[aria-invalid="true"] { border-color: #A8452B; }
 .btn svg { width: 16px; height: 16px; }
 .btn.ghost { background: transparent; color: var(--ink-2); padding-left: 10px; font-weight: 700; }
-.btn.ghost:hover { background: var(--ground-2); color: var(--ink); }
 .btn.sage { background: var(--moss); color: #EAF3E6; }
-.btn.sage:hover { background: var(--moss-2); }
 
 /* Moss slab — the privacy statement, and any passage that must stop the scroll. */
 .band { background: var(--moss); color: #EAF3E6; border-radius: var(--r-lg); padding: 38px 40px;
@@ -145,4 +142,10 @@ footer { text-align: center; color: var(--ink-3); font-size: 14px; padding: 26px
   transition: opacity 620ms cubic-bezier(.16,1,.3,1), transform 620ms cubic-bezier(.16,1,.3,1); }
 @media (prefers-reduced-motion: reduce) {
   .settle, .settle.in { opacity: 1; transform: none; transition: none; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { background: var(--lime-deep); }
+  .btn.ghost:hover { background: var(--ground-2); color: var(--ink); }
+  .btn.sage:hover { background: var(--moss-2); }
 }
