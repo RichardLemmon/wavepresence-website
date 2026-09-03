@@ -202,7 +202,12 @@
       return out;
     });
 
-    /* Group lines by room, in order of first appearance. */
+    /* Group lines by room, in order of first appearance.
+     * Inside a room the sensor comes first, then the mat, then doors. */
+    var RANK = { bedroom: 0, living: 0, hallway: 0, bathroom: 0, fall: 0, mat: 1, door: 2 };
+    lines = lines.map(function (l, i) { return [RANK[l.family] || 0, i, l]; })
+      .sort(function (x, y) { return x[0] - y[0] || x[1] - y[1]; })
+      .map(function (t) { return t[2]; });
     var groups = [];
     lines.forEach(function (l) {
       var g = groups.filter(function (x) { return x.name === l.group; })[0];
