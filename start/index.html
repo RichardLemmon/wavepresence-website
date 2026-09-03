@@ -7,52 +7,19 @@
 <meta name="description" content="Answer a few questions about who you're looking after. We'll put together the right WavePresence kit. No cameras, no microphones, ever." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../assets/organic.css">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ORGANIC TECH — see the direction contract at the top of <body>. */
-  :root {
-    --ground:#F1F5EE; --ground-2:#E7EDE3; --paper:#FFFFFF;
-    --ink:#0E1F17; --ink-2:#2E4D3A; --ink-3:#5F7568; --ink-4:#8FA694;
-    --line:#DCE4D8; --line-soft:#E7EDE3;
-    --lime:#C3F53C; --lime-deep:#A8DC1E; --lime-wash:#EDFBCE;
-    --moss:#1B3527; --moss-2:#254735;
-    --glass:rgba(14,31,23,.76);
-    --r-lg:28px; --r-md:18px; --r-sm:12px;
-    --f:'Manrope',-apple-system,system-ui,'Segoe UI',sans-serif;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--ground); color: var(--ink); font-family: var(--f);
-    font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  a { color: inherit; }
-  button, input, select { font: inherit; color: inherit; }
+  /* Page-specific: the seven-step kit finder. Shared world lives in /assets/organic.css. */
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+  main { flex: 1; width: 100%; max-width: 780px; margin: 0 auto; padding: 22px 24px 72px; position: relative; }
 
-  header.site {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 22px 24px; max-width: 780px; width: 100%; margin: 0 auto;
-  }
-  .wordmark { font-size: 20px; font-weight: 800; letter-spacing: -.035em; text-decoration: none; }
-  .wordmark em { font-style: normal; font-weight: 500; color: var(--ink-3); }
-  .privacy-pill {
-    font-size: 13px; font-weight: 700; color: #EAF3E6; background: var(--moss);
-    padding: 9px 15px; border-radius: 999px; display: flex; gap: 9px; align-items: center;
-    white-space: nowrap; flex: none;
-  }
-  .privacy-pill svg { width: 14px; height: 14px; color: var(--lime); }
-  @media (max-width: 358px) { .privacy-pill span { display: none; } }
-
-  /* Progress: moss for done, a taller glowing lime bar for now. */
   .progress { max-width: 780px; width: 100%; margin: 0 auto; padding: 0 24px 10px;
     display: flex; gap: 7px; align-items: center; height: 16px; }
   .progress span { display: block; flex: 1 1 0; height: 4px; background: var(--line);
-    border-radius: 999px; transition: background 240ms ease, height 240ms ease, box-shadow 240ms ease; }
+    border-radius: 999px; transition: background 240ms ease, box-shadow 240ms ease; }
   .progress span.is-done { background: var(--ink-2); }
   .progress span.is-now { background: var(--lime); height: 7px; box-shadow: 0 0 0 3px rgba(195,245,60,.28); }
-
-  main { flex: 1; width: 100%; max-width: 780px; margin: 0 auto; padding: 22px 24px 72px; position: relative; }
 
   .step { display: none; }
   .step.active { display: block; animation: rise 460ms cubic-bezier(0.16,1,0.3,1); }
@@ -61,15 +28,6 @@
     .step.active { animation: none; } .progress span { transition: none; }
   }
 
-  h1:focus, h2:focus { outline: none; }
-  h1, h2 { font-weight: 800; letter-spacing: -.045em; line-height: 1.03; text-wrap: balance; }
-  h1 { font-size: clamp(2.3rem, 6.4vw, 3.5rem); margin-bottom: 16px; }
-  h2 { font-size: clamp(1.9rem, 5.4vw, 2.6rem); margin-bottom: 10px; }
-  h1 em, h2 em { font-style: normal; color: var(--ink-3); }
-  .lede { color: var(--ink-2); font-size: 18px; max-width: 56ch; margin-bottom: 30px; }
-  .hint { font-size: 15px; color: var(--ink-3); margin-top: 10px; }
-
-  /* Fields */
   .field { margin-bottom: 24px; }
   .field label { display: block; font-weight: 700; margin-bottom: 9px; letter-spacing: -.01em; }
   .field input[type="text"], .field input[type="email"] {
@@ -81,7 +39,6 @@
   .error { color: #A8452B; font-size: 15px; margin-top: 8px; display: none; font-weight: 600; }
   .error.show { display: block; }
 
-  /* Choices */
   .choices { display: grid; gap: 10px; }
   .choices.cols { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
   .choice {
@@ -106,7 +63,6 @@
   .choice .t { display: block; font-weight: 700; letter-spacing: -.015em; }
   .choice .d { display: block; color: var(--ink-2); font-size: 15.5px; margin-top: 3px; }
 
-  /* Stepper */
   .stepper { display: inline-flex; align-items: center; border: 1.5px solid var(--line);
     border-radius: var(--r-sm); background: var(--paper); overflow: hidden; }
   .stepper button { width: 48px; height: 48px; border: 0; background: transparent; cursor: pointer;
@@ -115,7 +71,6 @@
   .stepper button svg { width: 16px; height: 16px; }
   .stepper output { min-width: 56px; text-align: center; font-weight: 800; font-size: 20px; }
 
-  /* Small list rows */
   .rows { display: grid; gap: 8px; margin-top: 10px; }
   .row { display: flex; align-items: center; gap: 10px; padding: 11px 13px; border: 1px solid var(--line);
     border-radius: var(--r-sm); background: var(--paper); font-size: 16px; }
@@ -130,51 +85,9 @@
     padding: 11px 15px; cursor: pointer; color: var(--ink-2); font-weight: 700; font-size: 16px; margin-top: 10px; }
   .add:hover { background: var(--lime-wash); border-color: var(--ink-2); }
 
-  /* Nav */
   .nav { display: flex; align-items: center; justify-content: space-between; margin-top: 38px; gap: 16px; }
-  .btn { display: inline-flex; align-items: center; gap: 11px; padding: 16px 27px; border-radius: 999px;
-    border: 0; background: var(--lime); color: var(--ink); font-weight: 800; font-size: 17px;
-    letter-spacing: -.01em; cursor: pointer; transition: background 160ms ease, transform 120ms ease; }
-  .btn:hover { background: var(--lime-deep); }
-  .btn:active { transform: translateY(1px); }
-  .btn:disabled { opacity: .5; cursor: default; }
-  .btn svg { width: 16px; height: 16px; }
-  .btn.ghost { background: transparent; color: var(--ink-2); padding-left: 10px; font-weight: 700; }
-  .btn.ghost:hover { background: var(--ground-2); color: var(--ink); }
-  .btn.sage { background: var(--moss); color: #EAF3E6; }
-  .btn.sage:hover { background: var(--moss-2); }
 
-  /* Privacy band */
-  .band { background: var(--moss); color: #EAF3E6; border-radius: var(--r-lg); padding: 38px 40px;
-    margin-top: 40px; position: relative; overflow: hidden; }
-  .band::after { content: ""; position: absolute; right: -130px; top: -130px; width: 340px; height: 340px;
-    border-radius: 50%; border: 46px solid rgba(195,245,60,.12); pointer-events: none; }
-  @media (max-width: 640px) { .band { padding: 28px 24px; } }
-  .band strong { display: block; font-size: clamp(1.5rem, 4.4vw, 2.15rem); font-weight: 800;
-    letter-spacing: -.04em; line-height: 1.08; max-width: 20ch; margin-bottom: 14px; position: relative; }
-  .band strong em { font-style: normal; color: var(--lime); }
-  .band p { color: rgba(234,243,230,.8); font-size: 16px; max-width: 58ch; position: relative; }
-  .band ul { list-style: none; margin-top: 26px; display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 22px; position: relative; }
-  @media (max-width: 720px) { .band ul { grid-template-columns: 1fr; gap: 14px; } }
-  .band li { display: block; font-size: 15px; color: rgba(234,243,230,.82);
-    padding-top: 15px; border-top: 1px solid rgba(195,245,60,.3); }
-  .band li svg { display: none; }
-
-  /* Device gallery */
-  .gallery-title { font-size: clamp(1.6rem, 4.4vw, 2.1rem); font-weight: 800; letter-spacing: -.04em;
-    margin: 44px 0 8px; }
-  .gallery-lede { color: var(--ink-2); max-width: 58ch; margin-bottom: 4px; }
-  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
-  @media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } }
-  .gallery figure { margin: 0; border-radius: var(--r-md); overflow: hidden; background: var(--paper);
-    border: 1px solid var(--line-soft); }
-  .gallery img { display: block; width: 100%; aspect-ratio: 16/10; object-fit: cover; }
-  .gallery figcaption { padding: 13px 16px 15px; font-size: 15px; color: var(--ink-2); }
-  .gallery figcaption b { color: var(--ink); font-weight: 800; letter-spacing: -.015em; }
-  .gallery + h2 { margin-top: 46px; }
-
-  /* Room photo with a floating glass caption */
+  /* Room photograph with a floating glass caption. */
   .hero-photo { position: relative; margin: 0 0 14px; border-radius: var(--r-lg); overflow: hidden;
     background: var(--ground-2); }
   .hero-photo img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; }
@@ -183,7 +96,6 @@
     color: #EAF3E6; border: 1px solid rgba(255,255,255,.14); border-radius: var(--r-sm);
     padding: 11px 15px; font-size: 14.5px; font-weight: 600; }
 
-  /* Kit lines */
   .kit { display: grid; gap: 12px; margin: 18px 0; }
   .line { display: grid; grid-template-columns: auto 1fr auto; gap: 7px 14px; padding: 18px 20px;
     border: 1.5px solid var(--line); border-radius: var(--r-md); background: var(--paper); cursor: pointer;
@@ -223,7 +135,6 @@
   .line[aria-disabled="true"] { cursor: default; }
   .line[aria-disabled="true"] .box { background: #C9E39A; border-color: #A9C77C; }
 
-  /* Totals */
   .total { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 20px;
     border-top: 4px solid var(--lime); margin-top: 8px; }
   .total .amt { font-size: 34px; font-weight: 800; letter-spacing: -.05em; }
@@ -232,14 +143,12 @@
   .total.sub .amt { font-size: 24px; }
   .total.sub .permo { font-size: 14px; font-weight: 600; color: var(--ink-3); }
 
-  /* Summary rows */
   .sum { display: grid; grid-template-columns: 1fr auto; gap: 5px 16px; padding: 16px 20px;
     border: 1.5px solid var(--line); border-radius: var(--r-md); background: var(--paper); }
   .sum .r { font-weight: 800; letter-spacing: -.015em; }
   .sum .items { grid-column: 1 / -1; color: var(--ink-2); font-size: 15px; }
   .sum .p { text-align: right; font-weight: 800; letter-spacing: -.02em; }
 
-  /* Style pickers + explainer */
   .styles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 6px; }
   @media (max-width: 560px) { .styles { grid-template-columns: 1fr; } }
   .styles .field { margin: 0; }
@@ -255,7 +164,6 @@
   #kit-explain { grid-template-columns: 1fr; margin: 12px 0 22px; }
   #kit-explain div { padding: 20px 22px; }
 
-  /* Reserve */
   .reserve { margin-top: 30px; padding: 26px; border-radius: var(--r-lg); background: var(--moss);
     color: #EAF3E6; position: relative; overflow: hidden; }
   .reserve::after { content: ""; position: absolute; right: -110px; bottom: -140px; width: 300px; height: 300px;
@@ -271,15 +179,11 @@
   .reserve .btn.sage:hover { background: var(--lime-deep); }
   .reserve .error { color: #FFD9A8; }
 
-  /* Done */
   .done { text-align: center; padding: 26px 0; }
   .done .tick { width: 68px; height: 68px; border-radius: 50%; background: var(--lime);
     display: grid; place-items: center; margin: 0 auto 20px; box-shadow: 0 0 0 10px rgba(195,245,60,.22); }
   .done .tick svg { width: 30px; height: 30px; color: var(--ink); }
   .done p { color: var(--ink-2); max-width: 52ch; margin: 0 auto 10px; }
-
-  footer { text-align: center; color: var(--ink-3); font-size: 14px; padding: 26px; }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 </style>
 </head>
 <body>
@@ -451,7 +355,7 @@
     <p class="hint" id="kit-count" style="margin:0 0 6px"></p>
     <h2 id="hk"></h2>
     <p class="lede" id="kit-lede"></p>
-    <figure class="hero-photo" id="kit-photo" hidden><img id="kit-photo-img" src="" alt="" /><figcaption id="kit-photo-cap"></figcaption></figure>
+    <figure class="hero-photo" id="kit-photo" hidden><img id="kit-photo-img" alt="" /><figcaption id="kit-photo-cap"></figcaption></figure>
     <div class="explain" id="kit-explain"></div>
     <div class="styles" id="kit-styles"></div>
     <div class="kit" id="kit"></div>
