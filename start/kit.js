@@ -113,14 +113,14 @@
     lines.push({
       sku: 'mat', qty: bedsides, room: bedroom, group: bedroom,
       why: bedsides === 2
-        ? 'One strip per side, where the feet land. The only sensor that knows someone stood up.'
-        : 'A strip where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up. If ' + p.subj + ' sleep' + p.s + ' with the door open, add a second mat just inside the door and skip the door sensor.',
+        ? 'One strip per side, where the feet land. Sits on the floor or under a rug, right where each foot lands. The only sensor that knows someone stood up.'
+        : 'Sits on the floor or under a rug, right where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up. If ' + p.subj + ' sleep' + p.s + ' with the door open, add a second mat just inside the door and skip the door sensor.',
       skip: 'If ' + who + ' rarely gets up at night, the mat can wait. You can add it any time.'
     });
 
     lines.push({
       sku: 'door', qty: 1, room: bedroom, group: bedroom,
-      why: 'Hears the bedroom door open and close, so “entering or leaving the room” is never a guess.',
+      why: 'Attaches to the door frame and the door itself. Hears the door open and close, so “entering or leaving the room” is never a guess.',
       skip: 'If ' + who + ' sleeps with the door open, a door sensor may not be necessary.'
     });
 
