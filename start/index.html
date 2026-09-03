@@ -161,13 +161,16 @@
   .band li svg { width: 16px; height: 16px; flex: none; margin-top: 4px; color: #9DB58F; }
 
   /* Device photos */
-  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 36px; }
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 520px) { .gallery { grid-template-columns: 1fr; } }
   .gallery figure { margin: 0; border-radius: 16px; overflow: hidden; background: var(--card); border: 1px solid var(--line-soft); }
   .gallery img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
   .gallery figcaption { padding: 10px 14px 12px; font-size: 15px; color: var(--ink-soft); }
   .gallery figcaption b { color: var(--ink); font-weight: 500; }
-  .gallery-title { font-family: var(--font-display); font-weight: 500; font-size: 26px; margin: 40px 0 6px; }
+  .gallery-title { font-family: var(--font-display); font-weight: 500; font-size: 26px; margin: 0 0 6px; }
+  .gallery + h1 { margin-top: 44px; }
+  .gallery-lede { margin-bottom: 4px; }
+  .gallery { margin-top: 14px; }
   .gallery-lede { color: var(--ink-soft); max-width: 58ch; }
   .hero-photo { margin: 0 0 20px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line-soft); background: var(--card); }
   .hero-photo img { display: block; width: 100%; aspect-ratio: 2 / 1; object-fit: cover; }
@@ -243,6 +246,14 @@
 
   <!-- 0 · Intro -->
   <section class="step active" data-step="0" aria-labelledby="h0">
+    <h2 class="gallery-title">Made to blend in.</h2>
+    <p class="gallery-lede">Pick the sensor that fits your home. A plant for the kitchen counter, a stone for the nightstand, a slim stalk or a disc where you want it out of the way.</p>
+    <div class="gallery">
+      <figure><img src="../assets/devices/plant.webp" alt="A concrete planter with a succulent on a kitchen counter, with a sensor inside" loading="lazy" /><figcaption><b>Plant.</b> A real succulent in a planter. The sensor is in the pot.</figcaption></figure>
+      <figure><img src="../assets/devices/stone.webp" alt="A smooth grey stone sensor glowing softly on a nightstand at night" loading="lazy" /><figcaption><b>Stone with nightlight.</b> A soft glow for the floor at 3 a.m., and a sensor inside.</figcaption></figure>
+      <figure><img src="../assets/devices/wand.webp" alt="A slim cream sensor on a stalk and round base on a nightstand" loading="lazy" /><figcaption><b>Stalk.</b> The same base sensor, raised to see over a mattress.</figcaption></figure>
+      <figure><img src="../assets/devices/disc.webp" alt="A round cream disc sensor on a wooden nightstand beside a bed" loading="lazy" /><figcaption><b>Disc.</b> The base sensor. Sits on a stand and aims at the bed or the room.</figcaption></figure>
+    </div>
     <h1 id="h0">Let’s find the <em>right kit</em>.</h1>
     <p class="lede">Seven short questions about who you’re looking after and the home they live in. At the end you’ll see exactly which sensors go where, and why. About two minutes.</p>
     <div class="nav">
@@ -257,14 +268,6 @@
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Nothing to wear. No wristband, no tag, no phone in a pocket.</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>You see “the bedroom was quiet”, never what anyone is doing.</li>
       </ul>
-    </div>
-    <h2 class="gallery-title">Made to blend in.</h2>
-    <p class="gallery-lede">Pick the sensor that fits your home. A plant for the kitchen counter, a stone for the nightstand, a slim stalk or a disc where you want it out of the way.</p>
-    <div class="gallery">
-      <figure><img src="../assets/devices/plant.webp" alt="A concrete planter with a succulent on a kitchen counter, with a sensor inside" loading="lazy" /><figcaption><b>Plant.</b> A real succulent in a planter. The sensor is in the pot.</figcaption></figure>
-      <figure><img src="../assets/devices/stone.webp" alt="A smooth grey stone sensor glowing softly on a nightstand at night" loading="lazy" /><figcaption><b>Stone with nightlight.</b> A soft glow for the floor at 3 a.m., and a sensor inside.</figcaption></figure>
-      <figure><img src="../assets/devices/wand.webp" alt="A slim cream sensor on a stalk and round base on a nightstand" loading="lazy" /><figcaption><b>Stalk.</b> The same base sensor, raised to see over a mattress.</figcaption></figure>
-      <figure><img src="../assets/devices/disc.webp" alt="A round cream disc sensor on a wooden nightstand beside a bed" loading="lazy" /><figcaption><b>Disc.</b> The base sensor. Sits on a stand and aims at the bed or the room.</figcaption></figure>
     </div>
   </section>
 
