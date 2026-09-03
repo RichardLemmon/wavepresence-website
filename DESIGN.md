@@ -23,6 +23,15 @@ colors:
   error-on-moss: "#FFD9A8"
   warn: "#9A5A12"
 typography:
+  # The complete ramp. Eight literal steps and four clamps — nothing else is
+  # allowed in the CSS. Snapped from twenty ad-hoc values on 2026-09-03; the
+  # steps sit far enough apart that a reader can tell two of them apart.
+  displayHero:
+    fontFamily: "Manrope, -apple-system, system-ui, 'Segoe UI', sans-serif"
+    fontSize: "clamp(2.5rem, 6vw, 4.05rem)"
+    fontWeight: 800
+    lineHeight: 1.03
+    letterSpacing: "-0.045em"
   display:
     fontFamily: "Manrope, -apple-system, system-ui, 'Segoe UI', sans-serif"
     fontSize: "clamp(2.3rem, 6.4vw, 3.5rem)"
@@ -64,6 +73,36 @@ typography:
     fontSize: "17px"
     fontWeight: 400
     lineHeight: 1.5
+    letterSpacing: "normal"
+  amountSmall:
+    fontFamily: "Manrope, -apple-system, system-ui, 'Segoe UI', sans-serif"
+    fontSize: "34px"
+    fontWeight: 800
+    lineHeight: 1
+    letterSpacing: "-0.05em"
+  heading:
+    fontFamily: "Manrope, -apple-system, system-ui, 'Segoe UI', sans-serif"
+    fontSize: "24px"
+    fontWeight: 800
+    lineHeight: 1.2
+    letterSpacing: "-0.035em"
+  subtitle:
+    fontFamily: "Manrope, -apple-system, system-ui, 'Segoe UI', sans-serif"
+    fontSize: "20px"
+    fontWeight: 800
+    lineHeight: 1.25
+    letterSpacing: "-0.03em"
+  supporting:
+    fontFamily: "Manrope, -apple-system, system-ui, 'Segoe UI', sans-serif"
+    fontSize: "16px"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "normal"
+  caption:
+    fontFamily: "Manrope, -apple-system, system-ui, 'Segoe UI', sans-serif"
+    fontSize: "14px"
+    fontWeight: 600
+    lineHeight: 1.4
     letterSpacing: "normal"
   label:
     fontFamily: "Manrope, -apple-system, system-ui, 'Segoe UI', sans-serif"

@@ -50,7 +50,7 @@ header.site {
 .wordmark { font-size: 20px; font-weight: 800; letter-spacing: -.035em; text-decoration: none; }
 .wordmark em { font-style: normal; font-weight: 500; color: var(--ink-3); }
 .privacy-pill {
-  font-size: 13px; font-weight: 700; color: #EAF3E6; background: var(--moss);
+  font-size: 12px; font-weight: 700; color: #EAF3E6; background: var(--moss);
   padding: 9px 15px; border-radius: 999px; display: flex; gap: 9px; align-items: center;
   white-space: nowrap; flex: none;
 }
@@ -64,7 +64,7 @@ h1 { font-size: clamp(2.3rem, 6.4vw, 3.5rem); margin-bottom: 16px; }
 h2 { font-size: clamp(1.9rem, 5.4vw, 2.6rem); margin-bottom: 10px; }
 h1 em, h2 em { font-style: normal; color: var(--ink-3); }
 .lede { color: var(--ink-2); font-size: 18px; max-width: 56ch; margin-bottom: 30px; }
-.hint { font-size: 15px; color: var(--ink-3); margin-top: 10px; }
+.hint { font-size: 14px; color: var(--ink-3); margin-top: 10px; }
 
 /* Buttons — lime is the primary action and the live signal, nothing else. */
 .btn { display: inline-flex; align-items: center; gap: 11px; padding: 16px 27px; border-radius: 999px;
@@ -85,7 +85,7 @@ select { appearance: none; -webkit-appearance: none; border-radius: var(--r-sm);
 select:focus { border-color: var(--ink-2); box-shadow: 0 0 0 4px rgba(195,245,60,.4); outline: none; }
 
 /* One error voice for both pages. */
-.error { color: #A8452B; font-size: 15px; margin-top: 8px; display: none; font-weight: 600; }
+.error { color: #A8452B; font-size: 14px; margin-top: 8px; display: none; font-weight: 600; }
 .error.show { display: block; }
 input[aria-invalid="true"] { border-color: #A8452B; }
 .btn svg { width: 16px; height: 16px; }
@@ -105,12 +105,12 @@ input[aria-invalid="true"] { border-color: #A8452B; }
 .band ul { list-style: none; margin-top: 26px; display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 22px; position: relative; }
 @media (max-width: 720px) { .band ul { grid-template-columns: 1fr; gap: 14px; } }
-.band li { display: block; font-size: 15px; color: rgba(234,243,230,.82);
+.band li { display: block; font-size: 14px; color: rgba(234,243,230,.82);
   padding-top: 15px; border-top: 1px solid rgba(195,245,60,.3); }
 .band li svg { display: none; }
 
 /* Device gallery */
-.gallery-title { font-size: clamp(1.6rem, 4.4vw, 2.1rem); font-weight: 800; letter-spacing: -.04em;
+.gallery-title { font-size: clamp(1.5rem, 4.4vw, 2.15rem); font-weight: 800; letter-spacing: -.04em;
   margin: 44px 0 8px; }
 .gallery-lede { color: var(--ink-2); max-width: 58ch; margin-bottom: 4px; }
 .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
@@ -118,7 +118,7 @@ input[aria-invalid="true"] { border-color: #A8452B; }
 .gallery figure { margin: 0; border-radius: var(--r-md); overflow: hidden; background: var(--paper);
   border: 1px solid var(--line-soft); }
 .gallery img { display: block; width: 100%; aspect-ratio: 16/10; object-fit: cover; }
-.gallery figcaption { padding: 13px 16px 15px; font-size: 15px; color: var(--ink-2); }
+.gallery figcaption { padding: 13px 16px 15px; font-size: 14px; color: var(--ink-2); }
 .gallery figcaption b { color: var(--ink); font-weight: 800; letter-spacing: -.015em; }
 .gallery + h2 { margin-top: 46px; }
 

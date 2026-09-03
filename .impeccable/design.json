@@ -8,164 +8,485 @@
         "role": "primary",
         "displayName": "Acid Lime",
         "canonical": "#C3F53C",
-        "tonalRamp": ["#2A3A05", "#3F570A", "#587810", "#729A16", "#8FBE1C", "#A8DC1E", "#C3F53C", "#EDFBCE"]
+        "tonalRamp": [
+          "#2A3A05",
+          "#3F570A",
+          "#587810",
+          "#729A16",
+          "#8FBE1C",
+          "#A8DC1E",
+          "#C3F53C",
+          "#EDFBCE"
+        ]
       },
       "lime-deep": {
         "role": "primary",
         "displayName": "Lime Deep",
         "canonical": "#A8DC1E",
-        "tonalRamp": ["#232F04", "#364807", "#4B650B", "#628410", "#7BA415", "#93C219", "#A8DC1E", "#D9F58A"]
+        "tonalRamp": [
+          "#232F04",
+          "#364807",
+          "#4B650B",
+          "#628410",
+          "#7BA415",
+          "#93C219",
+          "#A8DC1E",
+          "#D9F58A"
+        ]
       },
       "lime-wash": {
         "role": "primary",
         "displayName": "Lime Wash",
         "canonical": "#EDFBCE",
-        "tonalRamp": ["#3B4A18", "#516523", "#68812F", "#7F9D3D", "#9BB95E", "#BCD48F", "#DAEDB6", "#EDFBCE"]
+        "tonalRamp": [
+          "#3B4A18",
+          "#516523",
+          "#68812F",
+          "#7F9D3D",
+          "#9BB95E",
+          "#BCD48F",
+          "#DAEDB6",
+          "#EDFBCE"
+        ]
       },
       "moss": {
         "role": "secondary",
         "displayName": "Deep Moss",
         "canonical": "#1B3527",
-        "tonalRamp": ["#0B1810", "#132419", "#1B3527", "#254735", "#356148", "#4C815F", "#7BAE8D", "#C4DFCE"]
+        "tonalRamp": [
+          "#0B1810",
+          "#132419",
+          "#1B3527",
+          "#254735",
+          "#356148",
+          "#4C815F",
+          "#7BAE8D",
+          "#C4DFCE"
+        ]
       },
       "moss-2": {
         "role": "secondary",
         "displayName": "Moss 2",
         "canonical": "#254735",
-        "tonalRamp": ["#0D1B13", "#16291D", "#1E3A2A", "#254735", "#356148", "#4C815F", "#7BAE8D", "#C4DFCE"]
+        "tonalRamp": [
+          "#0D1B13",
+          "#16291D",
+          "#1E3A2A",
+          "#254735",
+          "#356148",
+          "#4C815F",
+          "#7BAE8D",
+          "#C4DFCE"
+        ]
       },
       "on-moss": {
         "role": "secondary",
         "displayName": "On-Moss",
         "canonical": "#EAF3E6",
-        "tonalRamp": ["#2C3B28", "#3E5138", "#54694C", "#6D8464", "#8CA083", "#AFBFA7", "#D0DECB", "#EAF3E6"]
+        "tonalRamp": [
+          "#2C3B28",
+          "#3E5138",
+          "#54694C",
+          "#6D8464",
+          "#8CA083",
+          "#AFBFA7",
+          "#D0DECB",
+          "#EAF3E6"
+        ]
       },
       "glass": {
         "role": "tertiary",
         "displayName": "Dark Glass",
         "canonical": "rgba(14,31,23,.76)",
-        "tonalRamp": ["rgba(14,31,23,1)", "rgba(14,31,23,.9)", "rgba(14,31,23,.82)", "rgba(14,31,23,.76)", "rgba(14,31,23,.62)", "rgba(14,31,23,.45)", "rgba(14,31,23,.28)", "rgba(14,31,23,.12)"]
+        "tonalRamp": [
+          "rgba(14,31,23,1)",
+          "rgba(14,31,23,.9)",
+          "rgba(14,31,23,.82)",
+          "rgba(14,31,23,.76)",
+          "rgba(14,31,23,.62)",
+          "rgba(14,31,23,.45)",
+          "rgba(14,31,23,.28)",
+          "rgba(14,31,23,.12)"
+        ]
       },
       "ground": {
         "role": "neutral",
         "displayName": "Pale Mint Ground",
         "canonical": "#F1F5EE",
-        "tonalRamp": ["#0E1F17", "#2E4D3A", "#5F7568", "#8FA694", "#DCE4D8", "#E7EDE3", "#F1F5EE", "#FFFFFF"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#2E4D3A",
+          "#5F7568",
+          "#8FA694",
+          "#DCE4D8",
+          "#E7EDE3",
+          "#F1F5EE",
+          "#FFFFFF"
+        ]
       },
       "ground-2": {
         "role": "neutral",
         "displayName": "Recessed Mint",
         "canonical": "#E7EDE3",
-        "tonalRamp": ["#0E1F17", "#2E4D3A", "#5F7568", "#8FA694", "#C6D2C1", "#DCE4D8", "#E7EDE3", "#F1F5EE"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#2E4D3A",
+          "#5F7568",
+          "#8FA694",
+          "#C6D2C1",
+          "#DCE4D8",
+          "#E7EDE3",
+          "#F1F5EE"
+        ]
       },
       "paper": {
         "role": "neutral",
         "displayName": "Paper",
         "canonical": "#FFFFFF",
-        "tonalRamp": ["#0E1F17", "#2E4D3A", "#5F7568", "#8FA694", "#DCE4D8", "#E7EDE3", "#F1F5EE", "#FFFFFF"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#2E4D3A",
+          "#5F7568",
+          "#8FA694",
+          "#DCE4D8",
+          "#E7EDE3",
+          "#F1F5EE",
+          "#FFFFFF"
+        ]
       },
       "ink": {
         "role": "neutral",
         "displayName": "Forest Ink",
         "canonical": "#0E1F17",
-        "tonalRamp": ["#0E1F17", "#1B3527", "#2E4D3A", "#456A53", "#5F7568", "#8FA694", "#DCE4D8", "#F1F5EE"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#1B3527",
+          "#2E4D3A",
+          "#456A53",
+          "#5F7568",
+          "#8FA694",
+          "#DCE4D8",
+          "#F1F5EE"
+        ]
       },
       "ink-2": {
         "role": "neutral",
         "displayName": "Secondary Ink",
         "canonical": "#2E4D3A",
-        "tonalRamp": ["#0E1F17", "#1B3527", "#2E4D3A", "#456A53", "#5F7568", "#8FA694", "#DCE4D8", "#F1F5EE"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#1B3527",
+          "#2E4D3A",
+          "#456A53",
+          "#5F7568",
+          "#8FA694",
+          "#DCE4D8",
+          "#F1F5EE"
+        ]
       },
       "ink-3": {
         "role": "neutral",
         "displayName": "Tertiary Ink",
         "canonical": "#5F7568",
-        "tonalRamp": ["#0E1F17", "#1B3527", "#2E4D3A", "#456A53", "#5F7568", "#8FA694", "#DCE4D8", "#F1F5EE"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#1B3527",
+          "#2E4D3A",
+          "#456A53",
+          "#5F7568",
+          "#8FA694",
+          "#DCE4D8",
+          "#F1F5EE"
+        ]
       },
       "ink-4": {
         "role": "neutral",
         "displayName": "Quiet Ink",
         "canonical": "#8FA694",
-        "tonalRamp": ["#0E1F17", "#1B3527", "#2E4D3A", "#456A53", "#5F7568", "#8FA694", "#DCE4D8", "#F1F5EE"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#1B3527",
+          "#2E4D3A",
+          "#456A53",
+          "#5F7568",
+          "#8FA694",
+          "#DCE4D8",
+          "#F1F5EE"
+        ]
       },
       "line": {
         "role": "neutral",
         "displayName": "Interactive Hairline",
         "canonical": "#DCE4D8",
-        "tonalRamp": ["#0E1F17", "#2E4D3A", "#5F7568", "#8FA694", "#B6C4B0", "#DCE4D8", "#E7EDE3", "#F1F5EE"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#2E4D3A",
+          "#5F7568",
+          "#8FA694",
+          "#B6C4B0",
+          "#DCE4D8",
+          "#E7EDE3",
+          "#F1F5EE"
+        ]
       },
       "line-soft": {
         "role": "neutral",
         "displayName": "Passive Hairline",
         "canonical": "#E7EDE3",
-        "tonalRamp": ["#0E1F17", "#2E4D3A", "#5F7568", "#8FA694", "#C6D2C1", "#DCE4D8", "#E7EDE3", "#F1F5EE"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#2E4D3A",
+          "#5F7568",
+          "#8FA694",
+          "#C6D2C1",
+          "#DCE4D8",
+          "#E7EDE3",
+          "#F1F5EE"
+        ]
       },
       "dial-track": {
         "role": "neutral",
         "displayName": "Dial Track",
         "canonical": "#E4EBDF",
-        "tonalRamp": ["#0E1F17", "#2E4D3A", "#5F7568", "#8FA694", "#C9D6C6", "#E4EBDF", "#EEF3EB", "#F1F5EE"]
+        "tonalRamp": [
+          "#0E1F17",
+          "#2E4D3A",
+          "#5F7568",
+          "#8FA694",
+          "#C9D6C6",
+          "#E4EBDF",
+          "#EEF3EB",
+          "#F1F5EE"
+        ]
       },
       "error": {
         "role": "tertiary",
         "displayName": "Clay Error",
         "canonical": "#A8452B",
-        "tonalRamp": ["#33130B", "#4C1D11", "#672718", "#84331F", "#A8452B", "#C4644A", "#DE9683", "#F4D6CC"]
+        "tonalRamp": [
+          "#33130B",
+          "#4C1D11",
+          "#672718",
+          "#84331F",
+          "#A8452B",
+          "#C4644A",
+          "#DE9683",
+          "#F4D6CC"
+        ]
       },
       "error-on-moss": {
         "role": "tertiary",
         "displayName": "Amber On-Moss",
         "canonical": "#FFD9A8",
-        "tonalRamp": ["#472B0B", "#5E3A10", "#7A4E16", "#99661F", "#BC8636", "#DCAA64", "#FFD9A8", "#FFEED6"]
+        "tonalRamp": [
+          "#472B0B",
+          "#5E3A10",
+          "#7A4E16",
+          "#99661F",
+          "#BC8636",
+          "#DCAA64",
+          "#FFD9A8",
+          "#FFEED6"
+        ]
       },
       "warn": {
         "role": "tertiary",
         "displayName": "Amber Warn",
         "canonical": "#9A5A12",
-        "tonalRamp": ["#2E1A04", "#452707", "#5D360A", "#79470E", "#9A5A12", "#BC7B31", "#D9A76C", "#F2DAB6"]
+        "tonalRamp": [
+          "#2E1A04",
+          "#452707",
+          "#5D360A",
+          "#79470E",
+          "#9A5A12",
+          "#BC7B31",
+          "#D9A76C",
+          "#F2DAB6"
+        ]
       }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Page headline. The hero raises the ceiling to clamp(2.5rem, 6vw, 4.05rem). Always text-wrap: balance." },
-      "headline": { "displayName": "Headline", "purpose": "Section headings and every kit-finder question. One question per screen means the question is the headline." },
-      "slab": { "displayName": "Slab Headline", "purpose": "The claim at the top of a moss or pale slab, held to a 20ch measure so it breaks into short lines." },
-      "amount": { "displayName": "Amount", "purpose": "Prices and kit totals. Tightest tracking in the system; the unit rides alongside at 13-16px in ink-3." },
-      "title": { "displayName": "Title", "purpose": "Card headings, kit line names, step titles. 17.5-24px at -0.015em to -0.035em." },
-      "lede": { "displayName": "Lede", "purpose": "The ink-2 sentence under every headline. Max 56ch, 46ch in the hero. Never longer than two sentences." },
-      "body": { "displayName": "Body", "purpose": "Page default, 17px/1.5." },
-      "label": { "displayName": "Label", "purpose": "Uppercase meta above or beneath a value - ONE PER BEDSIDE, ACTIVE TODAY, OF USUAL, AT HOME, EXAMPLE READING. 10.5-13px at +0.02em to +0.14em." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page headline. The hero raises the ceiling to clamp(2.5rem, 6vw, 4.05rem). Always text-wrap: balance."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings and every kit-finder question. One question per screen means the question is the headline."
+      },
+      "slab": {
+        "displayName": "Slab Headline",
+        "purpose": "The claim at the top of a moss or pale slab, held to a 20ch measure so it breaks into short lines."
+      },
+      "amount": {
+        "displayName": "Amount",
+        "purpose": "Prices and kit totals. Tightest tracking in the system; the unit rides alongside at 14px in ink-3."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card headings, kit line names, step titles. 18px at -0.02em."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "The ink-2 sentence under every headline. Max 56ch, 46ch in the hero. Never longer than two sentences."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Page default, 17px/1.5."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase meta above or beneath a value - ONE PER BEDSIDE, ACTIVE TODAY, OF USUAL, AT HOME, EXAMPLE READING. 10.5-13px at +0.02em to +0.14em."
+      },
+      "displayHero": {
+        "displayName": "Display, hero",
+        "purpose": "The landing page's opening headline only. clamp(2.5rem, 6vw, 4.05rem)."
+      },
+      "amountSmall": {
+        "displayName": "Amount, small",
+        "purpose": "The kit total on the summary. 34px, tightest tracking."
+      },
+      "heading": {
+        "displayName": "Heading",
+        "purpose": "Slab and card headings inside a panel. 24px."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "Wordmark, stepper value, explainer headings. 20px."
+      },
+      "supporting": {
+        "displayName": "Supporting",
+        "purpose": "The main reading inside a card or slab: item descriptions, privacy paragraph, explainer body. 16px."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Secondary meta: room labels, skip lines, left-out lines, gallery captions, legend pills. 14px."
+      }
     },
     "shadows": [
-      { "name": "dial-float", "value": "0 26px 70px rgba(20,40,28,.13)", "purpose": "Under the room-activity dial, the largest circular data object, so it hovers over the page ground." },
-      { "name": "medallion-lift", "value": "0 18px 44px rgba(14,31,23,.22)", "purpose": "Under a circular photograph overlapping a slab edge; paired with a 7px ground-coloured ring." },
-      { "name": "live-halo", "value": "0 0 0 4px rgba(195,245,60,.25)", "purpose": "Around the 8px lime dot meaning a room is in use now." },
-      { "name": "focus-halo", "value": "0 0 0 4px rgba(195,245,60,.4)", "purpose": "Around a focused input or select on pale ground, alongside an ink-2 border. The kit finder uses .45." },
-      { "name": "focus-halo-on-moss", "value": "0 0 0 4px rgba(195,245,60,.22)", "purpose": "The same focus halo inside a moss slab, where the border also goes lime." },
-      { "name": "now-halo", "value": "0 0 0 3px rgba(195,245,60,.28)", "purpose": "Around the current progress segment in the kit finder." },
-      { "name": "completion-halo", "value": "0 0 0 10px rgba(195,245,60,.22)", "purpose": "Around the lime tick on the reserved state. The largest halo in the system, used once, at the end." }
+      {
+        "name": "dial-float",
+        "value": "0 26px 70px rgba(20,40,28,.13)",
+        "purpose": "Under the room-activity dial, the largest circular data object, so it hovers over the page ground."
+      },
+      {
+        "name": "medallion-lift",
+        "value": "0 18px 44px rgba(14,31,23,.22)",
+        "purpose": "Under a circular photograph overlapping a slab edge; paired with a 7px ground-coloured ring."
+      },
+      {
+        "name": "live-halo",
+        "value": "0 0 0 4px rgba(195,245,60,.25)",
+        "purpose": "Around the 8px lime dot meaning a room is in use now."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 4px rgba(195,245,60,.4)",
+        "purpose": "Around a focused input or select on pale ground, alongside an ink-2 border. The kit finder uses .45."
+      },
+      {
+        "name": "focus-halo-on-moss",
+        "value": "0 0 0 4px rgba(195,245,60,.22)",
+        "purpose": "The same focus halo inside a moss slab, where the border also goes lime."
+      },
+      {
+        "name": "now-halo",
+        "value": "0 0 0 3px rgba(195,245,60,.28)",
+        "purpose": "Around the current progress segment in the kit finder."
+      },
+      {
+        "name": "completion-halo",
+        "value": "0 0 0 10px rgba(195,245,60,.22)",
+        "purpose": "Around the lime tick on the reserved state. The largest halo in the system, used once, at the end."
+      }
     ],
     "motion": [
-      { "name": "settle", "value": "opacity 620ms cubic-bezier(.16,1,.3,1), transform 620ms cubic-bezier(.16,1,.3,1)", "purpose": "The world's one authored motion: 22px rise into place, exponential ease-out, IntersectionObserver-driven at rootMargin 0 0 -8% 0 and threshold .06." },
-      { "name": "settle-stagger", "value": "(i % 4) * 70ms", "purpose": "Transition delay across a group of settling elements, cycling every four." },
-      { "name": "settle-failsafe", "value": "2500ms", "purpose": "Timeout that reveals every settle target and disconnects the observer, so content can never be stranded invisible." },
-      { "name": "rise", "value": "460ms cubic-bezier(.16,1,.3,1)", "purpose": "The kit finder's per-step entrance: 16px travel on the same curve." },
-      { "name": "state", "value": "160ms ease", "purpose": "Colour, background and border transitions on buttons, inputs, choices and kit lines." },
-      { "name": "tap", "value": "120ms ease", "purpose": "The primary button's 1px active nudge and a checkmark's opacity." },
-      { "name": "progress", "value": "240ms ease", "purpose": "Progress segment background and halo as the flow advances." },
-      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce disables settle, rise, and the progress transition entirely", "purpose": "Non-negotiable. Reveals degrade to plain visible content." }
+      {
+        "name": "settle",
+        "value": "opacity 620ms cubic-bezier(.16,1,.3,1), transform 620ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "The world's one authored motion: 22px rise into place, exponential ease-out, IntersectionObserver-driven at rootMargin 0 0 -8% 0 and threshold .06."
+      },
+      {
+        "name": "settle-stagger",
+        "value": "(i % 4) * 70ms",
+        "purpose": "Transition delay across a group of settling elements, cycling every four."
+      },
+      {
+        "name": "settle-failsafe",
+        "value": "2500ms",
+        "purpose": "Timeout that reveals every settle target and disconnects the observer, so content can never be stranded invisible."
+      },
+      {
+        "name": "rise",
+        "value": "460ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "The kit finder's per-step entrance: 16px travel on the same curve."
+      },
+      {
+        "name": "state",
+        "value": "160ms ease",
+        "purpose": "Colour, background and border transitions on buttons, inputs, choices and kit lines."
+      },
+      {
+        "name": "tap",
+        "value": "120ms ease",
+        "purpose": "The primary button's 1px active nudge and a checkmark's opacity."
+      },
+      {
+        "name": "progress",
+        "value": "240ms ease",
+        "purpose": "Progress segment background and halo as the flow advances."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce disables settle, rise, and the progress transition entirely",
+        "purpose": "Non-negotiable. Reveals degrade to plain visible content."
+      }
     ],
     "breakpoints": [
-      { "name": "1180", "value": "1180px" },
-      { "name": "1000", "value": "1000px" },
-      { "name": "900", "value": "900px" },
-      { "name": "760", "value": "760px" },
-      { "name": "720", "value": "720px" },
-      { "name": "700", "value": "700px" },
-      { "name": "680", "value": "680px" },
-      { "name": "640", "value": "640px" },
-      { "name": "620", "value": "620px" },
-      { "name": "560", "value": "560px" },
-      { "name": "358", "value": "358px" }
+      {
+        "name": "1180",
+        "value": "1180px"
+      },
+      {
+        "name": "1000",
+        "value": "1000px"
+      },
+      {
+        "name": "900",
+        "value": "900px"
+      },
+      {
+        "name": "760",
+        "value": "760px"
+      },
+      {
+        "name": "720",
+        "value": "720px"
+      },
+      {
+        "name": "700",
+        "value": "700px"
+      },
+      {
+        "name": "680",
+        "value": "680px"
+      },
+      {
+        "name": "640",
+        "value": "640px"
+      },
+      {
+        "name": "620",
+        "value": "620px"
+      },
+      {
+        "name": "560",
+        "value": "560px"
+      },
+      {
+        "name": "358",
+        "value": "358px"
+      }
     ]
   },
   "components": [
@@ -304,21 +625,81 @@
       "One authored motion: content settles like a reading landing."
     ],
     "rules": [
-      { "name": "The One Signal Rule", "body": "Lime means live or chosen. If a lime mark on screen does not answer \"what is happening right now\" or \"what did I pick\", it is wrong. Prices, links, body text and headings are never lime.", "section": "colors" },
-      { "name": "The Rationed Moss Rule", "body": "A moss slab is a scroll-stopper, so a page gets at most a couple. On the landing page it is the privacy claim and the Care card. Adding a third moss block does not make the page richer; it makes the first two stop working.", "section": "colors" },
-      { "name": "The Lime-Inside-Moss Rule", "body": "Moss is the only surface where lime may act as an accent rather than a signal: the emphasised word in a slab headline, the shield icon in the privacy pill, and the huge rgba(195,245,60,.12) ring bleeding off the slab's corner. Outside moss, that licence is revoked.", "section": "colors" },
-      { "name": "The Dimmed Hairline Rule", "body": "A lime hairline is always a tint, never full strength: rgba(195,245,60,.3) on moss, rgba(195,245,60,.45) on pale. A full-strength lime rule would outshine the one mark on the page that means live.", "section": "colors" },
-      { "name": "The Tighter-Bigger Rule", "body": "Tracking is a function of size and runs the whole ramp: display -0.045em, amounts -0.055em, titles -0.015em to -0.035em, body normal, labels positive from +0.02em up to +0.14em. Nothing in this world is set at default tracking and large.", "section": "typography" },
-      { "name": "The Emphasis-Is-Lighter Rule", "body": "Emphasis inside a headline is <em> rendered as upright and quieter, never italic and never bolder: ink-3 on pale ground, lime on moss. \"Monitoring a loved one's safety without being intrusive\" reads with its pivot word dropping back, not leaping forward.", "section": "typography" },
-      { "name": "The 800-Or-400 Rule", "body": "Structure is 800; prose is 400; 600-700 exists only for small interface text (labels, chips, notes). There is no 500-weight heading and no 600-weight display.", "section": "typography" },
-      { "name": "The One Column Rule", "body": "Every layout resolves to one centred column on a phone. The buyer is on a phone, often at night; there is no horizontal scroll, no carousel, and no two-up that survives below 560px.", "section": "layout" },
-      { "name": "The Content Breakpoint Rule", "body": "Add a breakpoint at the width where a component actually breaks, and name it for that component. Do not add device-named tiers.", "section": "layout" },
-      { "name": "The Only Circles Lift Rule", "body": "A drop shadow is licensed only for a circular object that overlaps something else. Rectangles - cards, slabs, kit lines, inputs - are flat and stay flat; if a rectangle needs separation, change its tone or give it a hairline.", "section": "elevation" },
-      { "name": "The Halo-Not-Glow Rule", "body": "Every lime box-shadow is spread-only with zero blur. It is a ring, and it means state (live, focused, current, done). Never use a blurred lime glow.", "section": "elevation" },
-      { "name": "The Circle-Is-Data Rule", "body": "Any reading - time of day, share of usual, live/not-live, selected/not - is a circle or an arc. Bars, sparklines and pie wedges have no place in this world. The room-activity dial is the canonical form and the Flutter dashboard inherits it directly.", "section": "shapes" },
-      { "name": "The Dashed-Means-Optional Rule", "body": "A dashed 1.5px border means the thing is available and not currently chosen. Never use dashed as decoration or as a disabled style.", "section": "shapes" },
-      { "name": "The Never-Stranded Rule", "body": "Any reveal must degrade to visible: no JS, no observer, reduced motion, or a slow browser all end with the content on screen. A reveal that can hide content permanently is worse than no reveal.", "section": "components" },
-      { "name": "The One Motion Rule", "body": "The system has one authored curve, cubic-bezier(.16,1,.3,1), and one gesture - settling downward into place. Everything else is a short linear-ish ease on a colour. No bounce, no spring, no parallax, no scroll-jacking.", "section": "components" }
+      {
+        "name": "The One Signal Rule",
+        "body": "Lime means live or chosen. If a lime mark on screen does not answer \"what is happening right now\" or \"what did I pick\", it is wrong. Prices, links, body text and headings are never lime.",
+        "section": "colors"
+      },
+      {
+        "name": "The Rationed Moss Rule",
+        "body": "A moss slab is a scroll-stopper, so a page gets at most a couple. On the landing page it is the privacy claim and the Care card. Adding a third moss block does not make the page richer; it makes the first two stop working.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lime-Inside-Moss Rule",
+        "body": "Moss is the only surface where lime may act as an accent rather than a signal: the emphasised word in a slab headline, the shield icon in the privacy pill, and the huge rgba(195,245,60,.12) ring bleeding off the slab's corner. Outside moss, that licence is revoked.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dimmed Hairline Rule",
+        "body": "A lime hairline is always a tint, never full strength: rgba(195,245,60,.3) on moss, rgba(195,245,60,.45) on pale. A full-strength lime rule would outshine the one mark on the page that means live.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tighter-Bigger Rule",
+        "body": "Tracking is a function of size and runs the whole ramp: display -0.045em, amounts -0.055em, titles -0.015em to -0.035em, body normal, labels positive from +0.02em up to +0.14em. Nothing in this world is set at default tracking and large.",
+        "section": "typography"
+      },
+      {
+        "name": "The Emphasis-Is-Lighter Rule",
+        "body": "Emphasis inside a headline is <em> rendered as upright and quieter, never italic and never bolder: ink-3 on pale ground, lime on moss. \"Monitoring a loved one's safety without being intrusive\" reads with its pivot word dropping back, not leaping forward.",
+        "section": "typography"
+      },
+      {
+        "name": "The 800-Or-400 Rule",
+        "body": "Structure is 800; prose is 400; 600-700 exists only for small interface text (labels, chips, notes). There is no 500-weight heading and no 600-weight display.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Column Rule",
+        "body": "Every layout resolves to one centred column on a phone. The buyer is on a phone, often at night; there is no horizontal scroll, no carousel, and no two-up that survives below 560px.",
+        "section": "layout"
+      },
+      {
+        "name": "The Content Breakpoint Rule",
+        "body": "Add a breakpoint at the width where a component actually breaks, and name it for that component. Do not add device-named tiers.",
+        "section": "layout"
+      },
+      {
+        "name": "The Only Circles Lift Rule",
+        "body": "A drop shadow is licensed only for a circular object that overlaps something else. Rectangles - cards, slabs, kit lines, inputs - are flat and stay flat; if a rectangle needs separation, change its tone or give it a hairline.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Halo-Not-Glow Rule",
+        "body": "Every lime box-shadow is spread-only with zero blur. It is a ring, and it means state (live, focused, current, done). Never use a blurred lime glow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Circle-Is-Data Rule",
+        "body": "Any reading - time of day, share of usual, live/not-live, selected/not - is a circle or an arc. Bars, sparklines and pie wedges have no place in this world. The room-activity dial is the canonical form and the Flutter dashboard inherits it directly.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Dashed-Means-Optional Rule",
+        "body": "A dashed 1.5px border means the thing is available and not currently chosen. Never use dashed as decoration or as a disabled style.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Never-Stranded Rule",
+        "body": "Any reveal must degrade to visible: no JS, no observer, reduced motion, or a slow browser all end with the content on screen. A reveal that can hide content permanently is worse than no reveal.",
+        "section": "components"
+      },
+      {
+        "name": "The One Motion Rule",
+        "body": "The system has one authored curve, cubic-bezier(.16,1,.3,1), and one gesture - settling downward into place. Everything else is a short linear-ish ease on a colour. No bounce, no spring, no parallax, no scroll-jacking.",
+        "section": "components"
+      }
     ],
     "dos": [
       "Do start every surface on pale mint (#F1F5EE) and treat paper white as a raised object on it.",
