@@ -24,3 +24,12 @@ Note: the door line promises open AND close. Current Secrui hardware only hears 
 
 Rules the page uses are in `start/kit.js` (`recommend()`), tested by hand with node.
 The privacy line is on every screen: no cameras, no microphones, ever.
+
+## Open: insides vs. shells (Rich, 2026-09-03)
+
+Sensors are really two parts. The insides (bedroom = two radars + heat; living
+space = one radar + heat) and the shell (disc, stalk, stone, plant). Price
+should be insides + shell. A shell is only offered for a room type once the
+bench has proven the radar sees out of it well enough. Today: bedroom gets
+stone, stalk, disc. Plant in the bedroom needs a test first (concrete pot and
+pebbles may block the radar). Living space likely takes all four.
