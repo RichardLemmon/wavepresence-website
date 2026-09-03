@@ -86,7 +86,9 @@
     gap: 0 40px; margin-top: 28px; position: relative; }
   @media (max-width: 1000px) { .band ul.kitlist { grid-template-columns: 1fr 1fr; gap: 0 34px; } }
   @media (max-width: 680px) { .band ul.kitlist { grid-template-columns: 1fr; } }
-  .kitlist li { padding: 18px 0; border-top: 2px solid var(--lime); }
+  /* A lime tint reads as structure; full-strength lime would outshine the one
+     mark that means live. Same relationship as .band li in organic.css. */
+  .kitlist li { padding: 18px 0; border-top: 1px solid rgba(195,245,60,.45); }
   .kitlist .hd { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
   .kitlist b { font-weight: 800; letter-spacing: -.02em; font-size: 17.5px; }
   .kitlist .pr { font-weight: 800; letter-spacing: -.02em; white-space: nowrap; }
