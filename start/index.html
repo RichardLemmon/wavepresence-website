@@ -229,6 +229,7 @@
   #kit-explain div { padding: 18px 20px; }
   .explain h3 { font-family: var(--font-display); font-weight: 500; font-size: 20px; margin-bottom: 6px; }
   .explain p { color: var(--ink-soft); }
+  .explain p.more { margin-top: 10px; color: var(--ink); }
 
   .reserve { margin-top: 28px; padding: 22px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
   .reserve h3 { font-family: var(--font-display); font-weight: 500; font-size: 24px; margin-bottom: 6px; }
@@ -620,7 +621,7 @@
 
   /* ---- kit, one page per room ---- */
   var EXPLAIN = {
-    bedroom: ['Bedroom sensors', 'Each one holds several sensors: breathing and heart micro-motion, body motion using radar and heat sensing. With the floor pressure mat and door sensor, that combination is what gives families peace of mind. Nothing needs to be worn.'],
+    bedroom: ['Bedroom sensors', 'Each one holds several sensors: breathing and heart micro-motion, body motion using radar and heat sensing. With the floor pressure mat and door sensor, that combination is what gives families peace of mind. Nothing needs to be worn.', 'We realize each living space is unique. Just select the sensors that fit yours.'],
     living:  ['Living-space sensors', 'Presence and movement only. No breathing or heart reading, and none needed. They tell you which room is in use when the bedroom is empty.'],
     bathroom:['Bathroom sensor', 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.'],
     fall:    ['Fall sensor', 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room. Working name; we may rename it.'],
@@ -676,7 +677,7 @@
       : 'Untick anything that doesn’t fit. You can always add it later.';
     paintPhoto(fams, fams.bedroom ? a.style.bedroom : (livingLine ? livingLine.style : null));
     $('#kit-explain').innerHTML = Object.keys(EXPLAIN).filter(function (f) { return fams[f]; }).map(function (f) {
-      return '<div><h3>' + esc(EXPLAIN[f][0]) + '</h3><p>' + esc(EXPLAIN[f][1]) + '</p></div>';
+      return '<div><h3>' + esc(EXPLAIN[f][0]) + '</h3><p>' + esc(EXPLAIN[f][1]) + '</p>' + (EXPLAIN[f][2] ? '<p class="more">' + esc(EXPLAIN[f][2]) + '</p>' : '') + '</div>';
     }).join('');
     var current = { bedroom: a.style.bedroom, living: livingLine ? livingLine.style : a.style.living };
     $('#kit-styles').innerHTML = ['bedroom', 'living'].filter(function (f) { return fams[f]; }).map(function (f) {
