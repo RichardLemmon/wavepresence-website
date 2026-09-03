@@ -193,6 +193,7 @@
   .line .why { grid-column: 2 / -1; color: var(--ink-soft); font-size: 16px; transition: color 160ms ease; }
   .line .price { text-align: right; font-weight: 500; white-space: nowrap; }
   .line .qty { color: var(--ink-muted); font-size: 15px; text-align: right; }
+  .line .skip { grid-column: 2 / -1; font-size: 15px; color: var(--ink-muted); }
   .line .off { grid-column: 2 / -1; font-size: 14px; color: var(--amber); display: none; }
   .line[aria-checked="false"] { background: transparent; border-style: dashed; }
   .line[aria-checked="false"] .name, .line[aria-checked="false"] .price, .line[aria-checked="false"] .qty { color: var(--ink-muted); }
@@ -435,7 +436,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=8"></script>
+<script src="kit.js?v=9"></script>
 <script>
 (function () {
   'use strict';
@@ -639,7 +640,8 @@
       '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
       '<div><div class="price">' + (l.price == null ? 'Price to come' : '$' + (l.price * l.qty)) + '</div>' + (l.qty > 1 && l.price != null ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
       '<div class="why">' + esc(l.why) + '</div>' +
-      '<div class="off">Not in your kit. You give up what’s described above.</div>' +
+      (l.skip ? '<div class="skip">' + esc(l.skip) + '</div>' : '') +
+      '<div class="off">Left out for now. You can add it any time.</div>' +
       '</div>';
   }
   function paintKit() {
@@ -651,8 +653,8 @@
     $('#kit-count').textContent = 'Room ' + (kitPage + 1) + ' of ' + k.groups.length;
     $('#hk').textContent = g.name;
     $('#kit-lede').textContent = kitPage === 0
-      ? 'Untick anything you don’t want. You’ll see what you give up.'
-      : 'Same as before. Untick anything you don’t want.';
+      ? 'Everything here is a suggestion. Untick anything that doesn’t fit, and we’ll say what changes.'
+      : 'Untick anything that doesn’t fit. You can always add it later.';
     paintPhoto(fams);
     $('#kit-explain').innerHTML = Object.keys(EXPLAIN).filter(function (f) { return fams[f]; }).map(function (f) {
       return '<div><h3>' + esc(EXPLAIN[f][0]) + '</h3><p>' + esc(EXPLAIN[f][1]) + '</p></div>';

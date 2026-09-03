@@ -33,6 +33,12 @@
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
+  /* "your mother", "your father", "your husband or wife", or the name. */
+  function whoIs(a) {
+    var rel = { mother: 'your mother', father: 'your father', spouse: 'your spouse' }[a.person.relationship];
+    return rel || (a.person.name || 'they');
+  }
+
   function defaults() {
     return {
       person: { name: '', relationship: 'mother', pronouns: 'she' },
@@ -85,6 +91,7 @@
     var notes = [];
     var bedsides = a.sharesBed ? 2 : 1;
     var bedroom = n + '’s bedroom';
+    var who = whoIs(a);
     var bedSku = 'bedroom_' + (a.style.bedroom || 'base');
     var livSku = 'living_' + (a.style.living || 'base');
 
@@ -99,19 +106,22 @@
       sku: 'mat', qty: bedsides, room: bedroom, group: bedroom, optional: a.level === 'low',
       why: bedsides === 2
         ? 'One strip per side, where the feet land. The only sensor that knows someone stood up.'
-        : 'A strip where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up.'
+        : 'A strip where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up.',
+      skip: 'If ' + who + ' rarely gets up at night, the mat can wait. You can add it any time.'
     });
 
     lines.push({
       sku: 'door', qty: 1, room: bedroom, group: bedroom,
-      why: 'Hears the bedroom door open and close, so “entering or leaving the room” is never a guess.'
+      why: 'Hears the bedroom door open and close, so “entering or leaving the room” is never a guess.',
+      skip: 'If ' + who + ' sleeps with the door open, a door sensor may not be necessary.'
     });
 
     if (a.level !== 'low' && (a.rooms.kitchen || a.floors > 1)) {
       lines.push({
         sku: 'door', qty: 1, room: a.floors > 1 ? 'Top of the stairs or kitchen door' : 'Kitchen door',
         group: a.rooms.kitchen ? 'Kitchen' : 'The whole home',
-        why: 'Turns “left the room” into “went downstairs” at 3 a.m. That is the one you asked about.'
+        why: 'Turns “left the room” into “went downstairs” at 3 a.m. That is the one you asked about.',
+        skip: 'If trips downstairs at night aren’t a worry, leave this one out.'
       });
     }
 
@@ -130,14 +140,16 @@
         sku: livSku, qty: 1, room: room, group: room,
         why: i === 0
           ? 'Presence and movement only. It does not read breathing or heart rate, and it does not need to. If ' + n + ' isn’t in ' + p.poss + ' room, this will tell you which room ' + p.subj + ' ' + p.is + ' in.'
-          : 'Presence and movement only.'
+          : 'Presence and movement only.',
+        skip: 'Only for rooms you want to hear about. If this one doesn’t matter to you, skip it.'
       });
     });
 
     hallways.forEach(function (room) {
       lines.push({
         sku: 'minipuck', qty: 1, room: room, group: room,
-        why: 'A small puck that plugs straight into a wall outlet. Presence and movement only. It catches anyone passing through, which is how you know about wandering between rooms at night.'
+        why: 'A small puck that plugs straight into a wall outlet. Presence and movement only. It catches anyone passing through, which is how you know about wandering between rooms at night.',
+        skip: 'If ' + who + ' doesn’t wander at night, the hallway can wait.'
       });
     });
 
@@ -146,13 +158,15 @@
       lines.push({
         sku: 'bathroom', qty: 1, optional: !a.rooms.bathroom && a.level !== 'high',
         room: a.ensuite ? n + '’s bathroom' : 'Bathroom', group: a.ensuite ? n + '’s bathroom' : 'Bathroom',
-        why: 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.'
+        why: 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.',
+        skip: 'If showers and long visits aren’t a concern, this one can wait.'
       });
     }
 
     lines.push({
       sku: 'fall', qty: a.floors || 1, room: (a.floors || 1) > 1 ? 'One per floor' : 'Main floor', group: 'The whole home',
-      why: 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room, with nothing worn.'
+      why: 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room, with nothing worn.',
+      skip: 'If falls aren’t the worry, you can add this later.'
     });
 
     if (a.ensuite) {
@@ -176,7 +190,7 @@
       var key = prod.family + '|' + l.room;
       var out = {
         key: key, sku: l.sku, name: prod.name, price: prod.price, qty: l.qty,
-        room: l.room, group: l.group, family: prod.family, why: l.why, optional: !!l.optional,
+        room: l.room, group: l.group, family: prod.family, why: l.why, skip: l.skip || '', optional: !!l.optional,
         selected: (key in sel) ? !!sel[key] : !l.optional
       };
       if (out.selected && out.price != null) total += out.price * out.qty;
