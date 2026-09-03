@@ -418,7 +418,6 @@
     <div class="kit" id="summary"></div>
     <div class="total"><span>Kit total <span class="onetime">one-time</span></span><span class="amt" id="total">$0</span></div>
     <div class="total sub"><span>WavePresence Care <span class="onetime">$19/month, monitoring and alerts</span></span><span class="amt">$19<span class="permo">/mo</span></span></div>
-    <div class="notes" id="notes"></div>
 
     <div class="reserve" id="reserve">
       <h3>Reserve this kit</h3>
@@ -686,7 +685,6 @@
         '<div class="items">' + (items.length ? esc(items.join(' · ')) : 'Nothing selected') + '</div></div>';
     }).join('');
     $('#total').textContent = '$' + k.total;
-    $('#notes').innerHTML = k.notes.map(function (n) { return '<div class="note">' + esc(n) + '</div>'; }).join('');
     return k;
   }
   $('#kit-styles').addEventListener('change', function (e) {
