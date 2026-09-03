@@ -180,6 +180,10 @@
   .line[aria-checked="false"] .room { color: #9C9585; }
   .line[aria-checked="false"] .why { color: #A79E8E; }
   .line[aria-checked="false"] .off { display: block; }
+  .sum { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--card-raised); }
+  .sum .r { font-weight: 500; }
+  .sum .items { grid-column: 1 / -1; color: var(--ink-soft); font-size: 15px; }
+  .sum .p { text-align: right; font-weight: 500; }
   .total { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 18px; border-top: 2px solid var(--ink); margin-top: 6px; }
   .total .amt { font-family: var(--font-display); font-size: 30px; font-weight: 500; }
   .notes { display: grid; gap: 10px; margin: 18px 0; }
@@ -354,46 +358,22 @@
     <div class="choices" role="radiogroup" data-radio="level" id="levels"></div>
   </section>
 
-  <!-- 7 · Kit -->
-  <section class="step" data-step="7" aria-labelledby="h7">
-    <h2 id="h7">Here’s <span data-name>Mom</span>’s <em>kit</em>.</h2>
-    <p class="lede">Every sensor has one job, and each line says what it is. Untick anything you don’t want. You’ll see what you give up. Nothing here records video or audio.</p>
-
-    <div class="explain">
-      <div>
-        <h3>Bedroom sensors</h3>
-        <p>Each one holds several sensors: breathing and heart micro-motion, body motion, and heat. With the floor mat and door sensor, that combination is what gives families peace of mind. Nothing is worn.</p>
-      </div>
-      <div>
-        <h3>Living-space sensors</h3>
-        <p>Presence and movement only. No breathing or heart reading, and none needed. They tell you which room is in use when the bedroom is empty.</p>
-      </div>
-      <div>
-        <h3>Fall sensor</h3>
-        <p>Feels the floor itself. One per floor senses a fall anywhere on it, in any room. Working name; we may rename it.</p>
-      </div>
-    </div>
-
-    <div class="styles">
-      <div class="field">
-        <label for="style-bedroom">Bedroom sensor style</label>
-        <select id="style-bedroom">
-          <option value="base">Base, $49</option>
-          <option value="stone">Stone with nightlight, $69</option>
-          <option value="plant">Plant, $69</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="style-living">Living-space sensor style</label>
-        <select id="style-living">
-          <option value="base">Base, $49</option>
-          <option value="stone">Stone, $59</option>
-          <option value="plant">Plant, $59</option>
-        </select>
-      </div>
-    </div>
-
+  <!-- 7 · Kit, one page per room -->
+  <section class="step" data-step="kit" aria-labelledby="hk">
+    <p class="hint" id="kit-count" style="margin:0 0 6px"></p>
+    <h2 id="hk"></h2>
+    <p class="lede" id="kit-lede"></p>
+    <div class="explain" id="kit-explain"></div>
+    <div class="styles" id="kit-styles"></div>
     <div class="kit" id="kit"></div>
+    <div class="total"><span id="kit-sub-label">This room</span><span class="amt" id="kit-sub">$0</span></div>
+  </section>
+
+  <!-- 8 · Summary + reserve -->
+  <section class="step" data-step="summary" aria-labelledby="hs">
+    <h2 id="hs">Here’s <span data-name>Mom</span>’s <em>kit</em>.</h2>
+    <p class="lede">Room by room. Go back to change anything. Nothing here records video or audio.</p>
+    <div class="kit" id="summary"></div>
     <div class="total"><span>Kit total</span><span class="amt" id="total">$0</span></div>
     <div class="notes" id="notes"></div>
 
@@ -431,7 +411,7 @@
   'use strict';
   var WAITLIST_ENDPOINT = 'https://wavepresence-api-develop.up.railway.app/waitlist';
   var STORE = 'wp_start_v1';
-  var STEPS = 8;
+  var SEGMENTS = 8; /* 6 questions, the kit pages, the summary */
 
   var a = WPKit.defaults();
   try {
@@ -447,11 +427,12 @@
 
   /* ---- progress ---- */
   var prog = $('#progress');
-  for (var i = 1; i < STEPS; i++) { var s = document.createElement('span'); prog.appendChild(s); }
+  for (var i = 0; i < SEGMENTS; i++) { var sp = document.createElement('span'); prog.appendChild(sp); }
   function paintProgress() {
+    /* segment index: questions 1..6 -> 0..5, kit pages -> 6, summary -> 7 */
+    var seg = step < 7 ? step - 1 : (step < lastStep() ? 6 : 7);
     $$('span', prog).forEach(function (el, i) {
-      var n = i + 1;
-      el.className = n < step ? 'is-done' : (n === step ? 'is-now' : '');
+      el.className = i < seg ? 'is-done' : (i === seg ? 'is-now' : '');
     });
     prog.style.visibility = step === 0 ? 'hidden' : 'visible';
   }
@@ -593,26 +574,66 @@
     paintRadios();
   }
 
-  /* ---- kit ---- */
-  $('#style-bedroom').addEventListener('change', function (e) { a.style.bedroom = e.target.value; save(); paintKit(); });
-  $('#style-living').addEventListener('change', function (e) { a.style.living = e.target.value; save(); paintKit(); });
+  /* ---- kit, one page per room ---- */
+  var EXPLAIN = {
+    bedroom: ['Bedroom sensors', 'Each one holds several sensors: breathing and heart micro-motion, body motion, and heat. With the floor mat and door sensor, that combination is what gives families peace of mind. Nothing is worn.'],
+    living:  ['Living-space sensors', 'Presence and movement only. No breathing or heart reading, and none needed. They tell you which room is in use when the bedroom is empty.'],
+    bathroom:['Bathroom sensor', 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.'],
+    fall:    ['Fall sensor', 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room. Working name; we may rename it.']
+  };
+  var STYLE_OPTS = {
+    bedroom: [['base', 'Base, $49'], ['stone', 'Stone with nightlight, $69'], ['plant', 'Plant, $69']],
+    living:  [['base', 'Base, $49'], ['stone', 'Stone, $59'], ['plant', 'Plant, $59']]
+  };
+  var kitPage = 0;
+  function lineHtml(l) {
+    return '<div class="line" role="checkbox" tabindex="0" aria-checked="' + l.selected + '" data-key="' + esc(l.key) + '">' +
+      '<span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
+      '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
+      '<div><div class="price">$' + (l.price * l.qty) + '</div>' + (l.qty > 1 ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
+      '<div class="why">' + esc(l.why) + '</div>' +
+      '<div class="off">Not in your kit. You give up what’s described above.</div>' +
+      '</div>';
+  }
   function paintKit() {
-    $('#style-bedroom').value = a.style.bedroom;
-    $('#style-living').value = a.style.living;
     var k = WPKit.recommend(a);
-    $('#kit').innerHTML = k.lines.map(function (l) {
-      return '<div class="line" role="checkbox" tabindex="0" aria-checked="' + l.selected + '" data-key="' + esc(l.key) + '">' +
-        '<span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
-        '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
-        '<div><div class="price">$' + (l.price * l.qty) + '</div>' + (l.qty > 1 ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
-        '<div class="why">' + esc(l.why) + '</div>' +
-        '<div class="off">Not in your kit. You give up what’s described above.</div>' +
-        '</div>';
+    var g = k.groups[Math.min(kitPage, k.groups.length - 1)];
+    if (!g) return k;
+    var fams = {};
+    g.lines.forEach(function (l) { fams[l.family] = true; });
+    $('#kit-count').textContent = 'Room ' + (kitPage + 1) + ' of ' + k.groups.length;
+    $('#hk').textContent = g.name;
+    $('#kit-lede').textContent = kitPage === 0
+      ? 'Untick anything you don’t want. You’ll see what you give up.'
+      : 'Same as before. Untick anything you don’t want.';
+    $('#kit-explain').innerHTML = Object.keys(EXPLAIN).filter(function (f) { return fams[f]; }).map(function (f) {
+      return '<div><h3>' + esc(EXPLAIN[f][0]) + '</h3><p>' + esc(EXPLAIN[f][1]) + '</p></div>';
+    }).join('');
+    $('#kit-styles').innerHTML = ['bedroom', 'living'].filter(function (f) { return fams[f]; }).map(function (f) {
+      return '<div class="field"><label for="style-' + f + '">' + (f === 'bedroom' ? 'Bedroom' : 'Living-space') + ' sensor style</label>' +
+        '<select id="style-' + f + '" data-style="' + f + '">' + STYLE_OPTS[f].map(function (o) {
+          return '<option value="' + o[0] + '"' + (a.style[f] === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
+        }).join('') + '</select></div>';
+    }).join('');
+    $('#kit').innerHTML = g.lines.map(lineHtml).join('');
+    $('#kit-sub').textContent = '$' + g.subtotal;
+    return k;
+  }
+  function paintSummary() {
+    var k = WPKit.recommend(a);
+    $('#summary').innerHTML = k.groups.map(function (g) {
+      var items = g.lines.filter(function (l) { return l.selected; }).map(function (l) { return (l.qty > 1 ? l.qty + ' × ' : '') + l.name; });
+      return '<div class="sum"><div class="r">' + esc(g.name) + '</div><div class="p">$' + g.subtotal + '</div>' +
+        '<div class="items">' + (items.length ? esc(items.join(' · ')) : 'Nothing selected') + '</div></div>';
     }).join('');
     $('#total').textContent = '$' + k.total;
     $('#notes').innerHTML = k.notes.map(function (n) { return '<div class="note">' + esc(n) + '</div>'; }).join('');
     return k;
   }
+  $('#kit-styles').addEventListener('change', function (e) {
+    var f = e.target.getAttribute('data-style');
+    if (f) { a.style[f] = e.target.value; save(); paintKit(); }
+  });
 
   function toggleLine(el) {
     var key = el.getAttribute('data-key');
@@ -651,7 +672,12 @@
     }
   });
 
-  /* ---- navigation ---- */
+  /* ---- navigation ----
+   * 0..6 are the question screens. Then one kit page per room, then summary.
+   */
+  var QUESTIONS = 7;
+  function kitPages() { return WPKit.recommend(a).groups.length; }
+  function lastStep() { return QUESTIONS + kitPages(); }
   function validate() {
     if (step === 1 && !a.person.name.trim()) {
       $('#name').setAttribute('aria-invalid', 'true'); $('#name-err').classList.add('show'); $('#name').focus();
@@ -660,17 +686,21 @@
     return true;
   }
   function go(n) {
-    step = Math.max(0, Math.min(STEPS - 1, n));
-    $$('.step').forEach(function (s) { s.classList.toggle('active', +s.getAttribute('data-step') === step); });
+    var last = lastStep();
+    step = Math.max(0, Math.min(last, n));
+    var which = step < QUESTIONS ? String(step) : (step < last ? 'kit' : 'summary');
+    if (which === 'kit') kitPage = step - QUESTIONS;
+    $$('.step').forEach(function (s) { s.classList.toggle('active', s.getAttribute('data-step') === which); });
     var nav = $('#nav');
     nav.style.display = step === 0 ? 'none' : 'flex';
     nav.style.visibility = 'visible';
-    $('[data-next]', nav).style.visibility = step === STEPS - 1 ? 'hidden' : 'visible';
+    $('[data-next]', nav).style.visibility = step === last ? 'hidden' : 'visible';
     paintProgress(); paintNames(); paintRadios(); paintChecks(); paintSteppers();
     if (step === 3) paintPets();
     if (step === 4) paintRooms();
     if (step === 6) paintLevels();
-    if (step === 7) paintKit();
+    if (which === 'kit') paintKit();
+    if (which === 'summary') paintSummary();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     var h = $('.step.active h1, .step.active h2'); if (h) h.setAttribute('tabindex', '-1'), h.focus({ preventScroll: true });
   }
@@ -685,7 +715,7 @@
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   var qs = new URLSearchParams(location.search);
-  go(qs.has('step') ? +qs.get('step') : 0);
+  go(qs.get('step') === 'summary' ? lastStep() : (qs.has('step') ? +qs.get('step') : 0));
 })();
 </script>
 </body>

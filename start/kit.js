@@ -88,27 +88,28 @@
     var livSku = 'living_' + (a.style.living || 'base');
 
     lines.push({
-      sku: bedSku, qty: bedsides, room: bedroom,
+      sku: bedSku, qty: bedsides, room: bedroom, group: bedroom,
       why: bedsides === 2
         ? 'One per bedside. Each holds several sensors that read breathing and heart micro-motion, body motion and heat for the person on its side, so two sleepers never blur into one.'
         : 'Holds several sensors that read breathing and heart micro-motion, along with body motion and heat. With the floor mat and door sensor, this is what gives the peace of mind families are looking for.'
     });
 
     lines.push({
-      sku: 'mat', qty: bedsides, room: bedroom, optional: a.level === 'low',
+      sku: 'mat', qty: bedsides, room: bedroom, group: bedroom, optional: a.level === 'low',
       why: bedsides === 2
         ? 'One strip per side, where the feet land. The only sensor that knows someone stood up.'
         : 'A strip where ' + p.poss + ' feet land. The primary sensor that knows ' + p.subj + ' ' + p.is + ' up.'
     });
 
     lines.push({
-      sku: 'door', qty: 1, room: bedroom,
+      sku: 'door', qty: 1, room: bedroom, group: bedroom,
       why: 'Hears the bedroom door open and close, so “entering or leaving the room” is never a guess.'
     });
 
     if (a.level !== 'low' && (a.rooms.kitchen || a.floors > 1)) {
       lines.push({
         sku: 'door', qty: 1, room: a.floors > 1 ? 'Top of the stairs or kitchen door' : 'Kitchen door',
+        group: a.rooms.kitchen ? 'Kitchen' : 'The whole home',
         why: 'Turns “left the room” into “went downstairs” at 3 a.m. That is the one you asked about.'
       });
     }
@@ -119,7 +120,7 @@
     (a.rooms.other || []).forEach(function (r) { if (r && r.trim()) livingRooms.push(r.trim()); });
     livingRooms.forEach(function (room, i) {
       lines.push({
-        sku: livSku, qty: 1, room: room,
+        sku: livSku, qty: 1, room: room, group: room,
         why: i === 0
           ? 'Presence and movement only. It does not read breathing or heart rate, and it does not need to. If ' + n + ' isn’t in ' + p.poss + ' room, this will tell you which room ' + p.subj + ' ' + p.is + ' in.'
           : 'Presence and movement only.'
@@ -130,13 +131,13 @@
     if (wantBath) {
       lines.push({
         sku: 'bathroom', qty: 1, optional: !a.rooms.bathroom && a.level !== 'high',
-        room: a.ensuite ? n + '’s bathroom' : 'Bathroom',
+        room: a.ensuite ? n + '’s bathroom' : 'Bathroom', group: a.ensuite ? n + '’s bathroom' : 'Bathroom',
         why: 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.'
       });
     }
 
     lines.push({
-      sku: 'fall', qty: a.floors || 1, room: (a.floors || 1) > 1 ? 'One per floor' : 'Main floor',
+      sku: 'fall', qty: a.floors || 1, room: (a.floors || 1) > 1 ? 'One per floor' : 'Main floor', group: 'The whole home',
       why: 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room, with nothing worn.'
     });
 
@@ -161,14 +162,23 @@
       var key = prod.family + '|' + l.room;
       var out = {
         key: key, sku: l.sku, name: prod.name, price: prod.price, qty: l.qty,
-        room: l.room, why: l.why, optional: !!l.optional,
+        room: l.room, group: l.group, family: prod.family, why: l.why, optional: !!l.optional,
         selected: (key in sel) ? !!sel[key] : !l.optional
       };
       if (out.selected) total += out.price * out.qty;
       return out;
     });
 
-    return { lines: lines, notes: notes, total: total };
+    /* Group lines by room, in order of first appearance. */
+    var groups = [];
+    lines.forEach(function (l) {
+      var g = groups.filter(function (x) { return x.name === l.group; })[0];
+      if (!g) { g = { name: l.group, lines: [], subtotal: 0 }; groups.push(g); }
+      g.lines.push(l);
+      if (l.selected) g.subtotal += l.price * l.qty;
+    });
+
+    return { lines: lines, groups: groups, notes: notes, total: total };
   }
 
   var api = { PRODUCTS: PRODUCTS, defaults: defaults, recommend: recommend, levelCopy: levelCopy, pronouns: pronouns };
