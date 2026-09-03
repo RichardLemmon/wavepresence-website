@@ -101,7 +101,7 @@
   }
 
   .kit { display: grid; gap: 12px; margin: 18px 0; }
-  .line { display: grid; grid-template-columns: auto 1fr auto; gap: 7px 14px; padding: 18px 20px;
+  .line { display: grid; grid-template-columns: auto auto 1fr auto; gap: 7px 14px; padding: 18px 20px;
     border: 1.5px solid var(--line); border-radius: var(--r-md); background: var(--paper); cursor: pointer;
     transition: background 160ms ease, border-color 160ms ease; }
   .line:focus-visible { outline: 3px solid var(--lime); outline-offset: 2px; }
@@ -111,12 +111,21 @@
   .line[aria-checked="true"] { border-color: var(--ink-2); }
   .line[aria-checked="true"] .box { background: var(--lime); border-color: var(--ink-2); }
   .line[aria-checked="true"] .box svg { opacity: 1; }
+  /* What it looks like, beside what it costs. Products without photography
+     carry a drawn mark in the same grammar rather than a grey placeholder. */
+  .line .thumb { width: 58px; height: 58px; border-radius: 13px; overflow: hidden; flex: none;
+    background: var(--lime-wash); border: 1px solid var(--line); display: grid; place-items: center; }
+  .line .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .line .thumb svg { width: 30px; height: 30px; }
+  .line[aria-checked="false"] .thumb { opacity: .72; }
+  @media (max-width: 400px) { .line .thumb { width: 46px; height: 46px; border-radius: 11px; }
+    .line .thumb svg { width: 24px; height: 24px; } }
   .line .name { font-weight: 800; letter-spacing: -.015em; }
   .line .room { color: var(--ink-3); font-size: 14px; font-weight: 700; letter-spacing: .01em; }
-  .line .why { grid-column: 2 / -1; color: var(--ink-2); font-size: 16px; transition: color 160ms ease; }
+  .line .why { grid-column: 3 / -1; color: var(--ink-2); font-size: 16px; transition: color 160ms ease; }
   .line .price { text-align: right; font-weight: 800; white-space: nowrap; letter-spacing: -.02em; }
   .line .qty { color: var(--ink-3); font-size: 14px; text-align: right; font-weight: 600; }
-  .line .qtyctl { grid-column: 2 / -1; display: inline-flex; align-items: center; margin-top: 6px;
+  .line .qtyctl { grid-column: 3 / -1; display: inline-flex; align-items: center; margin-top: 6px;
     border: 1.5px solid var(--line); border-radius: var(--r-sm); background: var(--ground); width: max-content; }
   .line .qtyctl button { width: 42px; height: 40px; border: 0; background: transparent; cursor: pointer;
     display: grid; place-items: center; color: var(--ink-2); }
@@ -124,10 +133,10 @@
   .line .qtyctl output { min-width: 34px; text-align: center; font-weight: 800; font-size: 16px; }
   .line .qtyctl .lbl { font-size: 13px; color: var(--ink-3); padding: 0 13px 0 5px; font-weight: 700; }
   .line[aria-checked="false"] .qtyctl { display: none; }
-  .line .warn { grid-column: 2 / -1; font-size: 15px; color: #9A5A12; font-weight: 600; }
-  .line .req { grid-column: 2 / -1; font-size: 14px; color: var(--ink-2); font-weight: 700; }
-  .line .skip { grid-column: 2 / -1; font-size: 15px; color: var(--ink-3); }
-  .line .off { grid-column: 2 / -1; font-size: 14px; color: var(--ink-3); font-weight: 700; display: none; }
+  .line .warn { grid-column: 3 / -1; font-size: 15px; color: #9A5A12; font-weight: 600; }
+  .line .req { grid-column: 3 / -1; font-size: 14px; color: var(--ink-2); font-weight: 700; }
+  .line .skip { grid-column: 3 / -1; font-size: 15px; color: var(--ink-3); }
+  .line .off { grid-column: 3 / -1; font-size: 14px; color: var(--ink-3); font-weight: 700; display: none; }
   /* Left out, not faded out. The off state is carried by the surface, the
      dashed edge, the empty box and the "Left out" line — never by dimming the
      copy a buyer needs in order to change their mind. */
@@ -430,7 +439,7 @@
 
 <footer>WavePresence · support@wavepresence.com · No cameras. No microphones. Ever.</footer>
 
-<script src="kit.js?v=29"></script>
+<script src="kit.js?v=30"></script>
 <script>
 (function () {
   'use strict';
@@ -621,10 +630,30 @@
     $('#kit-photo-cap').textContent = ph[1];
     fig.hidden = false;
   }
+  /* Authored marks, one stroke weight, for parts we have no photograph of yet.
+     Swap any of these for a real photo by adding it to STYLE-style thumbs. */
+  var GLYPH = {
+    mat: '<path d="M4 15h24v6H4z"/><path d="M11 10c0-2 1-3 2.5-3S16 8 16 10"/><path d="M18 11c0-1.6.8-2.5 2-2.5s2 .9 2 2.5"/>',
+    door: '<path d="M8 5h13v22H8z"/><path d="M8 27h16"/><circle cx="18" cy="16" r="1.4"/>',
+    fall: '<path d="M4 24h24"/><path d="M11 20a7 7 0 0 1 10 0"/><path d="M7.5 16a12 12 0 0 1 17 0"/><path d="M16 24v-4"/>',
+    hallway: '<rect x="9" y="4" width="14" height="12" rx="3"/><path d="M13 16v4"/><path d="M19 16v4"/><path d="M8 27h16"/><path d="M13 20h6v7h-6z"/>',
+    bathroom: '<path d="M16 4v7"/><path d="M9 11h14l-2 4H11z"/><path d="M12 21v3"/><path d="M16 20v4"/><path d="M20 21v3"/>'
+  };
+  function thumbHtml(l) {
+    if (l.family === 'bedroom' || l.family === 'living') {
+      var st = l.style || (l.family === 'bedroom' ? a.style.bedroom : a.style.living) || 'base';
+      return '<span class="thumb"><img src="../assets/styles/' + st + '.webp" alt="" /></span>';
+    }
+    var g = GLYPH[l.family];
+    if (!g) return '<span class="thumb"></span>';
+    return '<span class="thumb"><svg viewBox="0 0 32 32" fill="none" stroke="var(--ink-2)" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + g + '</svg></span>';
+  }
   var kitPage = 0;
   function lineHtml(l) {
     return '<div class="line" role="checkbox" tabindex="0" aria-checked="' + l.selected + '"' + (l.required ? ' aria-disabled="true"' : '') + ' data-key="' + esc(l.key) + '">' +
       '<span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>' +
+      thumbHtml(l) +
       '<div><div class="name">' + esc(l.name) + '</div><div class="room">' + esc(l.room) + '</div></div>' +
       '<div><div class="price">' + (l.price == null ? 'Price to come' : '$' + (l.price * l.qty)) + '</div>' + (l.qty > 1 && l.price != null ? '<div class="qty">' + l.qty + ' × $' + l.price + '</div>' : '') + '</div>' +
       '<div class="why">' + esc(l.why) + '</div>' +
