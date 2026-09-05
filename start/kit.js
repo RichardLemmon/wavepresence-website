@@ -133,7 +133,7 @@
         sku: 'door', qty: 1, room: a.floors > 1 ? 'Top of the stairs or kitchen door' : 'Kitchen door',
         group: a.rooms.kitchen ? 'Kitchen' : REST,
         why: 'Turns “left the room” into “went downstairs” at 3 a.m. That is the one you asked about.',
-        skip: 'If trips downstairs at night or potential wandering isn’t an issue, leave this one out.'
+        skip: 'If trips downstairs at night aren’t a worry, leave this one out.'
       });
     }
 
@@ -160,8 +160,8 @@
     hallways.forEach(function (room) {
       lines.push({
         sku: 'minipuck', qty: 1, room: room, group: REST,
-        why: 'A small puck that plugs straight into a wall outlet. Presence and movement only. It catches anyone passing through, which is how you know about wandering between rooms at night.',
-        skip: 'If ' + who + ' doesn’t wander at night, the hallway can wait.'
+        why: 'A small puck that plugs straight into a wall outlet. Presence and movement only. It catches anyone passing through, which is how you know when someone is up and about at night.',
+        skip: 'If nights are usually quiet for ' + who + ', the hallway can wait.'
       });
     });
 
@@ -171,7 +171,10 @@
         sku: 'bathroom', qty: 1, optional: !a.rooms.bathroom,
         room: a.ensuite ? n + '’s bathroom' : 'Bathroom', group: REST,
         why: 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.',
-        skip: 'If showers and long visits aren’t a concern, this one can wait.'
+        skip: 'If showers and long visits aren’t a concern, this one can wait.',
+        /* The bathroom is where the privacy worry is felt hardest, so the
+           promise is repeated on the line itself, not left to the page. */
+        note: 'No camera or microphone is ever used, here or anywhere.'
       });
     }
 
@@ -209,7 +212,7 @@
       if (prod.family === 'bedroom' && a.sharesBed && qty < 2) warn = 'A second sensor on the other side would tell you which of them got up. You can add it any time.';
       var out = {
         key: key, sku: l.sku, name: prod.name, price: prod.price, qty: qty, adjustable: adjustable, warn: warn,
-        room: l.room, group: l.group, family: prod.family, style: l.style || null, why: l.why, skip: l.skip || '', optional: !!l.optional,
+        room: l.room, group: l.group, family: prod.family, style: l.style || null, why: l.why, skip: l.skip || '', note: l.note || '', optional: !!l.optional,
         required: !!l.required,
         selected: l.required ? true : ((key in sel) ? !!sel[key] : !l.optional)
       };
@@ -250,12 +253,12 @@
         } else if (has.door) {
           t = 'You’ll know ' + p.subj + ' ' + is + ' asleep and hear the door if ' + p.subj + ' leave' + S + ' at night. When you’re ready, a floor pressure mat can tell you the moment ' + p.subj + ' ' + is + ' out of bed.';
         } else {
-          t = 'You’ll know ' + p.subj + ' ' + is + ' in bed and breathing. When you’re ready, you can add a floor pressure mat or door sensor to know ' + p.subj + ' ' + (p.s ? 'hasn’t' : 'haven’t') + ' wandered.';
+          t = 'You’ll know ' + p.subj + ' ' + is + ' in bed and breathing. When you’re ready, you can add a floor pressure mat or door sensor to know ' + p.subj + ' ' + (p.s ? 'hasn’t' : 'haven’t') + ' been up in the night.';
         }
       } else if (g.name === REST) {
         var bits = [];
         if (has.fall) bits.push('a fall anywhere on that floor is caught, in any room');
-        if (has.hallway) bits.push('wandering between rooms at night doesn’t go unseen');
+        if (has.hallway) bits.push('someone up and about at night doesn’t go unseen');
         if (has.bathroom) bits.push('a shower or a visit that runs long is told apart from silence');
         if (bits.length) t = cap(bits[0]) + (bits.length > 1 ? ', and ' + bits.slice(1).join(', and ') : '') + '.';
       } else if (has.living || has.door) {

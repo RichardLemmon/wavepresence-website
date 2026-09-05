@@ -137,6 +137,11 @@
   .line .req { grid-column: 3 / -1; font-size: 14px; color: var(--ink-2); font-weight: 700; }
   .line .skip { grid-column: 3 / -1; font-size: 14px; color: var(--ink-3); }
   .line .off { grid-column: 3 / -1; font-size: 14px; color: var(--ink-3); font-weight: 700; display: none; }
+  /* A promise, not an aside. Lime hairline so it reads as the brand speaking,
+     and it keeps its colour when the line is left out — the privacy claim is
+     the reason a buyer changes their mind back. */
+  .line .note-line { grid-column: 3 / -1; margin-top: 10px; padding-left: 12px;
+    border-left: 2px solid var(--lime); font-size: 14px; font-weight: 700; color: var(--ink-2); }
   /* Left out, not faded out. The off state is carried by the surface, the
      dashed edge, the empty box and the "Left out" line — never by dimming the
      copy a buyer needs in order to change their mind. */
@@ -352,7 +357,7 @@
       <button class="choice" role="checkbox" data-kind="check" aria-checked="true" aria-disabled="true" data-value="bedroom"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t"><span data-name>Mom</span>’s bedroom</span><span class="d">Always. This is where the important hours are.</span></span></button>
       <button class="choice" role="checkbox" data-kind="check" data-value="kitchen"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Kitchen</span><span class="d">Meals are the clearest daily rhythm there is.</span></span></button>
       <button class="choice" role="checkbox" data-kind="check" data-value="living"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Living room</span><span class="d">The afternoon chair, the evening TV.</span></span></button>
-      <button class="choice" role="checkbox" data-kind="check" data-value="hallway"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Hallway</span><span class="d">Catches wandering between rooms at night. A mini-puck plugs into an outlet.</span></span></button>
+      <button class="choice" role="checkbox" data-kind="check" data-value="hallway"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Hallway</span><span class="d">Catches someone up and about at night. A mini-puck plugs into an outlet.</span></span></button>
       <button class="choice" role="checkbox" data-kind="check" data-value="bathroom"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><span class="t">Bathroom</span><span class="d">Showers, and visits that run long.</span><span class="d note">* Humidity and movement only. No camera or microphone is ever used, here or anywhere.</span></span></button>
     </div>
     <div class="field" style="margin-top:18px">
@@ -603,7 +608,7 @@
     living:  ['Living-space sensors', 'Presence and movement only. No breathing or heart reading, and none needed. They tell you which room is in use when the bedroom is empty.'],
     bathroom:['Bathroom sensor', 'Humidity and movement. It knows a shower from a visit, and a visit that runs long.'],
     fall:    ['Fall sensor', 'Feels the floor itself. One per floor senses a fall anywhere on it, in any room. Working name; we may rename it.'],
-    hallway: ['Hallway mini-puck', 'A small puck that plugs into a wall outlet. Presence and movement only. It catches anyone passing through, so wandering between rooms at night is never missed.']
+    hallway: ['Hallway mini-puck', 'A small puck that plugs into a wall outlet. Presence and movement only. It catches anyone passing through, so someone up and about at night is never missed.']
   };
   var STYLE_OPTS = {
     bedroom: [['stone', 'Stone', 69], ['plant', 'Plant', 69], ['base', 'Disc', 49], ['stalk', 'Stalk', 49]],
@@ -665,6 +670,7 @@
       (l.warn ? '<div class="warn">' + esc(l.warn) + '</div>' : '') +
       (l.required ? '<div class="req">At least one bedroom sensor is required. Everything else on this page is optional.</div>' : '') +
       (l.skip ? '<div class="skip">' + esc(l.skip) + '</div>' : '') +
+      (l.note ? '<div class="note-line">' + esc(l.note) + '</div>' : '') +
       '<div class="off">Left out for now. You can add it any time.</div>' +
       '</div>';
   }

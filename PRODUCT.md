@@ -91,6 +91,12 @@ Constraints:
 3. A false alarm at 3 a.m. is how the product gets unplugged. Err quiet.
 4. The family answers once. Website answers flow into the app.
 5. Privacy is the product, not a footnote. Lead with it.
+6. The watched person may read this page. Rich lives with his mother, who has
+   dementia and does not know it (Rich, 2026-09-05). Every page must pass the
+   over-the-shoulder test: she reads it and does not feel accused, labelled, or
+   diagnosed. "Elder care", "looking after", "safety at home" pass. "Dementia",
+   "cognitive decline", "memory loss", "patient", "caregiver burden" do not
+   appear in customer-facing copy. This is a hard rule, not a preference.
 
 ## Accessibility & Inclusion
 Buyers are often 50 to 70 years old, on a phone, possibly at night. Large
