@@ -11,3 +11,6 @@
 
 # Wrangler local state
 .wrangler/
+
+# Shared WavePresence todo store (symlink -> wavepresence-sensors/docs/todos)
+docs/todos
